@@ -20,7 +20,7 @@ const _Container = styled(Button)<BtnProps>`
   justify-content: left;
   align-items: left;
   transition: all 0.2s ease-in-out;
-  width: 21.5rem;
+  width: 21rem;
   border-radius: 0px;
   padding: 0 0 0 0.75rem;
   --button-height: var(--button-height-xs) !important;

@@ -157,7 +157,7 @@ export const invisibleScroll = () => css`
 `;
 
 export const onTablet = `
-  @media screen and (min-width: ${theme?.breakpoints?.xs}px)
+  @media screen and (max-width: ${theme?.breakpoints?.xs}px)
 `;
 
 export const onDesktop = `
