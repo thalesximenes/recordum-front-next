@@ -27,7 +27,7 @@ const Item = styled(Accordion.Item)`
 const Control = styled(Accordion.Control, {
   shouldForwardProp: (prop) => prop !== "closed",
 })<AccordionControlProps>`
-  padding: 0.375rem;
+  padding: 0.25rem;
   transition: ${defaultTransition};
   border-radius: 0px !important;
   box-shadow: ${theme?.shadows?.md};
@@ -51,7 +51,7 @@ const Control = styled(Accordion.Control, {
   }
 
   ${onTablet} {
-    padding: 0.625rem;
+    padding: 0.375rem;
   }
 `;
 
