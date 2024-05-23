@@ -36,7 +36,7 @@ const Btn = ({
         onClick?.(e);
       }}
     >
-      Testes
+      {children}
     </Container>
   );
 };

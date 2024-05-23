@@ -7,7 +7,7 @@ import { Row } from "../Row";
 export default {
   title: "Button/Btn",
   component: Btn,
-  args: {},
+  args: { children: "Teste" },
 } as Meta<BtnProps>;
 
 type Story = StoryObj<BtnProps>;
