@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { Row, RowItem } from "../Row";
+import { Row } from "../Row";
 
 import Btn from "../Btn";
 import Card from "./index";
