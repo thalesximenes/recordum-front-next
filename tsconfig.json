@@ -20,6 +20,13 @@
       "@/hooks/*": ["hooks/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "persistReducer.d.ts",
+    "reduxPersist.d.ts",
+    "createWebStorage.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
   "exclude": ["node_modules"]
 }
