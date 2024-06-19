@@ -11,6 +11,7 @@ import styled from "@emotion/styled";
 const Container = styled.header<HeaderProps>`
   background-color: ${theme?.colors?.purple?.[6]};
   width: 100%;
+
   position: fixed;
   top: 0;
   z-index: 11;
@@ -75,16 +76,16 @@ const Menu = styled.div<any>`
   top: 8%;
   height: ${({ opened }) => (opened ? "92%" : "0")};
 
-  padding: 0;
+  padding: 0 1rem 0 1rem;
   padding-bottom: ${({ opened }) => (opened ? "0.5rem" : "0")};
 
-  overflow-y: hidden;
   overflow-x: hidden;
   transition: ${defaultTransition};
 
   ${onTablet} {
     top: 10%;
     height: ${({ opened }) => (opened ? "90%" : "0")};
+    overflow-y: hidden;
 
     padding: 0;
     padding-bottom: ${({ opened }) => (opened ? "0.625rem" : "0")};

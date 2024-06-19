@@ -1,13 +1,18 @@
-import { toast } from "react-toastify";
+import { toast, ToastPosition } from "react-toastify";
 
 export const newToast = (
   message: string | React.ReactNode,
   type: "SUCCESS" | "ERROR" | "WARNING" | "" = "",
   mobile = false
 ) => {
-  const config = {
-    position: mobile ? toast.POSITION.BOTTOM_CENTER : toast.POSITION.TOP_CENTER,
+  interface ToastInterface {
+    position: ToastPosition;
+  }
+
+  const config: ToastInterface = {
+    position: mobile ? "bottom-left" : "top-center",
   };
+
   switch (type) {
     case "SUCCESS":
       toast.success(message, config);

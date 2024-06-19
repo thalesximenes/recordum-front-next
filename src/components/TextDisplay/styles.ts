@@ -8,10 +8,8 @@ const _Container = styled.div<TextProps>`
   display: flex;
   flex-direction: ${({ direction }) => direction};
 
-  background: ${theme?.colors?.gray?.[2]};
   flex: ${({ flex }) => (flex ? "1" : "0")};
 
-  border: 1px solid ${theme?.colors?.gray?.[3]};
   border-radius: 8px;
   padding: 0.5rem;
   justify-content: flex-start;

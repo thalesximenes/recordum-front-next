@@ -7,7 +7,7 @@ const TextDisplay = (props: TextProps) => {
   const { label, text, direction = "column" } = props;
   return (
     <Container {...props} direction={direction}>
-      <label>{`${label}`}</label>
+      <label>{`${label}`}:</label>
       <p>{isValidElement(text) ? text : handleEmptyString(text)}</p>
     </Container>
   );

@@ -1,15 +1,15 @@
-import "@public/styles/globals.css";
-
+import "@mantine/core/styles.css";
 import type { AppProps } from "next/app";
 import { MantineProvider } from "@mantine/core";
 import { PersistGate } from "redux-persist/integration/react";
 import { RootState } from "redux/rootReducer";
 import StoreProvider from "../redux/StoreProvider";
-import Toast from "../styles/toast";
+import Toast from "@/styles/toast";
 import api from "api";
 import { theme } from "../components/themes";
 import { useEffect } from "react";
 import { useStore } from "react-redux";
+import Layout from "@/components/Layout";
 
 export default function App({ Component, pageProps }: AppProps) {
   const store: any = useStore();
@@ -29,7 +29,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <PersistGate persistor={store.__persistor}>
       <StoreProvider>
         <MantineProvider theme={theme}>
-          <Component {...pageProps} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
           <Toast autoClose={10000} />
         </MantineProvider>
       </StoreProvider>
