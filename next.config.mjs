@@ -2,7 +2,7 @@ const scope = "/recordum";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   basePath: scope,
   webpack(config) {
     config.module.rules.push({

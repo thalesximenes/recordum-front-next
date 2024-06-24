@@ -1,11 +1,11 @@
+import { NextPage } from "next";
 import { Row } from "@/components/Row";
 import { Text } from "@mantine/core";
-import { NextPage } from "next";
 
 const Home: NextPage = () => {
   return (
     <Row>
-      <Text c={`white`}>asd</Text>
+      <Text c={`white`}>Teste</Text>
     </Row>
   );
 };
