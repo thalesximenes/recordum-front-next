@@ -1,6 +1,6 @@
-import SessionReducer from "./Session/reducer";
-import { SessionReducerState } from "./Session/interfaces";
 import { combineReducers } from "redux";
+import SessionReducer from "./Session/slice";
+import { SessionReducerState } from "./Session/interfaces";
 
 interface RootReducer {
   Session: SessionReducerState;

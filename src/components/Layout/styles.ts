@@ -8,7 +8,6 @@ import {
 import styled from "@emotion/styled";
 
 const Main = styled.main<any>`
-  background-color: purple;
   display: flex;
   flex-direction: column;
 
