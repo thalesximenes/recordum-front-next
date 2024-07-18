@@ -1,7 +1,6 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import { changeNetworkStatus, startLogin, successLogin } from "./slice";
 
-import { AxiosResponse } from "axios";
 import api from "../../api/api";
 import { newToast } from "api/toast";
 

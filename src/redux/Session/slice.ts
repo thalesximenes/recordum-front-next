@@ -1,6 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
 import { SessionReducerState } from "./interfaces";
-
+import { createSlice } from "@reduxjs/toolkit";
 import persistReducer from "redux-persist/lib/persistReducer";
 import storage from "../storage";
 

@@ -1,46 +1,58 @@
 import "@mantine/core/styles.css";
 
-import type { AppProps } from "next/app";
 import Layout from "@/components/Layout";
 import { MantineProvider } from "@mantine/core";
+import { PersistGate } from "redux-persist/integration/react";
+import { Provider } from "react-redux";
 import { RootState } from "redux/rootReducer";
-import StoreProvider from "../redux/StoreProvider";
 import Toast from "@/styles/toast";
 import api from "api";
 import { theme } from "../components/themes";
 import { useEffect } from "react";
-import { useStore } from "react-redux";
+import wrapper from "@/redux/store";
 
-const App = ({ Component, pageProps }: AppProps) => {
-  const store: any = useStore();
-
-  useEffect(() => {
-    const token = (store.getState() as RootState)["Session"]["token"];
-    if (token) {
-      setApiAuthorization(token);
-    }
-  });
+const App = ({ Component, ...rest }) => {
+  const { store, props } = wrapper.useWrappedStore(rest);
+  const { pageProps } = props;
+  const persistor = store.__persistor;
 
   const setApiAuthorization = (token: any) => {
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   };
 
+  useEffect(() => {
+    const token = (store.getState() as RootState).Session.token;
+    if (token) {
+      setApiAuthorization(token);
+    }
+  }, [store]);
+
   return (
-    <MantineProvider theme={theme}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-      <Toast autoClose={10000} />
-    </MantineProvider>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <MantineProvider theme={theme}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+          <Toast autoClose={10000} />
+        </MantineProvider>
+      </PersistGate>
+    </Provider>
   );
 };
 
-const AppWrapper = ({ Component, pageProps }: AppProps) => {
-  return (
-    <StoreProvider>
-      <App Component={Component} {...pageProps} />
-    </StoreProvider>
-  );
-};
+App.getInitialProps = wrapper.getInitialAppProps(
+  (store) =>
+    async ({ Component, ctx }) => {
+      const pageProps = Component.getInitialProps
+        ? await Component.getInitialProps(ctx)
+        : {};
 
-export default AppWrapper;
+      return {
+        pageProps,
+        initialState: store.getState(),
+      };
+    }
+);
+
+export default wrapper.withRedux(App);

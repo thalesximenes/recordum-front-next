@@ -34,4 +34,8 @@ const Main = styled.main<any>`
   }
 `;
 
-export { Main };
+const Container = styled.div<any>`
+  z-index: -1;
+`;
+
+export { Main, Container };

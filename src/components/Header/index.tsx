@@ -1,18 +1,25 @@
 import { Container, Menu, Options } from "./styles";
+import { Row, RowItem } from "../Row";
+import rootReducer, { RootState } from "@/redux/rootReducer";
 
+import Btn from "../Btn";
 import IconBtn from "../IconBtn";
 import Img from "../Img";
-import logo from "@/public/images/logo.png";
-import creditCard from "@/public/images/creditCard.png";
-import perfil from "@/public/images/perfil.png";
-import { useState } from "react";
-import TextDisplay from "../TextDisplay";
-import { Row, RowItem } from "../Row";
-import useWindowSize from "@/hooks/useWindowSize";
 import { Text } from "@mantine/core";
-import Btn from "../Btn";
+import TextDisplay from "../TextDisplay";
+import creditCard from "@/public/images/creditCard.png";
+import logo from "@/public/images/logo.png";
+import perfil from "@/public/images/perfil.png";
+import { startGetUserInfo } from "@/redux/User/slice";
+import { useSelector } from "react-redux";
+import { useState } from "react";
+import useWindowSize from "@/hooks/useWindowSize";
 
 const Header = () => {
+  const { primeiroNome, sobrenome } = useSelector(
+    (state: RootState) => state?.User
+  );
+
   const [opened, setOpened] = useState(false);
   const { isDesktop, width } = useWindowSize();
 
@@ -51,7 +58,7 @@ const Header = () => {
                   direction={isDesktop ? "column" : "row"}
                   size={isDesktop ? "22px" : `18px`}
                   label={`Primeiro Nome`}
-                  text={`Thales`}
+                  text={primeiroNome}
                 />
               </RowItem>
               <RowItem>
@@ -59,7 +66,7 @@ const Header = () => {
                   direction={isDesktop ? "column" : "row"}
                   size={isDesktop ? "22px" : `18px`}
                   label={`Sobrenome`}
-                  text={`Ximenes`}
+                  text={sobrenome}
                 />
               </RowItem>
             </Row>

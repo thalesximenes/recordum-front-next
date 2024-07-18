@@ -1,7 +1,6 @@
-import { useEffect, useRef } from "react";
+import { Container, Main } from "./styles";
 
 import Header from "../Header";
-import { Main } from "./styles";
 import useScrollPercentage from "../../hooks/useScrollPercentage";
 
 const Layout = ({ children }: any) => {
@@ -10,7 +9,7 @@ const Layout = ({ children }: any) => {
   return (
     <Main ref={scrollRef}>
       <Header />
-      {children}
+      <Container>{children}</Container>
     </Main>
   );
 };
