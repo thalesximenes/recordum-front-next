@@ -1,17 +1,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { UserReducerState, Usuario } from "./interfaces";
 
-import { UserReducerState } from "./interfaces";
 import persistReducer from "redux-persist/lib/persistReducer";
 import storage from "../storage";
 
 const initialState: UserReducerState = {
-  curso: "",
-  email: "",
-  escolaridade: "",
-  primeiroNome: "",
-  sobrenome: "",
-  universidade: "",
-  vestibulares: "",
+  usuario: null,
+  date: null,
 };
 
 const persistConfig = {
@@ -27,18 +22,26 @@ const slice = createSlice({
     startGetUserInfo: (state, { payload }) => ({
       ...initialState,
     }),
-    successGetUserInfo: (state, action: PayloadAction<UserReducerState>) => ({
+    successGetUserInfo: (state, action: PayloadAction<Usuario>) => ({
       ...state,
-      ...action.payload,
+      usuario: { ...action.payload },
+      date: new Date(),
     }),
     failureGetUserInfo: () => ({
+      ...initialState,
+    }),
+    resetUserInfo: () => ({
       ...initialState,
     }),
   },
 });
 
-export const { startGetUserInfo, successGetUserInfo, failureGetUserInfo } =
-  slice.actions;
+export const {
+  startGetUserInfo,
+  successGetUserInfo,
+  failureGetUserInfo,
+  resetUserInfo,
+} = slice.actions;
 
 const UserReducer = persistReducer(persistConfig, slice.reducer);
 

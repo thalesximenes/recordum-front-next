@@ -54,6 +54,9 @@ const slice = createSlice({
       ...state,
       pageName: payload,
     }),
+    resetLogin: () => ({
+      ...initialState,
+    }),
   },
 });
 
@@ -63,6 +66,7 @@ export const {
   startLogin,
   successLogin,
   failureLogin,
+  resetLogin,
   changeNetworkStatus,
   startLogout,
   successLogout,

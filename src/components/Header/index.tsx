@@ -1,24 +1,35 @@
 import { Container, Menu, Options } from "./styles";
 import { Row, RowItem } from "../Row";
-import rootReducer, { RootState } from "@/redux/rootReducer";
+import { useEffect, useState } from "react";
 
 import Btn from "../Btn";
 import IconBtn from "../IconBtn";
 import Img from "../Img";
+import { RootState } from "@/redux/rootReducer";
 import { Text } from "@mantine/core";
 import TextDisplay from "../TextDisplay";
 import creditCard from "@/public/images/creditCard.png";
 import logo from "@/public/images/logo.png";
 import perfil from "@/public/images/perfil.png";
-import { startGetUserInfo } from "@/redux/User/slice";
+import { resetLogin } from "@/redux/Session/slice";
+import { resetUserInfo } from "@/redux/User/slice";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { useState } from "react";
 import useWindowSize from "@/hooks/useWindowSize";
 
 const Header = () => {
-  const { primeiroNome, sobrenome } = useSelector(
-    (state: RootState) => state?.User
-  );
+  const { replace } = useRouter();
+  const dispatch = useDispatch();
+
+  const { usuario } = useSelector((state: RootState) => state?.User);
+
+  useEffect(() => {
+    console.log(!usuario);
+    if (!usuario) {
+      replace("/");
+    }
+  }, [usuario]);
 
   const [opened, setOpened] = useState(false);
   const { isDesktop, width } = useWindowSize();
@@ -58,7 +69,7 @@ const Header = () => {
                   direction={isDesktop ? "column" : "row"}
                   size={isDesktop ? "22px" : `18px`}
                   label={`Primeiro Nome`}
-                  text={primeiroNome}
+                  text={usuario?.primeiroNome}
                 />
               </RowItem>
               <RowItem>
@@ -66,7 +77,7 @@ const Header = () => {
                   direction={isDesktop ? "column" : "row"}
                   size={isDesktop ? "22px" : `18px`}
                   label={`Sobrenome`}
-                  text={sobrenome}
+                  text={usuario?.sobrenome}
                 />
               </RowItem>
             </Row>
@@ -153,7 +164,15 @@ const Header = () => {
                   </Btn>
                 </RowItem>
                 <RowItem center>
-                  <Btn size={width / 4 >= 360 ? `md` : `sm`}>Sair da Conta</Btn>
+                  <Btn
+                    size={width / 4 >= 360 ? `md` : `sm`}
+                    onClick={() => {
+                      dispatch(resetUserInfo());
+                      dispatch(resetLogin());
+                    }}
+                  >
+                    Sair da Conta
+                  </Btn>
                 </RowItem>
               </Row>
             </Row>

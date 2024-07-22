@@ -1,4 +1,5 @@
 import "@mantine/core/styles.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import Layout from "@/components/Layout";
 import { MantineProvider } from "@mantine/core";

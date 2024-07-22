@@ -8,6 +8,7 @@ const Btn = ({
   children,
   radius,
   template,
+  type,
   onClick,
   ...otherProps
 }: BtnProps) => {
@@ -31,6 +32,7 @@ const Btn = ({
       size={size ?? (isTablet ? "md" : "sm")}
       radius={radius ?? "md"}
       color={getColor(template)}
+      type={type}
       onClick={(e) => {
         e.preventDefault();
         onClick?.(e);
