@@ -1,16 +1,15 @@
 import { Row, RowItem } from "@/components/Row";
 import { resetLogin, startLogin } from "@/redux/Session/slice";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Btn from "@/components/Btn";
 import Head from "next/head";
 import type { NextPage } from "next";
-import PasswordInput from "@/components/TextInput";
+import PasswordInput from "@/components/PasswordInput";
 import { RootState } from "@/redux/rootReducer";
 import TextInput from "@/components/TextInput";
 import styled from "@emotion/styled";
-import { useEffect } from "react";
 import useNavigatorOnLine from "@/hooks/useNavigatorOnline";
 import { useRouter } from "next/router";
 import useWindowSize from "@/hooks/useWindowSize";
