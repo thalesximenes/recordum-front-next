@@ -1,6 +1,7 @@
 export interface UserReducerState {
   usuario: Usuario;
   date: Date;
+  loadingUsuario: boolean;
 }
 
 export interface Usuario {

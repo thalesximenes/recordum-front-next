@@ -33,7 +33,7 @@ const _Container = styled(Button)<BtnProps>`
 
   color: ${({ template }) => getColor(template)};
   box-shadow: ${({ shadow }) => (!shadow ? "none" : theme.shadows?.sm)};
-  border: 3px solid;
+  border: 2px solid;
   border-color: ${({ template }) => getBorderColor(template)};
 
   &:disabled {

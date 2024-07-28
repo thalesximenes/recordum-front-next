@@ -7,6 +7,7 @@ import storage from "../storage";
 const initialState: UserReducerState = {
   usuario: null,
   date: null,
+  loadingUsuario: false,
 };
 
 const persistConfig = {
@@ -33,6 +34,18 @@ const slice = createSlice({
     resetUserInfo: () => ({
       ...initialState,
     }),
+
+    // Actions relacionadas ao Cadatro de Usuário
+    startCadastrarUsuario: (state, { payload }) => ({
+      ...initialState,
+      loadingUsuario: true,
+    }),
+    successCadastrarUsuario: () => ({
+      ...initialState,
+    }),
+    failureCadastrarUsuario: () => ({
+      ...initialState,
+    }),
   },
 });
 
@@ -41,6 +54,9 @@ export const {
   successGetUserInfo,
   failureGetUserInfo,
   resetUserInfo,
+  startCadastrarUsuario,
+  successCadastrarUsuario,
+  failureCadastrarUsuario,
 } = slice.actions;
 
 const UserReducer = persistReducer(persistConfig, slice.reducer);

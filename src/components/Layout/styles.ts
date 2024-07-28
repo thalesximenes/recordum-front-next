@@ -1,4 +1,9 @@
-import { customScroll, defaultTransition, onTablet } from "../themes";
+import {
+  customScroll,
+  defaultTransition,
+  onDesktop,
+  onTablet,
+} from "../themes";
 
 import bgCadastro from "@/public/images/bgCadastro.png";
 import styled from "@emotion/styled";
@@ -31,7 +36,14 @@ const Main = styled.main<any>`
 `;
 
 const Container = styled.div<any>`
+  height: 100%;
+  align-content: center;
   z-index: -1;
+
+  ${onDesktop} {
+    width: 50%;
+    background-color: white;
+  }
 `;
 
 const MainLogin = styled.main<any>`
@@ -44,22 +56,14 @@ const MainLogin = styled.main<any>`
 
   width: 100%;
   height: 100%;
+
   padding: 0;
-  padding-bottom: 0.5rem;
 
   overflow-y: auto;
   overflow-x: hidden;
   transition: ${defaultTransition};
 
   ${customScroll()};
-
-  ${onTablet} {
-    top: 0%;
-    height: 100%;
-
-    padding: 0;
-    padding-bottom: 0.625rem;
-  }
 `;
 
 export { Main, Container, MainLogin };

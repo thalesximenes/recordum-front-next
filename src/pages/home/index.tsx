@@ -2,7 +2,6 @@ import Btn from "@/components/Btn";
 import { NextPage } from "next";
 import { Row } from "@/components/Row";
 import TextInput from "@/components/TextInput";
-import { startLogin } from "@/redux/Session/slice";
 import { successGetUserInfo } from "@/redux/User/slice";
 import { useDispatch } from "react-redux";
 import { useState } from "react";

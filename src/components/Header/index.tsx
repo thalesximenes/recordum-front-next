@@ -25,7 +25,6 @@ const Header = () => {
   const { usuario } = useSelector((state: RootState) => state?.User);
 
   useEffect(() => {
-    console.log(!usuario);
     if (!usuario) {
       replace("/");
     }
@@ -87,7 +86,7 @@ const Header = () => {
                   direction={isDesktop ? "column" : "row"}
                   size={isDesktop ? "22px" : `18px`}
                   label={`E-mail`}
-                  text={`thales@email.com`}
+                  text={usuario?.email}
                 />
               </RowItem>
             </Row>
@@ -100,7 +99,7 @@ const Header = () => {
                   direction={isDesktop ? "column" : "row"}
                   size={isDesktop ? "22px" : `18px`}
                   label={`Escolaridade`}
-                  text={`Pré-Universitário`}
+                  text={usuario?.escolaridade}
                 />
               </RowItem>
               <RowItem>
@@ -108,7 +107,7 @@ const Header = () => {
                   direction={isDesktop ? "column" : "row"}
                   size={isDesktop ? "22px" : `18px`}
                   label={`Vestibulares`}
-                  text={`Enem`}
+                  text={usuario?.vestibulares}
                 />
               </RowItem>
             </Row>
@@ -121,7 +120,7 @@ const Header = () => {
                   direction={isDesktop ? "column" : "row"}
                   size={isDesktop ? "22px" : `18px`}
                   label={`Curso`}
-                  text={`Sistemas e Mídias Digitais`}
+                  text={usuario?.curso}
                 />
               </RowItem>
               <RowItem>
@@ -129,7 +128,7 @@ const Header = () => {
                   direction={isDesktop ? "column" : "row"}
                   size={isDesktop ? "22px" : `18px`}
                   label={`Universidade`}
-                  text={`Universidade Federal do Ceará`}
+                  text={usuario?.universidade}
                 />
               </RowItem>
             </Row>
@@ -160,7 +159,7 @@ const Header = () => {
                     template="secondary"
                     size={width / 4 >= 360 ? `md` : `sm`}
                   >
-                    Recuperar Senha
+                    Alterar Senha
                   </Btn>
                 </RowItem>
                 <RowItem center>

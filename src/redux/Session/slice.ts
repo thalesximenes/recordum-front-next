@@ -7,13 +7,12 @@ const initialState: SessionReducerState = {
   pageName: "",
   token: "",
   networkError: false,
-  isMenuHidden: false,
+  loading: false,
 };
 
 const persistConfig = {
   key: "session",
   storage,
-  blacklist: ["isMenuHidden"],
 };
 
 const slice = createSlice({
@@ -23,14 +22,20 @@ const slice = createSlice({
     // Actions relacionadas ao login
     startLogin: (state, { payload }) => ({
       ...state,
+      loading: true,
     }),
+
     successLogin: (state, { payload }) => ({
       ...state,
       token: payload?.token,
+      loading: false,
     }),
+
     failureLogin: (state) => ({
       ...state,
+      loading: false,
     }),
+
     changeNetworkStatus: (state, { payload }) => ({
       ...state,
       networkError: payload,
@@ -45,11 +50,6 @@ const slice = createSlice({
       ...initialState,
     }),
 
-    // Outras Actions
-    toggleMenu: (state) => ({
-      ...state,
-      isMenuHidden: !state.isMenuHidden,
-    }),
     setPageName: (state, { payload }) => ({
       ...state,
       pageName: payload,
@@ -61,7 +61,6 @@ const slice = createSlice({
 });
 
 export const {
-  toggleMenu,
   setPageName,
   startLogin,
   successLogin,

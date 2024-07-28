@@ -8,15 +8,11 @@ const Layout = ({ children }: any) => {
   const [scrollRef] = useScrollPercentage();
   const { pathname } = useRouter();
 
-  console.log(pathname);
-
   return (
     <>
-      {pathname === "/" ? (
+      {pathname === "/" || pathname === "/cadastro" ? (
         <MainLogin ref={scrollRef}>
-          <Container style={{ height: "100%", alignContent: "center" }}>
-            {children}
-          </Container>
+          <Container>{children}</Container>
         </MainLogin>
       ) : (
         <Main ref={scrollRef}>
