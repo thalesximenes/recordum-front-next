@@ -1,4 +1,4 @@
-import { toast, ToastPosition } from "react-toastify";
+import { ToastPosition, toast } from "react-toastify";
 
 export const newToast = (
   message: string | React.ReactNode,
@@ -7,10 +7,14 @@ export const newToast = (
 ) => {
   interface ToastInterface {
     position: ToastPosition;
+    closeOnClick: boolean;
+    draggable: boolean;
   }
 
   const config: ToastInterface = {
     position: mobile ? "bottom-left" : "top-center",
+    closeOnClick: true,
+    draggable: true,
   };
 
   switch (type) {

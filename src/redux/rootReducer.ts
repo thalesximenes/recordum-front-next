@@ -1,13 +1,19 @@
-import SessionReducer from "./Session/reducer";
+import { Reducer, UnknownAction, combineReducers } from "redux";
+
+import { PersistPartial } from "redux-persist/es/persistReducer";
+import SessionReducer from "./Session/slice";
 import { SessionReducerState } from "./Session/interfaces";
-import { combineReducers } from "redux";
+import UserReducer from "./User/slice";
+import { UserReducerState } from "./User/interfaces";
 
 interface RootReducer {
-  Session: SessionReducerState;
+  Session: Reducer<SessionReducerState & PersistPartial, UnknownAction>;
+  User: Reducer<UserReducerState & PersistPartial, UnknownAction>;
 }
 
 const rootReducer = combineReducers<RootReducer>({
   Session: SessionReducer,
+  User: UserReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

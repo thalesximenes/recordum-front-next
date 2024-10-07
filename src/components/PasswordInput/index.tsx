@@ -1,7 +1,7 @@
 import { Container } from "./styles";
-import { TextInputProps } from "./interfaces";
+import { PasswordInputProps } from "./interfaces";
 
-const TextInput = (props: TextInputProps) => {
+const PasswordInput = (props: PasswordInputProps) => {
   const { setValue, value, loading, ...otherProps } = props;
 
   return (
@@ -17,4 +17,4 @@ const TextInput = (props: TextInputProps) => {
   );
 };
 
-export default TextInput;
+export default PasswordInput;

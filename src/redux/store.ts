@@ -1,12 +1,40 @@
-import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./rootReducer";
+import { EnhancedStore, configureStore } from "@reduxjs/toolkit";
+import { Persistor, persistStore } from "redux-persist";
+import createSagaMiddleware, { Task } from "redux-saga";
 
-export const makeStore = () => {
-  return configureStore({ reducer: rootReducer });
+import { createWrapper } from "next-redux-wrapper";
+import rootReducer from "./rootReducer";
+import rootSaga from "./rootSaga";
+
+const sagaMiddleware = createSagaMiddleware();
+
+export interface ExtendedStore extends EnhancedStore {
+  sagaTask?: Task;
+  __persistor?: Persistor;
+}
+
+export const makeStore = (initialState) => {
+  const isClient = typeof window !== "undefined";
+
+  const store: ExtendedStore = configureStore({
+    reducer: rootReducer,
+    middleware: (gDM) =>
+      gDM({
+        thunk: false,
+        serializableCheck: false,
+      }).concat(sagaMiddleware),
+    preloadedState: initialState,
+    devTools: isClient,
+  });
+
+  if (isClient) store.__persistor = persistStore(store);
+
+  store.sagaTask = sagaMiddleware.run(rootSaga);
+
+  return store;
 };
 
-// Infer the type of makeStore
+const wrapper = createWrapper<ExtendedStore>(makeStore, { debug: true });
+
+export default wrapper;
 export type AppStore = ReturnType<typeof makeStore>;
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<AppStore["getState"]>;
-export type AppDispatch = AppStore["dispatch"];
