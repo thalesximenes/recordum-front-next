@@ -35,7 +35,7 @@ const Main = styled.main<any>`
   }
 `;
 
-const Container = styled.div<any>`
+const MainContainer = styled.div<any>`
   height: 100%;
   align-content: center;
   z-index: -1;
@@ -43,6 +43,15 @@ const Container = styled.div<any>`
   ${onDesktop} {
     width: 50%;
     background-color: white;
+  }
+`;
+
+const Container = styled.div<any>`
+  height: 100%;
+  z-index: -1;
+
+  ${onDesktop} {
+    margin: 2rem;
   }
 `;
 
@@ -66,4 +75,4 @@ const MainLogin = styled.main<any>`
   ${customScroll()};
 `;
 
-export { Main, Container, MainLogin };
+export { Main, Container, MainContainer, MainLogin };

@@ -11,8 +11,9 @@ const Custom404: NextPage = () => {
         style={{
           display: "flex",
           justifyContent: "center",
+          height: "100%",
+          alignItems: "center",
           flexGrow: "1",
-          marginTop: "8rem",
         }}
       >
         <h1>404 - Página não encontrada</h1>

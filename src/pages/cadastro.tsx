@@ -1,29 +1,26 @@
 import { Row, RowItem } from "@/components/Row";
-import { resetLogin } from "@/redux/Session/slice";
-import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 import Btn from "@/components/Btn";
 import Head from "next/head";
+import Img from "@/components/Img";
+import LogoExtenson from "@/public/images/Logo_extenso.png";
 import type { NextPage } from "next";
 import PasswordInput from "@/components/PasswordInput";
 import { RootState } from "@/redux/rootReducer";
+import { Text } from "@mantine/core";
+import TextHover from "@/components/TextHover";
 import TextInput from "@/components/TextInput";
+import { startCadastrarUsuario } from "@/redux/User/slice";
 import styled from "@emotion/styled";
-import useNavigatorOnLine from "@/hooks/useNavigatorOnline";
-import LogoExtenson from "@/public/images/Logo_extenso.png";
+import { theme } from "@/components/themes";
 import { useRouter } from "next/router";
 import useWindowSize from "@/hooks/useWindowSize";
-import Img from "@/components/Img";
-import { Text } from "@mantine/core";
-import { theme } from "@/components/themes";
-import { startCadastrarUsuario } from "@/redux/User/slice";
-import TextHover from "@/components/TextHover";
 
 const Home: NextPage = () => {
   const dispatch = useDispatch();
 
-  const firstUpdateRef = useRef(true);
   const { replace, push } = useRouter();
 
   const { isDesktop } = useWindowSize();

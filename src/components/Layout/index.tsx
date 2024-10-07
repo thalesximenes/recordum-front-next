@@ -1,4 +1,4 @@
-import { Container, Main, MainLogin } from "./styles";
+import { Container, Main, MainContainer, MainLogin } from "./styles";
 
 import Header from "../Header";
 import { useRouter } from "next/router";
@@ -12,7 +12,7 @@ const Layout = ({ children }: any) => {
     <>
       {pathname === "/" || pathname === "/cadastro" ? (
         <MainLogin ref={scrollRef}>
-          <Container>{children}</Container>
+          <MainContainer>{children}</MainContainer>
         </MainLogin>
       ) : (
         <Main ref={scrollRef}>
