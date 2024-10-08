@@ -5,20 +5,19 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Btn from "@/components/Btn";
 import Head from "next/head";
+import Img from "@/components/Img";
+import LogoExtenson from "@/public/images/Logo_extenso.png";
 import type { NextPage } from "next";
 import PasswordInput from "@/components/PasswordInput";
 import { RootState } from "@/redux/rootReducer";
+import { Text } from "@mantine/core";
+import TextHover from "@/components/TextHover";
 import TextInput from "@/components/TextInput";
 import styled from "@emotion/styled";
+import { theme } from "@/components/themes";
 import useNavigatorOnLine from "@/hooks/useNavigatorOnline";
-import LogoExtenson from "@/public/images/Logo_extenso.png";
 import { useRouter } from "next/router";
 import useWindowSize from "@/hooks/useWindowSize";
-import Img from "@/components/Img";
-import { Text } from "@mantine/core";
-import { theme } from "@/components/themes";
-import TextHover from "@/components/TextHover";
-import { startGetUserInfo } from "@/redux/User/slice";
 
 const Home: NextPage = () => {
   const dispatch = useDispatch();
@@ -137,8 +136,6 @@ const Login = () => {
         senha: senha,
       })
     );
-
-    // dispatch(startGetUserInfo({ nome: `Thales` }));
   }, [email, senha]);
 
   return (
@@ -159,25 +156,30 @@ const Login = () => {
           </RowItem>
         </Row>
       </div>
-      <Row>
-        <RowItem>
-          <Btn
-            template="primary"
-            loading={loading}
-            onClick={handleLogin}
-            disabled={!email || !senha || !isOnline}
-            fullWidth
-            type="submit"
-          >
-            {isOnline ? "Entrar" : "Conecte-se à internet"}
-          </Btn>
-        </RowItem>
-        <RowItem center>
-          <Text style={{ cursor: `pointer` }} c={theme?.colors?.purple[4]}>
-            Esqueci minha senha
-          </Text>
-        </RowItem>
-      </Row>
+      <div>
+        <Row>
+          <RowItem>
+            <Btn
+              style={{ width: "100%" }}
+              template="primary"
+              loading={loading}
+              onClick={handleLogin}
+              disabled={!email || !senha || !isOnline}
+              fullWidth
+              type="submit"
+            >
+              {isOnline ? "Entrar" : "Conecte-se à internet"}
+            </Btn>
+          </RowItem>
+        </Row>
+        <Row>
+          <RowItem center>
+            <Text style={{ cursor: `pointer` }} c={theme?.colors?.purple[4]}>
+              Esqueci minha senha
+            </Text>
+          </RowItem>
+        </Row>
+      </div>
     </>
   );
 };

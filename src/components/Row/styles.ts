@@ -25,8 +25,18 @@ const GroupItem = styled.div<RowItemProps>`
   max-width: 100%;
   flex: 1 1 150px;
   display: ${({ center, end }) => (center || end ? "flex" : "block")};
-  justify-content: ${({ center, end }) =>
-    end || center ? (end ? "flex-end" : "center") : "flex-start"};
+  ${(props) => {
+    let justifyContentValue = "flex-start";
+    if (props.end) {
+      justifyContentValue = "flex-end";
+    } else if (props.center) {
+      justifyContentValue = "center";
+    }
+
+    return `
+      justify-content: ${justifyContentValue};
+    `;
+  }}
 
   ${onTablet} {
     flex: 1 1 200px;

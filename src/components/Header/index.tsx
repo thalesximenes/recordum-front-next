@@ -18,7 +18,7 @@ import { useRouter } from "next/router";
 import useWindowSize from "@/hooks/useWindowSize";
 
 const Header = () => {
-  const { replace } = useRouter();
+  const { replace, push } = useRouter();
 
   const { usuario } = useSelector((state: RootState) => state?.User);
 
@@ -34,7 +34,12 @@ const Header = () => {
   return (
     <>
       <Container>
-        <IconBtn>
+        <IconBtn
+          onClick={() => {
+            push("/home");
+            setOpened(false);
+          }}
+        >
           <Img width={57} height={48} src={logo} alt={"icone_logo"} />
         </IconBtn>
         <Options>

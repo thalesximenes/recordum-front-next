@@ -20,7 +20,7 @@ const Card = ({
       radius="md"
       width={width}
     >
-      <CardSection inheritPadding>
+      <CardSection inheritPadding style={{ paddingLeft: 0, paddingTop: 0 }}>
         <Group justify={titleCentered ? "center" : "apart"}>
           <Group>
             <h2>{title}</h2>

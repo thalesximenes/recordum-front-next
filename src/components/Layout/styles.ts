@@ -50,9 +50,7 @@ const Container = styled.div<any>`
   height: 100%;
   z-index: -1;
 
-  ${onDesktop} {
-    margin: 2rem;
-  }
+  margin: 2rem 5rem 2rem 5rem;
 `;
 
 const MainLogin = styled.main<any>`

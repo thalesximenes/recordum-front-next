@@ -1,41 +1,52 @@
-import Btn from "@/components/Btn";
+import { Row, RowItem } from "@/components/Row";
+
+import BtnList from "@/components/BtnList";
+import Card from "@/components/Card";
 import { NextPage } from "next";
-import { Row } from "@/components/Row";
-import TextInput from "@/components/TextInput";
-import { successGetUserInfo } from "@/redux/User/slice";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
 
 const Home: NextPage = () => {
-  const dispatch = useDispatch();
-  const [nome, setNome] = useState("");
-
   return (
     <>
-      <Row>
-        <TextInput label={"Nome"} value={nome} setValue={setNome} />
-      </Row>
-      <Row>
-        <Btn
-          onClick={() =>
-            dispatch(
-              successGetUserInfo({
-                primeiroNome: nome,
-                sobrenome: nome,
-                curso: nome,
-                email: nome,
-                escolaridade: nome,
-                universidade: nome,
-                vestibulares: nome,
-              })
-            )
-          }
-        >
-          Cadastrar
-        </Btn>
-      </Row>
+      <HomeLayout>
+        <Row>
+          <RowItem>
+            <Card title="Continue Assistindo">Vídeo</Card>
+          </RowItem>
+        </Row>
+        <Row>
+          <RowItem>
+            <Card title="Hora da Revisão">Vídeo Resumido</Card>
+          </RowItem>
+        </Row>
+      </HomeLayout>
     </>
   );
 };
+
+const HomeLayout = ({ children }) => (
+  <Row style={{ flexDirection: "row", width: "100%" }}>
+    <RowItem>{children}</RowItem>
+    <SideMenu />
+  </Row>
+);
+
+const SideMenu = () => (
+  <Row style={{ marginTop: 0 }}>
+    <Row style={{ flexDirection: "column" }}>
+      <BtnList
+        buttons={[
+          { children: "Teste" },
+          { children: "Teste" },
+          { children: "Teste" },
+          { children: "Teste" },
+          { children: "Teste" },
+          { children: "Teste" },
+          { children: "Teste" },
+          { children: "Teste" },
+        ]}
+      />
+    </Row>
+  </Row>
+);
 
 export default Home;

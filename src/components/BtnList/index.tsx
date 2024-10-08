@@ -15,16 +15,16 @@ const Btn = ({ buttons }: BtnListProps) => {
     <Row key={i}>
       <Container
         {...b}
-        template={b.template}
-        size={b.size ?? (isTablet ? "md" : "sm")}
-        radius={b.radius ?? "md"}
+        template={b?.template}
+        size={b?.size ?? (isTablet ? "md" : "sm")}
+        radius={b?.radius ?? "md"}
         color={getColor(i)}
         onClick={(e: any) => {
           e.preventDefault();
-          b.onClick?.(e);
+          b?.onClick?.(e);
         }}
       >
-        Testes
+        {b?.children}
       </Container>
     </Row>
   ));
