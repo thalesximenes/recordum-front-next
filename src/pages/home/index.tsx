@@ -3,8 +3,10 @@ import { Row, RowItem } from "@/components/Row";
 import BtnList from "@/components/BtnList";
 import Card from "@/components/Card";
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
+  const { push } = useRouter();
   return (
     <>
       <HomeLayout>
@@ -30,23 +32,26 @@ const HomeLayout = ({ children }) => (
   </Row>
 );
 
-const SideMenu = () => (
-  <Row style={{ marginTop: 0 }}>
-    <Row style={{ flexDirection: "column" }}>
-      <BtnList
-        buttons={[
-          { children: "Teste" },
-          { children: "Teste" },
-          { children: "Teste" },
-          { children: "Teste" },
-          { children: "Teste" },
-          { children: "Teste" },
-          { children: "Teste" },
-          { children: "Teste" },
-        ]}
-      />
+const SideMenu = () => {
+  const { push } = useRouter();
+  return (
+    <Row style={{ marginTop: 0 }}>
+      <Row style={{ flexDirection: "column" }}>
+        <BtnList
+          buttons={[
+            { children: "Teste", onClick: () => push("/materia/teste") },
+            { children: "Teste" },
+            { children: "Teste" },
+            { children: "Teste" },
+            { children: "Teste" },
+            { children: "Teste" },
+            { children: "Teste" },
+            { children: "Teste" },
+          ]}
+        />
+      </Row>
     </Row>
-  </Row>
-);
+  );
+};
 
 export default Home;
