@@ -4,9 +4,18 @@ import BtnList from "@/components/BtnList";
 import Card from "@/components/Card";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setBackgroundImage } from "@/redux/Session/slice";
 
 const Home: NextPage = () => {
   const { push } = useRouter();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setBackgroundImage({ backgroundImage: "" }));
+  }, []);
+
   return (
     <>
       <HomeLayout>
