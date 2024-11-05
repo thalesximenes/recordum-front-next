@@ -3,13 +3,14 @@ import { Row, RowItem } from "@/components/Row";
 import BtnList from "@/components/BtnList";
 import Card from "@/components/Card";
 import { NextPage } from "next";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import VideoThumb from "@/components/VideoThumb";
 import { setBackgroundImage } from "@/redux/Session/slice";
+import thumb from "../../../public/images/bgCadastro.png";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
-  const { push } = useRouter();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,12 +22,27 @@ const Home: NextPage = () => {
       <HomeLayout>
         <Row>
           <RowItem>
-            <Card title="Continue Assistindo">Vídeo</Card>
+            <Card title="Continue Assistindo">
+              <VideoThumb
+                alt="Int. à Genética"
+                src={thumb}
+                title="Int. à Genética"
+                description="Genética"
+                description2="Biologia"
+              />
+            </Card>
           </RowItem>
         </Row>
         <Row>
           <RowItem>
-            <Card title="Hora da Revisão">Vídeo Resumido</Card>
+            <Card title="Hora da Revisão">
+              <VideoThumb
+                alt="Conteúdo Y"
+                src={thumb}
+                title="Conteúdo Y"
+                summarized
+              />
+            </Card>
           </RowItem>
         </Row>
       </HomeLayout>

@@ -1,18 +1,21 @@
+import { Row, RowItem } from "@/components/Row";
+
 import Accordion from "@/components/Accordion";
 import Btn from "@/components/Btn";
-import { Row, RowItem } from "@/components/Row";
-import { setBackgroundImage } from "@/redux/Session/slice";
+import IconBtn from "@/components/IconBtn";
 import { NextPage } from "next";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import bgMaterias from "@/public/images/bgMaterias.png";
 import Quiz from "@/public/images/quiz.svg";
 import Rating from "@/public/images/rating.svg";
 import { Text } from "@mantine/core";
-import IconBtn from "@/components/IconBtn";
 import TextHover from "@/components/TextHover";
+import VideoThumb from "@/components/VideoThumb";
+import bgMaterias from "@/public/images/bgMaterias.png";
+import { setBackgroundImage } from "@/redux/Session/slice";
 import { theme } from "@/components/themes";
+import thumb from "../../../public/images/bgCadastro.png";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const Materia: NextPage = () => {
   const router = useRouter();
@@ -22,46 +25,10 @@ const Materia: NextPage = () => {
     dispatch(setBackgroundImage({ backgroundImage: bgMaterias.src }));
   }, []);
 
-  const formatText = (text) => {
-    return text.charAt(0).toUpperCase() + text.slice(1);
-  };
-
   if (router?.query?.slug.length > 1) {
     return (
       <>
-        <Row wrap="nowrap">
-          <TextHover
-            fw={500}
-            style={{ cursor: `pointer`, width: "fit-content" }}
-            c={theme?.colors?.purple[5]}
-            hoverColor={theme?.colors?.purple[7]}
-            textDecoration="underline"
-            onClick={() => router.push("/home")}
-          >
-            Home
-          </TextHover>
-          <Text>{">"}</Text>
-          <TextHover
-            fw={500}
-            style={{ cursor: `pointer`, width: "fit-content" }}
-            c={theme?.colors?.purple[5]}
-            hoverColor={theme?.colors?.purple[7]}
-            textDecoration="underline"
-            onClick={() => router.push(`/materia/${router?.query?.slug?.[0]}`)}
-          >
-            {formatText(router?.query?.slug?.[0])}
-          </TextHover>
-          <Text>{">"}</Text>
-          <TextHover
-            fw={500}
-            style={{ cursor: `pointer`, width: "fit-content" }}
-            c={theme?.colors?.purple[5]}
-            hoverColor={theme?.colors?.purple[7]}
-            textDecoration="underline"
-          >
-            {formatText(router?.query?.slug?.[1])}
-          </TextHover>
-        </Row>
+        <PageGuide router={router} />
         <Row>
           <RowItem>
             {data.map((d) => (
@@ -71,17 +38,35 @@ const Materia: NextPage = () => {
                     {d?.videos?.map((v) => (
                       <Row>
                         <RowItem>
-                          <Btn>{v.title}</Btn>
+                          <VideoThumb
+                            direction="row"
+                            alt={v.title}
+                            src={thumb}
+                            title={v.title}
+                            summarized
+                            onClick={() =>
+                              router.push(
+                                `/materia/${router?.query?.slug?.[0]}/genetica`
+                              )
+                            }
+                          />
                         </RowItem>
-                        <Text style={{ alignSelf: "center" }}>
-                          {+v.duracao} min. |
-                        </Text>
-                        <IconBtn>
-                          <Rating width={30} />
-                        </IconBtn>
-                        <IconBtn>
-                          <Quiz width={30} />
-                        </IconBtn>
+                        <Row
+                          style={{
+                            alignSelf: "center",
+                            marginTop: 0,
+                          }}
+                        >
+                          <Text style={{ alignSelf: "center" }}>
+                            {+v.duracao} min. |
+                          </Text>
+                          <IconBtn>
+                            <Rating width={30} />
+                          </IconBtn>
+                          <IconBtn>
+                            <Quiz width={30} />
+                          </IconBtn>
+                        </Row>
                       </Row>
                     ))}
                   </Accordion>
@@ -95,21 +80,67 @@ const Materia: NextPage = () => {
   }
 
   return (
-    <Row>
-      <RowItem>
-        <Accordion
-          title={router?.query?.slug?.[0]?.toUpperCase()}
-          titleCentered
-        >
-          <Btn
-            onClick={() =>
-              router.push(`/materia/${router?.query?.slug?.[0]}/genetica`)
-            }
+    <>
+      <PageGuide router={router} />
+      <Row>
+        <RowItem>
+          <Accordion
+            title={router?.query?.slug?.[0]?.toUpperCase()}
+            value={"default"}
+            titleCentered
           >
-            Teste
-          </Btn>
-        </Accordion>
-      </RowItem>
+            <VideoThumb
+              alt="Int. à Genética"
+              src={thumb}
+              title="Int. à Genética"
+              description="Genética"
+              description2="Biologia"
+              onClick={() =>
+                router.push(`/materia/${router?.query?.slug?.[0]}/genetica`)
+              }
+            />
+          </Accordion>
+        </RowItem>
+      </Row>
+    </>
+  );
+};
+
+const PageGuide = ({ router }) => {
+  const formatText = (text) => {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  };
+
+  return (
+    <Row wrap="nowrap">
+      <TextHover
+        fw={500}
+        style={{ cursor: `pointer`, width: "fit-content" }}
+        c={theme?.colors?.purple[5]}
+        hoverColor={theme?.colors?.purple[7]}
+        textDecoration="underline"
+        onClick={() => router.push("/home")}
+      >
+        Home
+      </TextHover>
+      {router?.query?.slug?.map((s, i) => {
+        const link = router?.query?.slug?.slice(0, i + 1)?.join("/");
+        return (
+          <>
+            <Text>{">"}</Text>
+            <TextHover
+              fw={500}
+              style={{ cursor: `pointer`, width: "fit-content" }}
+              c={theme?.colors?.purple[5]}
+              hoverColor={theme?.colors?.purple[7]}
+              textDecoration="underline"
+              onClick={() => router.push(`/materia/${link}`)}
+            >
+              {formatText(s)}
+            </TextHover>
+          </>
+        );
+      })}
     </Row>
   );
 };

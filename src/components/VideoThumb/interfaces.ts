@@ -8,6 +8,7 @@ export interface VideoThumbProps {
   description2?: string;
   loading?: boolean;
   value?: string;
+  direction?: string;
   onClick?: () => void;
   summarized?: boolean;
 }
