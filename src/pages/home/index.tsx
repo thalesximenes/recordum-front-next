@@ -5,7 +5,7 @@ import Card from "@/components/Card";
 import { NextPage } from "next";
 import VideoThumb from "@/components/VideoThumb";
 import { setBackgroundImage } from "@/redux/Session/slice";
-import thumb from "../../../public/images/bgCadastro.png";
+import thumb from "@/public/images/bgCadastro.png";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
