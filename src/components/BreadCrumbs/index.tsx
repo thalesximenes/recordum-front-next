@@ -5,7 +5,7 @@ import assert from "assert";
 import { theme } from "../themes";
 import { useRouter } from "next/router";
 
-const PageGuide = () => {
+const BreadCrumbs = () => {
   const router = useRouter();
   const formatText = (text) => {
     return text.charAt(0).toUpperCase() + text.slice(1);
@@ -33,12 +33,13 @@ const PageGuide = () => {
           <>
             <Text>{">"}</Text>
             <TextHover
+              key={i}
               fw={500}
               style={{ cursor: `pointer`, width: "fit-content" }}
               c={theme?.colors?.purple[5]}
               hoverColor={theme?.colors?.purple[7]}
               textDecoration="underline"
-              onClick={() => router.push(`/materia/${link}`)}
+              onClick={() => router.push(`/eixo-tematico/${link}`)}
             >
               {formatText(s)}
             </TextHover>
@@ -49,4 +50,4 @@ const PageGuide = () => {
   );
 };
 
-export default PageGuide;
+export default BreadCrumbs;

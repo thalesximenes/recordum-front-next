@@ -1,25 +1,26 @@
-import AulaPage from "./aula";
-import MateriaPage from ".";
+import BreadCrumbs from "@/components/BreadCrumbs";
+import ConteudoPage from "./conteudo";
+import MateriaPage from "./materia";
 import { NextPage } from "next";
-import PageGuide from "@/components/PageGuide";
 import { useRouter } from "next/router";
 
 const Materia: NextPage = () => {
   const router = useRouter();
+  console.log("aqui");
 
   switch (router?.query?.slug?.length) {
     case 1:
       return (
         <>
-          <PageGuide />
+          <BreadCrumbs />
           <MateriaPage />
         </>
       );
     case 2:
       return (
         <>
-          <PageGuide />
-          <AulaPage />
+          <BreadCrumbs />
+          <ConteudoPage />
         </>
       );
     default:

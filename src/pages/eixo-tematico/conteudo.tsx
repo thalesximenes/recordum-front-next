@@ -14,24 +14,24 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
-const AulaPage: NextPage = () => {
+const ConteudoPage: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!router?.query?.slug) router.push("/home");
+    // if (!router?.query?.slug) router.push("/home");
     dispatch(setBackgroundImage({ backgroundImage: bgMaterias.src }));
   }, []);
 
   return (
     <Row>
       <RowItem>
-        {data.map((d) => (
-          <Row>
+        {data.map((d, index) => (
+          <Row key={index}>
             <RowItem>
               <Accordion title={d.title} value={"default"}>
-                {d?.videos?.map((v) => (
-                  <Row>
+                {d?.videos?.map((v, index) => (
+                  <Row key={index}>
                     <RowItem>
                       <VideoThumb
                         direction="row"
@@ -41,7 +41,7 @@ const AulaPage: NextPage = () => {
                         summarized
                         onClick={() =>
                           router.push(
-                            `/materia/${router?.query?.slug?.[0]}/genetica`
+                            `/eixo-tematico/${router?.query?.slug?.[0]}/genetica`
                           )
                         }
                       />
@@ -91,4 +91,4 @@ const data = [
   },
 ];
 
-export default AulaPage;
+export default ConteudoPage;

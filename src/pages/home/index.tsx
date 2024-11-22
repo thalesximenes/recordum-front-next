@@ -64,7 +64,7 @@ const SideMenu = () => {
       <Row style={{ flexDirection: "column" }}>
         <BtnList
           buttons={[
-            { children: "Teste", onClick: () => push("/materia/teste") },
+            { children: "Teste", onClick: () => push("/eixo-tematico/teste") },
             { children: "Teste" },
             { children: "Teste" },
             { children: "Teste" },

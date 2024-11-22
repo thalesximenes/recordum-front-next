@@ -15,7 +15,7 @@ const MateriaPage: NextPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!router?.query?.slug) router.push("/home");
+    // if (!router?.query?.slug) router.push("/home");
     dispatch(setBackgroundImage({ backgroundImage: bgMaterias.src }));
   }, []);
 
@@ -34,7 +34,7 @@ const MateriaPage: NextPage = () => {
             description="Genética"
             description2="Biologia"
             onClick={() =>
-              router.push(`/materia/${router?.query?.slug?.[0]}/genetica`)
+              router.push(`/eixo-tematico/${router?.query?.slug?.[0]}/genetica`)
             }
           />
         </Accordion>
