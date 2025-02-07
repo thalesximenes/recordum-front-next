@@ -132,8 +132,8 @@ const Login = () => {
   const handleLogin = useCallback(() => {
     dispatch(
       startLogin({
-        usuario: email,
-        senha: senha,
+        username: email,
+        password: senha,
       })
     );
   }, [email, senha]);

@@ -40,14 +40,16 @@ const Home: NextPage = () => {
   const finalizarCadastro = () => {
     dispatch(
       startCadastrarUsuario({
-        enderecoEmail,
-        nome,
-        sobrenome,
-        senha,
-        escolaridade,
-        curso,
-        vestibulares,
-        callback: () => push(""),
+        username: enderecoEmail,
+        first_name: nome,
+        last_name: sobrenome,
+        email: enderecoEmail,
+        senha: senha,
+        escolaridade: escolaridade,
+        vestibulares: vestibulares,
+        curso: curso,
+        universidade: universidade,
+        callback: () => push("/"),
       })
     );
   };

@@ -54,7 +54,7 @@ const VideoLarge = ({
   loading = false,
 }) => {
   return (
-    <div style={{ cursor: "pointer" }} onClick={onClick}>
+    <div style={{ cursor: "pointer" }} onClick={onClick} onKeyDown={() => null}>
       <Img src={src} alt={alt} height={100} width={175} onClick={onClick} />
       <Row>
         <Tooltip label={title}>
