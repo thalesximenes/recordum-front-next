@@ -22,7 +22,7 @@ const slice = createSlice({
   reducers: {
     // Actions relacionadas ao login
     startLogin: (state, { payload }) => ({
-      ...state,
+      ...initialState,
       loading: true,
     }),
 

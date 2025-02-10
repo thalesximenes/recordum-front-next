@@ -1,39 +1,103 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import {
-  changeNetworkStatus,
-  failureLogin,
-  startLogin,
-  successLogin,
+  failureGetAula,
+  failureGetDisciplinas,
+  failureGetEixos,
+  failureGetTemas,
+  startGetAula,
+  startGetDisciplinas,
+  startGetEixos,
+  startGetTemas,
+  successGetAula,
+  successGetDisciplinas,
+  successGetEixos,
+  successGetTemas,
 } from "./slice";
 
 import api from "../../api/api";
 import { newToast } from "api/toast";
-import { startGetUserInfo } from "../User/slice";
 
-function* startLoginSaga() {
-  yield takeLatest(startLogin, function* ({ payload }: { payload: any }) {
+function* startGetEixosSaga() {
+  yield takeLatest(startGetEixos, function* () {
     try {
-      const { data } = yield api.post("/usuario/login/", { ...payload });
+      const { data } = yield api.get("/conteudo/eixos/");
 
-      yield put(changeNetworkStatus(false));
-      yield put(successLogin({ token: payload?.token }));
-      yield put(startGetUserInfo({ ...data, callback: payload?.callback }));
+      console.log(data);
+      yield put(successGetEixos(data));
     } catch (error: any) {
       if (error?.message === "Network Error") {
         newToast("A rede conectada não tem acesso à internet", "WARNING");
-        yield put(changeNetworkStatus(true));
       } else {
-        error?.response?.data?.non_field_errors.map((e) =>
-          newToast(e, "ERROR")
-        );
+        error?.response?.data?.detail.map((e) => newToast(e, "ERROR"));
       }
-      yield put(failureLogin());
+      yield put(failureGetEixos());
+    }
+  });
+}
+
+function* startGetDisciplinasSaga() {
+  yield takeLatest(
+    startGetDisciplinas,
+    function* ({ payload }: { payload: any }) {
+      try {
+        const { data } = yield api.get(`/conteudo/disciplinas/${payload}`);
+
+        yield put(successGetDisciplinas(data));
+      } catch (error: any) {
+        if (error?.message === "Network Error") {
+          newToast("A rede conectada não tem acesso à internet", "WARNING");
+        } else {
+          error?.response?.data?.detail.map((e) => newToast(e, "ERROR"));
+        }
+        yield put(failureGetDisciplinas());
+      }
+    }
+  );
+}
+
+function* startGetTemasSaga() {
+  yield takeLatest(startGetTemas, function* ({ payload }: { payload: any }) {
+    try {
+      const { data } = yield api.get(`/conteudo/temas/${payload}`);
+
+      yield put(successGetTemas(data));
+    } catch (error: any) {
+      if (error?.message === "Network Error") {
+        newToast("A rede conectada não tem acesso à internet", "WARNING");
+      } else {
+        error?.response?.data?.detail.map((e) => newToast(e, "ERROR"));
+      }
+      yield put(failureGetTemas());
+    }
+  });
+}
+
+function* startGetAulaSaga() {
+  yield takeLatest(startGetAula, function* ({ payload }: { payload: any }) {
+    try {
+      const { data } = yield api.get("/conteudo/aula/", {
+        params: { id: payload },
+      });
+
+      yield put(successGetAula(data));
+    } catch (error: any) {
+      if (error?.message === "Network Error") {
+        newToast("A rede conectada não tem acesso à internet", "WARNING");
+      } else {
+        error?.response?.data?.detail.map((e) => newToast(e, "ERROR"));
+      }
+      yield put(failureGetAula());
     }
   });
 }
 
 const exportDefault = function* () {
-  yield all([call(startLoginSaga)]);
+  yield all([
+    call(startGetEixosSaga),
+    call(startGetDisciplinasSaga),
+    call(startGetTemasSaga),
+    call(startGetAulaSaga),
+  ]);
 };
 
 export default exportDefault;

@@ -21,15 +21,10 @@ function* startCadastrarUsuarioSaga() {
         yield put(successCadastrarUsuario());
 
         newToast("Usuário cadastrado com sucesso.", "SUCCESS");
-        console.log(payload);
         payload?.callback?.();
       } catch (error: any) {
-        console.log(error);
-
         const errorData = error?.response?.data;
-
         errorData?.non_field_errors?.map((e) => newToast(e, "ERROR"));
-
         errorData?.email?.map((e) => newToast(e, "ERROR"));
 
         yield put(failureCadastrarUsuario());
@@ -42,10 +37,10 @@ function* startGetUserInfoSaga() {
   yield takeLatest(startGetUserInfo, function* ({ payload }: { payload: any }) {
     try {
       api.defaults.headers.common["Authorization"] = `Token ${payload.token}`;
-      console.log("aqui");
-      yield api.get("/usuario/informacao/", null);
 
-      yield put(successGetUserInfo());
+      const { data } = yield api.get("/usuario/informacao/");
+
+      yield put(successGetUserInfo(data));
 
       payload?.callback?.();
     } catch (error: any) {

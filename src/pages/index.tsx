@@ -38,7 +38,6 @@ const Home: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log(usuario);
     if (usuario) {
       replace("/home");
     }

@@ -1,47 +1,55 @@
 import { Row, RowItem } from "@/components/Row";
+import { useDispatch, useSelector } from "react-redux";
 
 import Accordion from "@/components/Accordion";
 import IconBtn from "@/components/IconBtn";
 import { NextPage } from "next";
 import Quiz from "@/public/images/quiz.svg";
 import Rating from "@/public/images/rating.svg";
+import { RootState } from "@/redux/rootReducer";
 import { Text } from "@mantine/core";
 import VideoThumb from "@/components/VideoThumb";
 import bgMaterias from "@/public/images/bgMaterias.png";
 import { setBackgroundImage } from "@/redux/Session/slice";
+import { startGetTemas } from "@/redux/Conteudo/slice";
 import thumb from "@/public/images/bgCadastro.png";
-import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
-const ConteudoPage: NextPage = () => {
+const TemaPage: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const eixo = router?.query?.slug?.[0];
+  const disciplina = router?.query?.slug?.[1];
+
+  const { idDisciplina, temas } = useSelector(
+    (store: RootState) => store.Conteudo
+  );
 
   useEffect(() => {
-    // if (!router?.query?.slug) router.push("/home");
     dispatch(setBackgroundImage({ backgroundImage: bgMaterias.src }));
+    dispatch(startGetTemas(idDisciplina));
   }, []);
 
   return (
     <Row>
       <RowItem>
-        {data.map((d, index) => (
+        {temas.map((d, index) => (
           <Row key={index}>
             <RowItem>
-              <Accordion title={d.title} value={"default"}>
-                {d?.videos?.map((v, index) => (
+              <Accordion title={d.tema} value={"default"}>
+                {d?.aulas?.map((v, index) => (
                   <Row key={index}>
                     <RowItem>
                       <VideoThumb
                         direction="row"
-                        alt={v.title}
+                        alt={v.nome}
                         src={thumb}
-                        title={v.title}
+                        title={v.nome}
                         summarized
                         onClick={() =>
                           router.push(
-                            `/eixo-tematico/${router?.query?.slug?.[0]}/genetica`
+                            `/eixo-tematico/${eixo}/${disciplina}/${v.nome}`
                           )
                         }
                       />
@@ -73,22 +81,4 @@ const ConteudoPage: NextPage = () => {
   );
 };
 
-const data = [
-  {
-    title: "Genética",
-    videos: [{ link: "", title: "Introdução à Genética", duracao: 5 }],
-  },
-  {
-    title: "Genética Mendeliana",
-    videos: [
-      { link: "", title: "1ª Lei de Mendel", duracao: 5 },
-      {
-        link: "",
-        title: "2ª Lei de Mendel - Lei da Segregação Independente",
-        duracao: 7,
-      },
-    ],
-  },
-];
-
-export default ConteudoPage;
+export default TemaPage;

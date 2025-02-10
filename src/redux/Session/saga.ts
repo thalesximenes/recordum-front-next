@@ -16,7 +16,7 @@ function* startLoginSaga() {
       const { data } = yield api.post("/usuario/login/", { ...payload });
 
       yield put(changeNetworkStatus(false));
-      yield put(successLogin({ token: payload?.token }));
+      yield put(successLogin(data));
       yield put(startGetUserInfo({ ...data, callback: payload?.callback }));
     } catch (error: any) {
       if (error?.message === "Network Error") {

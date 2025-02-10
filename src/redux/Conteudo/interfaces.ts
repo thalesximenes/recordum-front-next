@@ -1,8 +1,11 @@
 export interface ConteudoReducerState {
-  eixo: Eixo[];
+  eixos: Eixo[];
+  idEixo: number;
   disciplinas: Disciplina[];
+  idDisciplina: number;
   temas: Tema[];
-  aula: Aula[];
+  idAula: number;
+  aula: Aula;
   loading: boolean;
 }
 
@@ -30,5 +33,4 @@ interface Aula {
   nome: string;
   aula: string;
   mapa: string;
-  tema: number;
 }

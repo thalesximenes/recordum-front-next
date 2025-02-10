@@ -1,25 +1,39 @@
 import { Row, RowItem } from "@/components/Row";
+import { setEixo, startGetEixos } from "@/redux/Conteudo/slice";
+import { useDispatch, useSelector } from "react-redux";
 
 import BtnList from "@/components/BtnList";
 import Card from "@/components/Card";
 import { NextPage } from "next";
+import { RootState } from "@/redux/rootReducer";
+import { Text } from "@mantine/core";
 import VideoThumb from "@/components/VideoThumb";
 import { setBackgroundImage } from "@/redux/Session/slice";
+import { theme } from "@/components/themes";
 import thumb from "@/public/images/bgCadastro.png";
-import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
   const dispatch = useDispatch();
 
+  const { usuario } = useSelector((store: RootState) => store.User);
+
   useEffect(() => {
     dispatch(setBackgroundImage({ backgroundImage: "" }));
+    dispatch(startGetEixos());
   }, []);
 
   return (
     <>
       <HomeLayout>
+        <Row>
+          <RowItem>
+            <Text c={theme?.colors?.purple[5]} size={"1.5rem"} fw={700}>
+              Olá, {usuario?.primeiroNome}!
+            </Text>
+          </RowItem>
+        </Row>
         <Row>
           <RowItem>
             <Card title="Continue Assistindo">
@@ -59,20 +73,20 @@ const HomeLayout = ({ children }) => (
 
 const SideMenu = () => {
   const { push } = useRouter();
+  const dispatch = useDispatch();
+  const { eixos } = useSelector((store: RootState) => store.Conteudo);
+
   return (
     <Row style={{ marginTop: 0 }}>
       <Row style={{ flexDirection: "column" }}>
         <BtnList
-          buttons={[
-            { children: "Teste", onClick: () => push("/eixo-tematico/teste") },
-            { children: "Teste" },
-            { children: "Teste" },
-            { children: "Teste" },
-            { children: "Teste" },
-            { children: "Teste" },
-            { children: "Teste" },
-            { children: "Teste" },
-          ]}
+          buttons={eixos?.map((e) => ({
+            children: e?.nome,
+            onClick: () => {
+              dispatch(setEixo(e?.id));
+              push(`/eixo-tematico/${e?.nome}`);
+            },
+          }))}
         />
       </Row>
     </Row>

@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import { RootState } from "redux/rootReducer";
 import Toast from "@/styles/toast";
 import api from "api";
+import { configureApi } from "api/api";
 import { theme } from "../components/themes";
 import { useEffect } from "react";
 import wrapper from "@/redux/store";
@@ -17,16 +18,19 @@ const App = ({ Component, ...rest }) => {
   const { pageProps } = props;
   const persistor = store.__persistor;
 
+  configureApi(store);
+
   const setApiAuthorization = (token: any) => {
-    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    api.defaults.headers.common["Authorization"] = `Token ${token}`;
   };
 
   useEffect(() => {
     const token = (store.getState() as RootState).Session.token;
+    console.log(token);
     if (token) {
       setApiAuthorization(token);
     }
-  }, [store]);
+  }, []);
 
   return (
     <Provider store={store}>

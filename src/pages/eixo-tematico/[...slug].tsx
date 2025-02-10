@@ -1,26 +1,31 @@
 import BreadCrumbs from "@/components/BreadCrumbs";
-import ConteudoPage from "./conteudo";
-import MateriaPage from "./materia";
+import DisciplinaPage from "./disciplina";
 import { NextPage } from "next";
+import TemaPage from "./tema";
 import { useRouter } from "next/router";
 
 const Materia: NextPage = () => {
   const router = useRouter();
-  console.log("aqui");
 
   switch (router?.query?.slug?.length) {
     case 1:
       return (
         <>
           <BreadCrumbs />
-          <MateriaPage />
+          <DisciplinaPage />
         </>
       );
     case 2:
       return (
         <>
           <BreadCrumbs />
-          <ConteudoPage />
+          <TemaPage />
+        </>
+      );
+    case 3:
+      return (
+        <>
+          <BreadCrumbs />
         </>
       );
     default:

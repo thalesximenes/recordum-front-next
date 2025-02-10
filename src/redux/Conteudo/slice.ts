@@ -4,10 +4,13 @@ import persistReducer from "redux-persist/lib/persistReducer";
 import storage from "../storage";
 
 const initialState: ConteudoReducerState = {
-  eixo: [],
+  idEixo: 0,
+  eixos: [],
+  idDisciplina: 0,
   disciplinas: [],
+  idAula: 0,
   temas: [],
-  aula: [],
+  aula: { id: 0, mapa: "", aula: "", nome: "" },
   loading: false,
 };
 
@@ -21,20 +24,25 @@ const slice = createSlice({
   initialState,
   reducers: {
     // Busca Eixos
-    startGetEixos: (state, { payload }) => ({
+    startGetEixos: (state) => ({
       ...state,
       loading: true,
     }),
 
     successGetEixos: (state, { payload }) => ({
       ...state,
-      token: payload?.token,
+      eixos: payload,
       loading: false,
     }),
 
     failureGetEixos: (state) => ({
       ...state,
       loading: false,
+    }),
+
+    setEixo: (state, { payload }) => ({
+      ...state,
+      idEixo: payload,
     }),
 
     // Busca Disciplinas
@@ -45,13 +53,18 @@ const slice = createSlice({
 
     successGetDisciplinas: (state, { payload }) => ({
       ...state,
-      token: payload?.token,
+      disciplinas: payload,
       loading: false,
     }),
 
     failureGetDisciplinas: (state) => ({
       ...state,
       loading: false,
+    }),
+
+    setDisciplina: (state, { payload }) => ({
+      ...state,
+      idDisciplina: payload,
     }),
 
     // Busca Temas
@@ -62,13 +75,18 @@ const slice = createSlice({
 
     successGetTemas: (state, { payload }) => ({
       ...state,
-      token: payload?.token,
+      temas: payload,
       loading: false,
     }),
 
     failureGetTemas: (state) => ({
       ...state,
       loading: false,
+    }),
+
+    setAula: (state, { payload }) => ({
+      ...state,
+      idAula: payload,
     }),
 
     // Busca Aulas
@@ -87,56 +105,25 @@ const slice = createSlice({
       ...state,
       loading: false,
     }),
-
-    changeNetworkStatus: (state, { payload }) => ({
-      ...state,
-      networkError: payload,
-    }),
-
-    // Actions relacionadas ao logout
-    startLogout: (state) => ({
-      ...state,
-      token: initialState.token,
-    }),
-    successLogout: () => ({
-      ...initialState,
-    }),
-
-    setBackgroundImage: (state, { payload }) => ({
-      ...state,
-      backgroundImage: payload?.backgroundImage,
-    }),
-
-    setPageName: (state, { payload }) => ({
-      ...state,
-      pageName: payload,
-    }),
-
-    resetGetEixos: () => ({
-      ...initialState,
-    }),
   },
 });
 
 export const {
-  setBackgroundImage,
-  setPageName,
   startGetEixos,
   successGetEixos,
   failureGetEixos,
+  setEixo,
   startGetDisciplinas,
   successGetDisciplinas,
   failureGetDisciplinas,
+  setDisciplina,
   startGetTemas,
   successGetTemas,
   failureGetTemas,
   startGetAula,
   successGetAula,
   failureGetAula,
-  resetGetEixos,
-  changeNetworkStatus,
-  startLogout,
-  successLogout,
+  setAula,
 } = slice.actions;
 
 const SessionReducer = persistReducer(persistConfig, slice.reducer);
