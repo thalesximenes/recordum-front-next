@@ -6,6 +6,7 @@ export interface ConteudoReducerState {
   temas: Tema[];
   idAula: number;
   aula: Aula;
+  mapasTextos: MapaTexto[];
   loading: boolean;
 }
 
@@ -19,6 +20,7 @@ interface Disciplina {
   nome: string;
   thumb: string;
   eixo: number;
+  quantidade_aulas: number;
 }
 
 interface Tema {
@@ -33,4 +35,13 @@ interface Aula {
   nome: string;
   aula: string;
   mapa: string;
+  duracao: number;
+}
+
+interface MapaTexto {
+  id: number;
+  texto: string;
+  x: number;
+  y: number;
+  aula: number;
 }

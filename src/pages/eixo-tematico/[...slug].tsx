@@ -1,3 +1,4 @@
+import AulaPage from "./aula";
 import BreadCrumbs from "@/components/BreadCrumbs";
 import DisciplinaPage from "./disciplina";
 import { NextPage } from "next";
@@ -26,11 +27,18 @@ const Materia: NextPage = () => {
       return (
         <>
           <BreadCrumbs />
+          <AulaPage />
         </>
       );
     default:
       <></>;
   }
 };
+
+export async function getServerSideProps() {
+  return {
+    props: {},
+  };
+}
 
 export default Materia;

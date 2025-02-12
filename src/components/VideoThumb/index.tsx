@@ -10,6 +10,8 @@ import { theme } from "../themes";
 const VideoThumb = ({
   src,
   alt,
+  width,
+  height,
   onClick,
   title,
   description,
@@ -24,6 +26,8 @@ const VideoThumb = ({
         <VideoLarge
           src={src}
           alt={alt}
+          width={width}
+          height={height}
           onClick={onClick}
           title={title}
           description={description}
@@ -47,6 +51,8 @@ const VideoThumb = ({
 const VideoLarge = ({
   src,
   alt,
+  width,
+  height,
   onClick,
   title,
   description,
@@ -55,7 +61,13 @@ const VideoLarge = ({
 }) => {
   return (
     <div style={{ cursor: "pointer" }} onClick={onClick} onKeyDown={() => null}>
-      <Img src={src} alt={alt} height={100} width={175} onClick={onClick} />
+      <Img
+        src={src}
+        alt={alt}
+        height={height || 100}
+        width={width || 175}
+        onClick={onClick}
+      />
       <Row>
         <Tooltip label={title}>
           <Text

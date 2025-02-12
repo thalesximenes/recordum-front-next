@@ -10,7 +10,8 @@ const initialState: ConteudoReducerState = {
   disciplinas: [],
   idAula: 0,
   temas: [],
-  aula: { id: 0, mapa: "", aula: "", nome: "" },
+  aula: { id: 0, mapa: "", aula: "", nome: "", duracao: 0 },
+  mapasTextos: [],
   loading: false,
 };
 
@@ -26,6 +27,7 @@ const slice = createSlice({
     // Busca Eixos
     startGetEixos: (state) => ({
       ...state,
+      eixos: initialState.eixos,
       loading: true,
     }),
 
@@ -48,6 +50,7 @@ const slice = createSlice({
     // Busca Disciplinas
     startGetDisciplinas: (state, { payload }) => ({
       ...state,
+      disciplinas: initialState.disciplinas,
       loading: true,
     }),
 
@@ -70,6 +73,7 @@ const slice = createSlice({
     // Busca Temas
     startGetTemas: (state, { payload }) => ({
       ...state,
+      temas: initialState.temas,
       loading: true,
     }),
 
@@ -92,16 +96,35 @@ const slice = createSlice({
     // Busca Aulas
     startGetAula: (state, { payload }) => ({
       ...state,
+      aula: initialState.aula,
       loading: true,
     }),
 
     successGetAula: (state, { payload }) => ({
       ...state,
-      token: payload?.token,
+      aula: payload,
       loading: false,
     }),
 
     failureGetAula: (state) => ({
+      ...state,
+      loading: false,
+    }),
+
+    // Busca Mapas Textos
+    startGetMapasTextos: (state, { payload }) => ({
+      ...state,
+      mapasTextos: initialState.mapasTextos,
+      loading: true,
+    }),
+
+    successGetMapasTextos: (state, { payload }) => ({
+      ...state,
+      mapasTExtos: payload,
+      loading: false,
+    }),
+
+    failureGetMapasTextos: (state) => ({
       ...state,
       loading: false,
     }),
@@ -120,10 +143,13 @@ export const {
   startGetTemas,
   successGetTemas,
   failureGetTemas,
+  setAula,
   startGetAula,
   successGetAula,
   failureGetAula,
-  setAula,
+  startGetMapasTextos,
+  successGetMapasTextos,
+  failureGetMapasTextos,
 } = slice.actions;
 
 const SessionReducer = persistReducer(persistConfig, slice.reducer);

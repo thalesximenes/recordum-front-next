@@ -1,4 +1,5 @@
 import { Row, RowItem } from "@/components/Row";
+import { setBackgroundImage, setPageName } from "@/redux/Session/slice";
 import { setEixo, startGetEixos } from "@/redux/Conteudo/slice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -8,7 +9,6 @@ import { NextPage } from "next";
 import { RootState } from "@/redux/rootReducer";
 import { Text } from "@mantine/core";
 import VideoThumb from "@/components/VideoThumb";
-import { setBackgroundImage } from "@/redux/Session/slice";
 import { theme } from "@/components/themes";
 import thumb from "@/public/images/bgCadastro.png";
 import { useEffect } from "react";
@@ -20,6 +20,7 @@ const Home: NextPage = () => {
   const { usuario } = useSelector((store: RootState) => store.User);
 
   useEffect(() => {
+    dispatch(setPageName("Início"));
     dispatch(setBackgroundImage({ backgroundImage: "" }));
     dispatch(startGetEixos());
   }, []);
@@ -84,7 +85,7 @@ const SideMenu = () => {
             children: e?.nome,
             onClick: () => {
               dispatch(setEixo(e?.id));
-              push(`/eixo-tematico/${e?.nome}`);
+              push(`/eixo-tematico/${e?.nome.normalize("NFKD")}`);
             },
           }))}
         />

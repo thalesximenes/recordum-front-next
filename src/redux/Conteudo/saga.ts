@@ -3,14 +3,17 @@ import {
   failureGetAula,
   failureGetDisciplinas,
   failureGetEixos,
+  failureGetMapasTextos,
   failureGetTemas,
   startGetAula,
   startGetDisciplinas,
   startGetEixos,
+  startGetMapasTextos,
   startGetTemas,
   successGetAula,
   successGetDisciplinas,
   successGetEixos,
+  successGetMapasTextos,
   successGetTemas,
 } from "./slice";
 
@@ -44,11 +47,7 @@ function* startGetDisciplinasSaga() {
 
         yield put(successGetDisciplinas(data));
       } catch (error: any) {
-        if (error?.message === "Network Error") {
-          newToast("A rede conectada não tem acesso à internet", "WARNING");
-        } else {
-          error?.response?.data?.detail.map((e) => newToast(e, "ERROR"));
-        }
+        newToast("Erro ao consultar", "ERROR");
         yield put(failureGetDisciplinas());
       }
     }
@@ -75,9 +74,7 @@ function* startGetTemasSaga() {
 function* startGetAulaSaga() {
   yield takeLatest(startGetAula, function* ({ payload }: { payload: any }) {
     try {
-      const { data } = yield api.get("/conteudo/aula/", {
-        params: { id: payload },
-      });
+      const { data } = yield api.get(`/conteudo/aula/${payload}`);
 
       yield put(successGetAula(data));
     } catch (error: any) {
@@ -91,12 +88,29 @@ function* startGetAulaSaga() {
   });
 }
 
+function* startGetMapasTextosSaga() {
+  yield takeLatest(
+    startGetMapasTextos,
+    function* ({ payload }: { payload: any }) {
+      try {
+        const { data } = yield api.get(`/conteudo/mapastextos/${payload}`);
+
+        yield put(successGetMapasTextos(data));
+      } catch (error: any) {
+        newToast("Erro ao consultar", "ERROR");
+        yield put(failureGetMapasTextos());
+      }
+    }
+  );
+}
+
 const exportDefault = function* () {
   yield all([
     call(startGetEixosSaga),
     call(startGetDisciplinasSaga),
     call(startGetTemasSaga),
     call(startGetAulaSaga),
+    call(startGetMapasTextosSaga),
   ]);
 };
 

@@ -2,6 +2,8 @@ import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 export interface VideoThumbProps {
   src: string | StaticImport;
+  width?: number;
+  height?: number;
   alt: string;
   title: string;
   description?: string;
