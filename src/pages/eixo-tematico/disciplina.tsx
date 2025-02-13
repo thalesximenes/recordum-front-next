@@ -42,7 +42,7 @@ const DisciplinaPage: NextPage = () => {
                   src={thumb}
                   title={d?.nome.normalize("NFKC")}
                   width={width <= 480 && width - 80}
-                  height={width <= 480 && (width - 80) * 0.6}
+                  height={width <= 480 && (width - 120) * 0.6}
                   description={`${d?.quantidade_aulas || 0} aula(s)`}
                   description2={eixo}
                   onClick={() => {

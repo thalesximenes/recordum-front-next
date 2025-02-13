@@ -32,14 +32,12 @@ const Header = () => {
   }, [usuario]);
 
   const [opened, setOpened] = useState(false);
-  const { isDesktop, width } = useWindowSize();
-
-  const mobile = width <= 480;
+  const { isDesktop, isTablet, width } = useWindowSize();
 
   return (
     <>
       <Container>
-        {mobile ? (
+        {!isDesktop && !isTablet ? (
           <>
             <div />
             <div style={{ position: "absolute" }}>
@@ -48,7 +46,7 @@ const Header = () => {
                   setOpened(!opened);
                 }}
               >
-                <Burger width={57} height={48} />
+                <Burger width={48} height={48} />
               </IconBtn>
             </div>
             <Options>

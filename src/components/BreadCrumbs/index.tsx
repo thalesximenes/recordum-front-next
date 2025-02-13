@@ -15,26 +15,28 @@ const BreadCrumbs = () => {
 
   return (
     <Row wrap="nowrap">
-      <TextHover
-        fw={500}
-        style={{ cursor: `pointer`, width: "fit-content" }}
-        c={theme?.colors?.purple[5]}
-        hoverColor={theme?.colors?.purple[7]}
-        textDecoration="underline"
-        onClick={() => router.push("/home")}
-      >
-        Home
-      </TextHover>
+      <Row>
+        <TextHover
+          fw={500}
+          style={{ cursor: `pointer`, width: "fit-content" }}
+          c={theme?.colors?.purple[5]}
+          hoverColor={theme?.colors?.purple[7]}
+          textDecoration="underline"
+          onClick={() => router.push("/home")}
+        >
+          Home
+        </TextHover>
+      </Row>
       {router?.query?.slug?.map((s, i) => {
         assert(typeof router?.query?.slug !== "string");
         const link = router?.query?.slug?.slice(0, i + 1)?.join("/");
-
         return (
-          <>
+          <Row wrap="nowrap" key={i} style={{ marginTop: 0 }}>
             <Text>{">"}</Text>
             <TextHover
-              key={i}
               fw={500}
+              lineClamp={1}
+              w={100}
               style={{ cursor: `pointer`, width: "fit-content" }}
               c={theme?.colors?.purple[5]}
               hoverColor={theme?.colors?.purple[7]}
@@ -43,7 +45,7 @@ const BreadCrumbs = () => {
             >
               {formatText(s)}
             </TextHover>
-          </>
+          </Row>
         );
       })}
     </Row>

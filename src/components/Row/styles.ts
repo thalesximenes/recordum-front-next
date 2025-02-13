@@ -21,7 +21,7 @@ const Group = styled(MGroup)`
   }
 `;
 
-const GroupItem = styled.div<RowItemProps>`
+const GroupItem = styled(MGroup)<RowItemProps>`
   max-width: 100%;
   flex: 1 1 150px;
   display: ${({ center, end }) => (center || end ? "flex" : "block")};

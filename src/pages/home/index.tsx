@@ -3,6 +3,7 @@ import { setBackgroundImage, setPageName } from "@/redux/Session/slice";
 import { setEixo, startGetEixos } from "@/redux/Conteudo/slice";
 import { useDispatch, useSelector } from "react-redux";
 
+import BtnCarousel from "@/components/BtnCarousel";
 import BtnList from "@/components/BtnList";
 import Card from "@/components/Card";
 import { NextPage } from "next";
@@ -13,6 +14,7 @@ import { theme } from "@/components/themes";
 import thumb from "@/public/images/bgCadastro.png";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import useWindowSize from "@/hooks/useWindowSize";
 
 const Home: NextPage = () => {
   const dispatch = useDispatch();
@@ -65,12 +67,47 @@ const Home: NextPage = () => {
   );
 };
 
-const HomeLayout = ({ children }) => (
-  <Row style={{ flexDirection: "row", width: "100%" }}>
-    <RowItem>{children}</RowItem>
-    <SideMenu />
-  </Row>
-);
+const HomeLayout = ({ children }) => {
+  const { width } = useWindowSize();
+
+  return (
+    <>
+      {width < 1024 && (
+        <Row>
+          <RowItem>
+            <HeadMenu />
+          </RowItem>
+        </Row>
+      )}
+      <Row style={{ flexDirection: "row", width: "100%" }}>
+        <RowItem>{children}</RowItem>
+        {width >= 1024 && <SideMenu />}
+      </Row>
+    </>
+  );
+};
+
+const HeadMenu = () => {
+  const { push } = useRouter();
+  const dispatch = useDispatch();
+  const { eixos } = useSelector((store: RootState) => store.Conteudo);
+
+  return (
+    <Row style={{ marginTop: 0 }}>
+      <Row style={{ flexDirection: "column" }}>
+        <BtnCarousel
+          buttons={eixos?.map((e) => ({
+            children: e?.nome,
+            onClick: () => {
+              dispatch(setEixo(e?.id));
+              push(`/eixo-tematico/${e?.nome.normalize("NFKD")}`);
+            },
+          }))}
+        />
+      </Row>
+    </Row>
+  );
+};
 
 const SideMenu = () => {
   const { push } = useRouter();

@@ -1,15 +1,15 @@
 import { Meta, StoryObj } from "@storybook/react";
 
-import BtnList from "./index";
-import { BtnListProps } from "./interfaces";
+import BtnCarousel from "./index";
+import { BtnCarouselProps } from "./interfaces";
 
 export default {
-  title: "Button/BtnList",
-  component: BtnList,
+  title: "Button/BtnCarousel",
+  component: BtnCarousel,
   args: {},
-} as Meta<BtnListProps>;
+} as Meta<BtnCarouselProps>;
 
-type Story = StoryObj<BtnListProps>;
+type Story = StoryObj<BtnCarouselProps>;
 
 export const Default: Story = {
   args: {

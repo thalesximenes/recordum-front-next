@@ -6,7 +6,6 @@ import Link from "next/link";
 import { forwardRef } from "react";
 import useWindowSize from "@/hooks/useWindowSize";
 
-// eslint-disable-next-line react/display-name
 const IconBtn = forwardRef<HTMLButtonElement, IconBtnProps>(
   (props: IconBtnProps, ref) => {
     const theme = useMantineTheme();
@@ -52,23 +51,26 @@ const IconBtn = forwardRef<HTMLButtonElement, IconBtnProps>(
       }
     };
 
+    const setVariant = () => {
+      if (template) {
+        if (template === "gradient") return template;
+        return "filled";
+      }
+
+      if (variant) return variant;
+
+      return "default";
+    };
+
     return (
       <>
         {linkPath ? (
           <Link href={linkPath} passHref>
             <Container
               {...otherProps}
-              size={
-                size ? getSize(size) : isTablet ? getSize("md") : getSize("sm")
-              }
+              size={isTablet ? getSize(size || "md") : getSize(size || "sm")}
               radius={radius || "md"}
-              variant={
-                template
-                  ? template === "gradient"
-                    ? "gradient"
-                    : "filled"
-                  : variant || "default"
-              }
+              variant={setVariant()}
               color={template ? getColor(template) : color}
             >
               {children}
@@ -78,17 +80,9 @@ const IconBtn = forwardRef<HTMLButtonElement, IconBtnProps>(
           <Container
             {...otherProps}
             ref={ref}
-            size={
-              size ? getSize(size) : isTablet ? getSize("md") : getSize("sm")
-            }
+            size={isTablet ? getSize(size || "md") : getSize(size || "sm")}
             radius={radius || "md"}
-            variant={
-              template
-                ? template === "gradient"
-                  ? "gradient"
-                  : "filled"
-                : variant || "default"
-            }
+            variant={setVariant()}
             color={template ? getColor(template) : color}
           >
             <div>{children}</div>

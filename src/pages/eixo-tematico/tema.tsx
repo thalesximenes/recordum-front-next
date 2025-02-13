@@ -117,7 +117,7 @@ const VideoMobile = ({ aula }) => {
         src={thumb}
         alt={aula?.nome}
         width={width - 80}
-        height={(width - 80) * 0.6}
+        height={(width - 120) * 0.6}
         onClick={() => {
           dispatch(setAula(aula?.id));
           router.push(

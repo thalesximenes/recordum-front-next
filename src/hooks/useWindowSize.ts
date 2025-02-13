@@ -9,10 +9,10 @@ const useWindowSize = () => {
     height: typeof window ? 800 : window?.innerHeight,
     isTablet: typeof window
       ? false
-      : window?.innerWidth > +theme?.breakpoints?.xs,
+      : window?.innerWidth >= +theme?.breakpoints?.xs,
     isDesktop: typeof window
       ? false
-      : window?.innerWidth > +theme?.breakpoints?.sm,
+      : window?.innerWidth >= +theme?.breakpoints?.sm,
   });
 
   useEffect(() => {
@@ -20,8 +20,8 @@ const useWindowSize = () => {
       setWindowSize({
         width: window?.innerWidth,
         height: window?.innerHeight,
-        isTablet: window?.innerWidth > +theme.breakpoints.xs,
-        isDesktop: window?.innerWidth > +theme.breakpoints.sm,
+        isTablet: window?.innerWidth >= +theme.breakpoints.xs,
+        isDesktop: window?.innerWidth >= +theme.breakpoints.sm,
       });
     };
 

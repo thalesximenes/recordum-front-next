@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
+
 import Checkbox from "./index";
 import { CheckboxGroupProps } from "./interfaces";
 
@@ -20,7 +21,7 @@ export const Default: Story = {
   },
 };
 
-export const Error: Story = {
+export const Errors: Story = {
   args: {
     label: "Opções",
     items: [

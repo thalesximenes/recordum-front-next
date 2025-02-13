@@ -1,6 +1,5 @@
-import React from "react";
-
 import { Container } from "./styles";
+import React from "react";
 import { TextProps } from "./interfaces";
 
 const TextHover = (props: TextProps) => {
