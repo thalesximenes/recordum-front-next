@@ -26,7 +26,7 @@ const App = ({ Component, ...rest }) => {
 
   useEffect(() => {
     const token = (store.getState() as RootState).Session.token;
-    console.log(token);
+
     if (token) {
       setApiAuthorization(token);
     }

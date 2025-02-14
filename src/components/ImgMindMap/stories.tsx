@@ -16,22 +16,23 @@ export default {
       {
         x: 141,
         y: 70,
-        info: "Teste Info",
+        texto: "Teste Info",
       },
       {
         x: 87,
         y: 281,
-        info: "Teste Info",
+        texto:
+          "Teste Info Teste Info Teste Info Teste Info Teste Info Teste Info Teste Info Teste Info Teste Info Teste Info Teste Info Teste Info Teste Info Teste Info Teste Info Teste Info",
       },
       {
         x: 319,
         y: 188,
-        info: "Teste Info",
+        texto: "Teste Info",
       },
       {
         x: 472,
         y: 38,
-        info: "Teste Info",
+        texto: "Teste Info",
       },
     ],
   },

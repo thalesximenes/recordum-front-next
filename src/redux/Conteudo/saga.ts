@@ -25,7 +25,6 @@ function* startGetEixosSaga() {
     try {
       const { data } = yield api.get("/conteudo/eixos/");
 
-      console.log(data);
       yield put(successGetEixos(data));
     } catch (error: any) {
       if (error?.message === "Network Error") {

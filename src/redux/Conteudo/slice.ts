@@ -118,11 +118,14 @@ const slice = createSlice({
       loading: true,
     }),
 
-    successGetMapasTextos: (state, { payload }) => ({
-      ...state,
-      mapasTExtos: payload,
-      loading: false,
-    }),
+    successGetMapasTextos: (state, { payload }) => {
+      console.log(payload);
+      return {
+        ...state,
+        mapasTextos: payload,
+        loading: false,
+      };
+    },
 
     failureGetMapasTextos: (state) => ({
       ...state,

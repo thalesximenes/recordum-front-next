@@ -8,9 +8,15 @@ import { ImgMindMapProps } from "./interfaces";
 import ImgMindMapViewer from "./ImgMindMapViewer";
 
 const ImgMindMap = (props: ImgMindMapProps) => {
-  const { src, alt, width, height, mindMaps: mindMapsInitial = [] } = props;
+  const {
+    src,
+    alt,
+    width,
+    height,
+    mindMaps: mindMapsInitial = [],
+    template = "VIEW",
+  } = props;
   const [imgScale, setImgScale] = useState<number>(1);
-  const [imgScaleO, setImgScaleO] = useState<number>(1);
   const [infoPosition, setInfoPosition] = useState<any>(null);
   const [dragPosition, setDragPosition] = useState<any>(null);
   const [mindMaps, setMindMaps] = useState<any>(mindMapsInitial);
@@ -81,7 +87,7 @@ const ImgMindMap = (props: ImgMindMapProps) => {
   return (
     <>
       <Container
-        onClick={(e: any) => handleClickMovement(e)}
+        onClick={(e: any) => template === "EDIT" && handleClickMovement(e)}
         onKeyDown={() => null}
         ref={containerRef}
       >
@@ -89,9 +95,10 @@ const ImgMindMap = (props: ImgMindMapProps) => {
           src={src}
           alt={alt}
           width={width}
+          height={height}
           mindMaps={mindMaps}
         />
-        {infoPosition && (
+        {template === "EDIT" && infoPosition && (
           <Draggable
             bounds={{
               left: -infoPosition?.x,
@@ -114,26 +121,28 @@ const ImgMindMap = (props: ImgMindMapProps) => {
           </Draggable>
         )}
       </Container>
-      <Row>
-        <RowItem>
-          <Btn
-            disabled={!infoPosition}
-            onClick={() => {
-              setInfoPosition(null);
-              setMindMaps([
-                ...mindMaps,
-                {
-                  x: infoPosition.x / imgScale,
-                  y: infoPosition.y / imgScale,
-                  info: "Teste Info",
-                },
-              ]);
-            }}
-          >
-            Adicionar
-          </Btn>
-        </RowItem>
-      </Row>
+      {template === "EDIT" && (
+        <Row>
+          <RowItem>
+            <Btn
+              disabled={!infoPosition}
+              onClick={() => {
+                setInfoPosition(null);
+                setMindMaps([
+                  ...mindMaps,
+                  {
+                    x: infoPosition.x / imgScale,
+                    y: infoPosition.y / imgScale,
+                    info: "Teste Info",
+                  },
+                ]);
+              }}
+            >
+              Adicionar
+            </Btn>
+          </RowItem>
+        </Row>
+      )}
     </>
   );
 };

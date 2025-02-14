@@ -1,9 +1,10 @@
-import { Text, Tooltip } from "@mantine/core";
+import { HoverCard, Text } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 
 import Img from "@/components/Img";
 import { ImgMindMapProps } from "../interfaces";
 import { MindMapContainer } from "./styles";
+import { theme } from "@/components/themes";
 
 const ImgMindMapViewer = (props: ImgMindMapProps) => {
   const { src, alt, width, mindMaps } = props;
@@ -41,20 +42,38 @@ const ImgMindMapViewer = (props: ImgMindMapProps) => {
         }}
       />
       {mindMaps.map((mM, index) => (
-        <Tooltip label={mM?.info} key={index}>
-          <MindMapContainer
+        <HoverCard width={280} shadow="md" key={index} closeDelay={1000}>
+          <HoverCard.Target>
+            <MindMapContainer
+              style={{
+                left: `${mM?.x * imgScale}px`,
+                top: `${mM?.y * imgScale}px`,
+                width: `${HINT_WIDTH}px`,
+                height: `${HINT_HEIGHT}px`,
+              }}
+            >
+              <Text lh={"16px"} fw={600}>
+                {" "}
+                {index + 1}
+              </Text>
+            </MindMapContainer>
+          </HoverCard.Target>
+          <HoverCard.Dropdown
             style={{
-              left: `${mM?.x * imgScale}px`,
-              top: `${mM?.y * imgScale}px`,
-              width: `${HINT_WIDTH}px`,
-              height: `${HINT_HEIGHT}px`,
+              border: `.25rem ${theme.colors.purple[5]} solid`,
+              borderRadius: ".5rem",
             }}
           >
-            <Text lh={"16px"} fw={600}>
-              {index + 1}
+            <Text
+              size="sm"
+              c={theme.colors.purple[5]}
+              fw={600}
+              style={{ textAlign: "justify" }}
+            >
+              {mM.texto}
             </Text>
-          </MindMapContainer>
-        </Tooltip>
+          </HoverCard.Dropdown>
+        </HoverCard>
       ))}
     </div>
   );

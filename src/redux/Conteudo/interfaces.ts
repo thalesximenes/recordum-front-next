@@ -30,7 +30,7 @@ interface Tema {
   disciplina: number;
 }
 
-interface Aula {
+export interface Aula {
   id: number;
   nome: string;
   aula: string;

@@ -14,7 +14,7 @@ const EixoTematico: NextPage = () => {
             title="Nenhum resultado encontrado"
             value="default"
             titleCentered
-          ></Accordion>
+          />
         </RowItem>
       </Row>
     </>
