@@ -1,32 +1,28 @@
-import { AspectRatio, Text } from "@mantine/core";
+import { AspectRatio, Progress, Text } from "@mantine/core";
 import { Aula, MapaTexto } from "@/redux/Conteudo/interfaces";
 import { Row, RowItem } from "@/components/Row";
 import { startGetAula, startGetMapasTextos } from "@/redux/Conteudo/slice";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useLayoutEffect, useRef } from "react";
 
-import Accordion from "@/components/Accordion";
 import IconBtn from "@/components/IconBtn";
-import Image from "next/image";
 import ImgMindMap from "@/components/ImgMindMap";
-import ImgMindMapViewer from "@/components/ImgMindMap/ImgMindMapViewer";
 import { NextPage } from "next";
-import Quiz from "@/public/images/quiz.svg";
 import Rating from "@/public/images/rating.svg";
 import { RootState } from "@/redux/rootReducer";
+import SideMenu from "@/components/SideMenu";
 import Tabs from "@/components/Tabs";
-import VideoThumb from "@/components/VideoThumb";
-import bgMaterias from "@/public/images/bgMaterias.png";
+import TitleSideMenu from "@/components/TitleSideMenu";
 import genetica from "../../../public/images/genetica.png";
 import { setBackgroundImage } from "@/redux/Session/slice";
 import { theme } from "@/components/themes";
-import thumb from "@/public/images/bgCadastro.png";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
+import useWindowSize from "@/hooks/useWindowSize";
 
 const AulaPage: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const firstLoad = useRef(false);
+  const { width, isDesktop } = useWindowSize();
 
   const eixo = router?.query?.slug?.[0];
   const disciplina = router?.query?.slug?.[1];
@@ -58,9 +54,51 @@ const AulaPage: NextPage = () => {
           ]}
         />
       </RowItem>
-      <Row style={{ width: "30%" }}>
-        <RowItem>aqui</RowItem>
-      </Row>
+      {isDesktop && <Row style={{ width: "30%" }} />}
+      <SideMenu width={width * 0.3 - 40}>
+        <Row wrap="nowrap">
+          <RowItem>
+            <TitleSideMenu eixo={eixo} disciplina={disciplina} />
+          </RowItem>
+          <RowItem end>
+            <IconBtn>
+              <Rating width={40} />
+            </IconBtn>
+          </RowItem>
+        </Row>
+        <div className={"content"} style={{ marginTop: "10px" }}>
+          <Row>
+            <RowItem>
+              <Text style={{ marginTop: 0 }} c={theme.colors.gray[6]} fw={450}>
+                1/5 VIDEOS COMPLETOS
+              </Text>
+              <Progress.Root>
+                <Progress.Section value={20} color={theme.colors.purple[5]} />
+              </Progress.Root>
+            </RowItem>
+          </Row>
+          {data.map((d, index) => (
+            <>
+              <Row key={index}>
+                <RowItem>
+                  <Text c={theme.colors.gray[7]}>{`${
+                    index + 1
+                  } - ${d.title.toUpperCase()}`}</Text>
+                </RowItem>
+              </Row>
+              {d.aulas.map((a, index) => (
+                <Row key={index}>
+                  <RowItem>
+                    <Text c={theme.colors.purple[5]} fw={500}>
+                      {a.title}
+                    </Text>
+                  </RowItem>
+                </Row>
+              ))}
+            </>
+          ))}
+        </div>
+      </SideMenu>
     </Row>
   );
 };
@@ -125,6 +163,24 @@ const TabRevisao = ({
     </>
   );
 };
+
+const data = [
+  {
+    title: "Introdução à Genética",
+    aulas: [{ title: "Introdução à Genética - Conceitos Iniciais" }],
+  },
+  {
+    title: "Genética Mendeliana",
+    aulas: [
+      { title: "1ª Lei de Mendel" },
+      { title: "2ª Lei de Mendel - Lei da Segregação Independente" },
+    ],
+  },
+  {
+    title: "Genética Moderna",
+    aulas: [{ title: "Aula 1" }, { title: "Aula 2" }],
+  },
+];
 
 export async function getServerSideProps() {
   return {

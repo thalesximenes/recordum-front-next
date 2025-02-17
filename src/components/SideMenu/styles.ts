@@ -1,76 +1,60 @@
-import { defaultTransition, onTablet, theme } from "../themes";
+import { defaultTransition, onDesktop } from "../themes";
 
-import { Accordion } from "@mantine/core";
-import { SideMenuControlProps } from "./interfaces";
+import { SideMenuProps } from "./interfaces";
 import styled from "@emotion/styled";
 
-const Container = styled(Accordion)`
-  display:flex
+const SideMenuContainer = styled("div", {
+  shouldForwardProp: (prop) =>
+    prop !== "isOpen" && prop !== "width" && prop !== "collapsedWidth",
+})<SideMenuProps>`
+  position: fixed;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  background-color: ${({ isOpen }) => (isOpen ? `white` : `none`)};
   transition: ${defaultTransition};
-  padding: 0;
-  position: absolute;
-  border-radius: 0px;
+
+  border: ${({ isOpen }) => (isOpen ? `2px solid #BAB8D7` : `none`)};
+  border-right: none;
+  align-items: center;
+  padding: 10px 20px 10px 0;
+  margin-top: 26px;
+  transform: ${({ isOpen }) =>
+    isOpen ? `translate(0, 0)` : `translate(${300 + 20}px , 0)`};
+
+  ${onDesktop} {
+    margin-top: 32px;
+    transform: ${({ isOpen, width }) =>
+      isOpen ? `translate(0, 0)` : `translate(${width + 20}px , 0)`};
+  }
+
+  .content {
+    margin-left: ${({ isOpen }) => (isOpen ? `-8px` : `none`)};
+  }
+`;
+
+const ToggleButton = styled.button`
+  display: flex;
+  align-self: flex-start;
+  background: none;
   border: none;
+  cursor: pointer;
+  margin-top: 22px;
 `;
 
-const Item = styled(Accordion.Item)`
-  transition: ${defaultTransition};
-  border-radius: 0px !important;
-  border-color: transparent;
-  border: none;
-  background: transparent;
+const Content = styled.div<SideMenuProps>`
+  flex-grow: 1;
+  display: flex;
+  align-self: flex-start;
+  flex-direction: column;
 
-  .mantine-Accordion-label {
-    padding: 0;
+  width: 300px;
+  ${onDesktop} {
+    width: ${({ width }) => (width ? `${width}px` : "fit-content")};
   }
+
+  opacity: 1;
+  transition: opacity ${defaultTransition};
 `;
 
-const Control = styled(Accordion.Control, {
-  shouldForwardProp: (prop) => prop !== "closed",
-})<SideMenuControlProps>`
-  width: auto;
-  padding: 0.25rem;
-  transition: ${defaultTransition};
-  border-radius: 0px !important;
-  box-shadow: ${theme?.shadows?.md};
-
-  // background: ${theme?.colors?.random?.[0]};
-  color: ${theme?.colors?.purple?.[6]} !important;
-
-  h2 {
-    margin: 0;
-    font-weight: 700;
-    font-size: 1.25rem;
-
-    ${onTablet} {
-      font-size: 1.375rem;
-    }
-  }
-
-  &:hover {
-    background: ${theme?.colors?.purple?.[4]};
-    color: ${theme?.colors?.purple?.[0]} !important;
-  }
-
-  ${onTablet} {
-    padding: 0.375rem;
-  }
-`;
-
-const Panel = styled(Accordion.Panel)`
-  transition: ${defaultTransition};
-  background-color: transparent;
-  border-radius: 0px;
-  line-height: normal;
-  border-top-width: 0;
-
-  .mantine-Accordion-content {
-    padding: 0.5rem;
-
-    ${onTablet} {
-      padding: 0.625rem;
-    }
-  }
-`;
-
-export { Container, Item, Control, Panel };
+export { SideMenuContainer, ToggleButton, Content };

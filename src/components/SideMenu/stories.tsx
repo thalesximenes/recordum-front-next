@@ -1,44 +1,30 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { Row, RowItem } from "../Row";
 
+import React from "react";
 import SideMenu from "./index";
 import { SideMenuProps } from "./interfaces";
-import Card from "../Card/index";
-import React from "react";
 
 export default {
-  title: "Layout/Side Menu",
+  title: "Layout/Side Menu2",
   component: SideMenu,
   args: {
-    title: "Título teste",
-    children: "Ver mais!",
+    initialOpen: false, // Define o estado inicial para melhor visualização
+    width: 200,
+    collapsedWidth: 50,
+    children: (
+      <>
+        <div>Ver mais!</div>
+        <div>Ver mais!</div>
+        <div>Ver mais!</div>
+        <div>Ver mais!</div>
+        <div>Ver mais!</div>
+        <div>Ver mais!</div>
+        <div>Ver mais!</div>
+      </>
+    ),
   },
 } as Meta<SideMenuProps>;
 
 type Story = StoryObj<SideMenuProps>;
 
 export const Default: Story = {};
-
-export const Loading: Story = {
-  args: {
-    loading: true,
-  },
-};
-
-export const VersusCard: Story = {
-  args: {
-    title: "SideMenu",
-  },
-  render: (args) => (
-    <Row grow align="flex-start">
-      <RowItem>
-        <SideMenu {...args} />
-      </RowItem>
-      <RowItem>
-        <Card title="Card">
-          <div>Ver mais!</div>
-        </Card>
-      </RowItem>
-    </Row>
-  ),
-};
