@@ -91,9 +91,19 @@ const HeadMenu = () => {
   const { push } = useRouter();
   const dispatch = useDispatch();
   const { eixos } = useSelector((store: RootState) => store.Conteudo);
+  const { isTablet } = useWindowSize();
 
   return (
     <Row style={{ marginTop: 0 }}>
+      <Row>
+        <Text
+          size={isTablet ? "1.25rem" : "1.125rem"}
+          fw={700}
+          c={theme.colors.purple[5]}
+        >
+          Eixos Temáticos
+        </Text>
+      </Row>
       <Row style={{ flexDirection: "column" }}>
         <BtnCarousel
           buttons={eixos?.map((e) => ({
@@ -114,9 +124,20 @@ const SideMenu = () => {
   const dispatch = useDispatch();
   const { eixos } = useSelector((store: RootState) => store.Conteudo);
 
+  const { isTablet } = useWindowSize();
+
   return (
     <Row style={{ marginTop: 0 }}>
-      <Row style={{ flexDirection: "column" }}>
+      <Row style={{ flexDirection: "column", overflowY: "auto" }}>
+        <Row>
+          <Text
+            size={isTablet ? "1.25rem" : "1.125rem"}
+            fw={700}
+            c={theme.colors.purple[5]}
+          >
+            Eixos Temáticos
+          </Text>
+        </Row>
         <BtnList
           buttons={eixos?.map((e) => ({
             children: e?.nome,

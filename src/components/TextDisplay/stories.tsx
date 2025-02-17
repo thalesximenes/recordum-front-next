@@ -5,7 +5,7 @@ import { TextProps } from "./interfaces";
 import { theme } from "../themes";
 
 export default {
-  title: "Layout/TextDisplay",
+  title: "Layout/Text Display",
   component: TextDisplay,
   args: {},
 } as Meta<TextProps>;

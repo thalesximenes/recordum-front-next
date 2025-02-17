@@ -8,7 +8,7 @@ import thumb from "@/public/images/bgCadastro.png";
 import { useState } from "react";
 
 export default {
-  title: "Image/VideoThumb",
+  title: "Image/Video Thumb",
   component: VideoThumb,
   args: {
     title: "Int. à Genética",

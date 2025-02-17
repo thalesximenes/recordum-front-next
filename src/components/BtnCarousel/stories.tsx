@@ -4,7 +4,7 @@ import BtnCarousel from "./index";
 import { BtnCarouselProps } from "./interfaces";
 
 export default {
-  title: "Button/BtnCarousel",
+  title: "Button/Btn Carousel",
   component: BtnCarousel,
   args: {},
 } as Meta<BtnCarouselProps>;

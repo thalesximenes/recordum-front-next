@@ -4,7 +4,7 @@ import PasswordInput from "./index";
 import { PasswordInputProps } from "./interfaces";
 
 export default {
-  title: "Input/PasswordInput",
+  title: "Input/Password Input",
   component: PasswordInput,
   args: {},
 } as Meta<PasswordInputProps>;

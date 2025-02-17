@@ -5,7 +5,7 @@ import Img from ".";
 import genetica from "../../../public/images/genetica.png";
 
 export default {
-  title: "Image/ImgMentalMap",
+  title: "Image/Img Mental Map",
   component: Img,
   args: {
     src: genetica,

@@ -142,7 +142,7 @@ const Middle = ({ isDesktop, usuario }) => {
           <TextDisplay
             direction={direction(isDesktop)}
             size={size(isDesktop)}
-            label={`Primeiro Nome`}
+            label={`Nome`}
             text={usuario?.primeiroNome}
           />
         </RowItem>

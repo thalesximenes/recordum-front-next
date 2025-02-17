@@ -4,7 +4,7 @@ import BtnList from "./index";
 import { BtnListProps } from "./interfaces";
 
 export default {
-  title: "Button/BtnList",
+  title: "Button/Btn List",
   component: BtnList,
   args: {},
 } as Meta<BtnListProps>;
