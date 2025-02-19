@@ -56,6 +56,11 @@ const Topic = styled.div<{ color?: string }>`
   &:first-of-type {
     margin-top: 0;
   }
+
+  &.new {
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 1px solid #000;
+  }
 `;
 
 const Notes = styled.div`

@@ -124,27 +124,34 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
   };
 
   const handleUpdateTopics = () => {
-    if (currentTopic) {
-      setTopics((prevTopics) => {
+    setTopics((prevTopics) => {
+      if (currentTopic) {
         const currIndex = prevTopics.findIndex((pT) => pT.id === currentTopic);
         if (currIndex !== -1) {
           prevTopics[currIndex].value = topicName;
           prevTopics[currIndex].color = topicColor;
         }
-        return prevTopics;
-      });
-      close();
-    } else {
-      setTopics((prevTopics) => {
+      } else {
         prevTopics.push({
           id: new Date().getTime().toString(),
           value: topicName,
           color: topicColor,
         });
-        return prevTopics;
-      });
-      close();
-    }
+      }
+      return prevTopics;
+    });
+    close();
+  };
+
+  const handleDeleteTopic = () => {
+    setTopics((prevTopics) => {
+      const topicIndex = prevTopics.findIndex((n) => n.id === currentTopic);
+      if (topicIndex !== -1) {
+        return prevTopics.filter((n) => n.id !== currentTopic);
+      }
+      return prevTopics;
+    });
+    close();
   };
 
   const handleTopicClick = (topic: TopicProps) => {
@@ -169,7 +176,7 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
             </Topic>
           ))}
           <Topic
-            color={rgba("255, 255, 255", 0.5)}
+            className={"new"}
             onClick={() => {
               setCurrentTopic(null);
               open();
@@ -239,7 +246,11 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
           >
             {currentTopic ? "Editar" : "Criar"}
           </Btn>
-          {currentTopic && <Btn template="secondary">Excluir</Btn>}
+          {currentTopic && (
+            <Btn template="secondary" onClick={handleDeleteTopic}>
+              Excluir
+            </Btn>
+          )}
           <Btn onClick={close}>Cancelar</Btn>
         </Row>
       </Modal>
