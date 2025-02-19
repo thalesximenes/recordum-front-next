@@ -23,7 +23,39 @@ const Topics = styled.div`
   padding: 0.2rem;
   background-color: burlywood;
 
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
   flex-grow: 0.3;
+`;
+
+const TopicPreview = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  > label {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  > div {
+    margin: 1rem 0 !important;
+  }
+`;
+
+const Topic = styled.div<{ color?: string }>`
+  padding: 0.4rem;
+  background-color: ${({ color }) => color ?? "#fff"};
+  border-radius: 8px;
+
+  margin-top: 0.5rem;
+  cursor: pointer;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
 `;
 
 const Notes = styled.div`
@@ -32,15 +64,19 @@ const Notes = styled.div`
 
   flex-grow: 0.7;
 
-  textarea {
-    width: 100%;
-    overflow: hidden;
-    resize: none;
-    line-height: 20px;
+  > div {
+    /* height: ; */
 
-    background-color: cornflowerblue;
-    border: none;
-    outline: none;
+    > textarea {
+      width: 100%;
+      overflow: hidden;
+      resize: none;
+      line-height: 20px;
+
+      background-color: cornflowerblue;
+      border: none;
+      outline: none;
+    }
   }
 `;
 
@@ -59,4 +95,13 @@ const Summary = styled.div`
   flex-grow: 1;
 `;
 
-export { Container, TopSection, Topics, Notes, BottomSection, Summary };
+export {
+  Container,
+  TopSection,
+  Topics,
+  TopicPreview,
+  Topic,
+  Notes,
+  BottomSection,
+  Summary,
+};

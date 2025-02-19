@@ -5,3 +5,9 @@ export interface NoteProps {
   value: string;
   idTopic: string;
 }
+
+export interface TopicProps {
+  id: string;
+  value: string;
+  color: string;
+}
