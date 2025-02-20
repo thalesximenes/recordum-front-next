@@ -2,31 +2,33 @@ import styled from "@emotion/styled";
 
 const Container = styled.div`
   padding: 0.2rem;
-  background-color: steelblue;
+  /* background-color: steelblue; */
 
   display: flex;
   flex-direction: column;
 
-  min-height: 600px;
+  height: 600px;
 `;
 
 const TopSection = styled.div`
-  padding: 0.2rem;
-  background-color: thistle;
+  padding: 0.2rem 0.2rem 0 0.2rem;
+  /* background-color: thistle; */
 
   display: flex;
   justify-content: space-between;
-  flex-grow: 0.85;
+  height: 85%;
 `;
 
 const Topics = styled.div`
   padding: 0.2rem;
-  background-color: burlywood;
+  /* background-color: burlywood; */
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
 
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  flex-grow: 0.3;
+  /* flex-grow: 0.3; */
+  min-width: 30%;
 `;
 
 const TopicPreview = styled.div`
@@ -65,37 +67,58 @@ const Topic = styled.div<{ color?: string }>`
 
 const Notes = styled.div`
   padding: 0.2rem;
-  background-color: chocolate;
+  /* background-color: chocolate; */
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
 
-  flex-grow: 0.7;
+  /* flex-grow: 0.7; */
+  min-width: 70%;
+  overflow-y: scroll;
 
   > div {
     /* height: ; */
 
     > textarea {
       width: 100%;
+      padding: 0.5rem;
       overflow: hidden;
       resize: none;
       line-height: 20px;
 
-      background-color: cornflowerblue;
-      border: none;
+      /* background-color: cornflowerblue; */
+      border: 2px solid rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
       outline: none;
     }
   }
 `;
 
+const Note = styled.textarea`
+  width: 100%;
+  padding: 0.5rem;
+  overflow: hidden;
+  resize: none;
+  line-height: 20px;
+
+  /* background-color: cornflowerblue; */
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  outline: none;
+`;
+
 const BottomSection = styled.div`
-  padding: 0.2rem;
-  background-color: cornsilk;
+  position: relative;
+  padding: 0 0.2rem 0.2rem 0.2rem;
+  /* background-color: cornsilk; */
 
   display: flex;
-  flex-grow: 0.15;
+  height: 15%;
+  /* min-height: 15%; */
 `;
 
 const Summary = styled.div`
   padding: 0.2rem;
-  background-color: lightseagreen;
+  /* background-color: lightseagreen; */
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
 
   flex-grow: 1;
 `;
@@ -107,6 +130,7 @@ export {
   TopicPreview,
   Topic,
   Notes,
+  Note,
   BottomSection,
   Summary,
 };

@@ -1,6 +1,7 @@
 import {
   BottomSection,
   Container,
+  Note,
   Notes,
   Summary,
   TopSection,
@@ -8,16 +9,10 @@ import {
   TopicPreview,
   Topics,
 } from "./styles";
-import {
-  ColorInput,
-  ColorPicker,
-  Modal,
-  MultiSelect,
-  rgba,
-} from "@mantine/core";
+import { ColorPicker, Modal, MultiSelect } from "@mantine/core";
 import { CornellNotepadProps, NoteProps, TopicProps } from "./interfaces";
 import { Row, RowItem } from "../Row";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { SyntheticEvent, useEffect, useRef, useState } from "react";
 
 import Btn from "../Btn";
 import TextInput from "../TextInput";
@@ -26,7 +21,7 @@ import { useDisclosure } from "@mantine/hooks";
 const CornellNotepad = ({}: CornellNotepadProps) => {
   const notesRef = useRef();
   const [notes, setNotes] = useState<NoteProps[]>([]);
-  const [topicsOpened, { open, close }] = useDisclosure(true);
+  const [topicsOpened, { open, close }] = useDisclosure(false);
   const [topics, setTopics] = useState<TopicProps[]>([]);
   const [currentTopic, setCurrentTopic] = useState<string>(null);
   const [topicName, setTopicName] = useState<string>("");
@@ -45,9 +40,13 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
     }
   }, [topicsOpened]);
 
-  // useEffect(() => {
-  //   console.log(topicColor);
-  // }, [topicColor]);
+  useEffect(() => {
+    console.log(topics);
+  }, [topics]);
+
+  useEffect(() => {
+    console.log(notes);
+  }, [notes]);
 
   const getRandomColor = () =>
     "#" +
@@ -59,28 +58,26 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
     if (e.target.nodeName == "DIV") {
       const notesContainer: HTMLDivElement = notesRef?.current;
       if (notesContainer) {
-        const newN: NoteProps = {
-          id: new Date().getTime().toString(),
-          value: "",
-          idTopic: null,
-        };
-
         const cont = document.createElement("div");
         const textarea = document.createElement("textarea");
         textarea.rows = 1;
         textarea.style.height = calcTextareaHeight(" ") + "px";
         cont.appendChild(textarea);
         notesContainer.appendChild(cont);
-
-        setNotes([...notes, newN]);
-
         textarea.focus();
-        textarea.addEventListener("blur", () => removeNote(cont, newN.id));
-        textarea.addEventListener("input", (e: Event) =>
-          changeNote(e.target, newN.id)
-        );
+        textarea.addEventListener("blur", () => {
+          if (textarea.value) {
+            const newN: NoteProps = {
+              id: new Date().getTime().toString(),
+              value: textarea.value,
+              idTopic: null,
+            };
+            setNotes((prevNotes) => [...prevNotes, newN]);
+          }
+          notesContainer.removeChild(cont);
+        });
         textarea.addEventListener(
-          "keyup",
+          "input",
           () =>
             (textarea.style.height = calcTextareaHeight(textarea.value) + "px")
         );
@@ -88,38 +85,29 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
     }
   };
 
-  const removeNote = useCallback((element: HTMLElement, idNote: string) => {
-    setNotes((prevNotes) => {
-      const noteIndex = prevNotes.findIndex((n) => n.id === idNote);
-      if (noteIndex !== -1 && !prevNotes[noteIndex].value) {
-        const notesContainer: HTMLDivElement = notesRef?.current;
-        if (notesContainer) notesContainer.removeChild(element);
+  const onChangeNote = (e: SyntheticEvent) => {
+    const textareaEl = e.target as HTMLTextAreaElement;
+    if (textareaEl) {
+      const id = textareaEl.getAttribute("id");
+      setNotes((prevNotes) =>
+        prevNotes.map((pN) =>
+          pN.id === id ? { ...pN, value: textareaEl.value } : pN
+        )
+      );
+    }
+  };
 
-        return prevNotes.filter((n) => n.id !== idNote);
-      }
-      return prevNotes;
-    });
-  }, []);
-
-  const changeNote = useCallback(
-    (textareaElement: EventTarget, idNote: string) => {
-      setNotes((prevNotes) => {
-        const noteIndex = prevNotes.findIndex((n) => n.id === idNote);
-        if (noteIndex !== -1) {
-          prevNotes[noteIndex].value = (
-            textareaElement as HTMLTextAreaElement
-          )?.value;
-        }
-        return prevNotes;
-      });
-    },
-    []
-  );
+  const onBlurNote = (e: SyntheticEvent) => {
+    const textareaEl = e.target as HTMLTextAreaElement;
+    if (textareaEl && textareaEl?.value?.trim() === "") {
+      const id = textareaEl.getAttribute("id");
+      setNotes((prevNotes) => prevNotes?.filter((pN) => pN.id !== id));
+    }
+  };
 
   const calcTextareaHeight = (value) => {
     let numberOfLineBreaks = (value.match(/\n/g) || []).length;
-    // let newHeight = 20 + numberOfLineBreaks * 20 + 12 + 2;
-    let newHeight = 20 + numberOfLineBreaks * 20 + 10;
+    let newHeight = 20 + numberOfLineBreaks * 20 + 10 + 8;
     return newHeight;
   };
 
@@ -186,7 +174,16 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
           </Topic>
         </Topics>
         <Notes onClick={handleNotesClick} ref={notesRef}>
-          notes
+          {notes?.map((n) => (
+            <Note
+              key={n?.id}
+              id={n?.id}
+              value={n?.value}
+              onChange={onChangeNote}
+              onBlur={onBlurNote}
+              style={{ height: calcTextareaHeight(n?.value) + "px" }}
+            />
+          ))}
         </Notes>
       </TopSection>
       <BottomSection>
