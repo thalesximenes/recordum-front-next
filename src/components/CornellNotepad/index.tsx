@@ -54,6 +54,9 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
       .toString(16)
       .padStart(6, "0");
 
+  const getTopicColor = (idTopic: string) =>
+    topics.find((t) => t.id === idTopic).color;
+
   const handleNotesClick = (e: any) => {
     if (e.target.nodeName == "DIV") {
       const notesContainer: HTMLDivElement = notesRef?.current;
@@ -112,6 +115,7 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
   };
 
   const handleUpdateTopics = () => {
+    let auxTopicId = null;
     setTopics((prevTopics) => {
       if (currentTopic) {
         const currIndex = prevTopics.findIndex((pT) => pT.id === currentTopic);
@@ -119,15 +123,40 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
           prevTopics[currIndex].value = topicName;
           prevTopics[currIndex].color = topicColor;
         }
+        auxTopicId = currentTopic;
       } else {
+        auxTopicId = new Date().getTime().toString();
         prevTopics.push({
-          id: new Date().getTime().toString(),
+          id: auxTopicId,
           value: topicName,
           color: topicColor,
         });
       }
       return prevTopics;
     });
+    if (topicNotes) {
+      if (currentTopic) {
+        setNotes((prevNotes) =>
+          prevNotes.map((pN) => {
+            if (topicNotes.includes(pN.id)) {
+              pN.idTopic = auxTopicId;
+            } else if (pN.idTopic === auxTopicId) {
+              pN.idTopic = null;
+            }
+            return pN;
+          })
+        );
+      } else {
+        setNotes((prevNotes) =>
+          prevNotes.map((pN) => {
+            if (topicNotes.includes(pN.id)) {
+              pN.idTopic = auxTopicId;
+            }
+            return pN;
+          })
+        );
+      }
+    }
     close();
   };
 
@@ -146,6 +175,9 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
     setCurrentTopic(topic?.id);
     setTopicName(topic?.value);
     setTopicColor(topic?.color);
+    setTopicNotes(
+      notes?.filter((n) => n.idTopic === topic.id).map((n) => n.id)
+    );
     open();
   };
 
@@ -182,6 +214,7 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
               onChange={onChangeNote}
               onBlur={onBlurNote}
               style={{ height: calcTextareaHeight(n?.value) + "px" }}
+              color={n.idTopic ? getTopicColor(n.idTopic) : null}
             />
           ))}
         </Notes>
@@ -226,9 +259,11 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
             <MultiSelect
               disabled={!notes?.length}
               label={"Anotações"}
+              value={topicNotes}
+              onChange={setTopicNotes}
               data={notes
                 ?.filter((n) => !n.idTopic || n.idTopic === currentTopic)
-                .map((n) => ({
+                ?.map((n) => ({
                   label: n?.value,
                   value: n?.id,
                 }))}

@@ -92,14 +92,15 @@ const Notes = styled.div`
   }
 `;
 
-const Note = styled.textarea`
+const Note = styled.textarea<{ color: string }>`
   width: 100%;
   padding: 0.5rem;
   overflow: hidden;
   resize: none;
   line-height: 20px;
 
-  /* background-color: cornflowerblue; */
+  background-color: ${({ color }) => color ?? "transparent"};
+  /* border: 2px solid ${({ color }) => color ?? "rgba(0, 0, 0, 0.1)"}; */
   border: 2px solid rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   outline: none;
