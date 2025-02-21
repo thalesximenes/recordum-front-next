@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 
 const Container = styled.div`
   padding: 0.2rem;
-  /* background-color: steelblue; */
 
   display: flex;
   flex-direction: column;
@@ -12,8 +11,7 @@ const Container = styled.div`
 
 const MiddleSection = styled.div`
   position: relative;
-  padding: 0 0.2rem 0 0.2rem;
-  /* background-color: thistle; */
+  padding: 0 0 0 0.2rem;
   border: 0.5px solid rgba(0, 0, 0, 0.1);
 
   display: flex;
@@ -21,23 +19,18 @@ const MiddleSection = styled.div`
   height: 85%;
   position: relative;
 
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 const Topics = styled.div`
   padding: 0.2rem;
   position: relative;
-  /* background-color: burlywood; */
-  /* border: 0.5px solid rgba(0, 0, 0, 0.1); */
 
   display: flex;
   align-items: flex-end;
   flex-direction: column;
-  /* flex-grow: 0.3; */
-  /* min-width: 20%; */
   width: 20%;
   min-width: 100px;
-  /* height: 100%; */
 
   .new {
     margin-bottom: 0.5rem;
@@ -66,7 +59,6 @@ const Topic = styled.div<{ color?: string }>`
   border-radius: 8px;
   word-break: break-word;
 
-  /* margin-top: 0.5rem; */
   cursor: pointer;
 
   &:first-of-type {
@@ -90,19 +82,10 @@ const MiddleDivider = styled.div`
 
 const Notes = styled.div`
   padding: 0.2rem;
-  /* background-color: chocolate; */
-  /* border: 0.5px solid rgba(0, 0, 0, 0.1); */
 
-  /* flex-grow: 0.7; */
-  /* min-width: 70%; */
   width: 100%;
   line-height: 0;
-  /* max-width: 80%; */
-  /* overflow-y: scroll; */
 
-  > div {
-    /* height: ; */
-  }
   > textarea {
     width: 100%;
     padding: 0.5rem;
@@ -110,7 +93,6 @@ const Notes = styled.div`
     resize: none;
     line-height: 20px;
 
-    /* background-color: cornflowerblue; */
     border: 2px solid rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     outline: none;
@@ -125,7 +107,6 @@ const Note = styled.textarea<{ color: string }>`
   line-height: 20px;
 
   background-color: ${({ color }) => color ?? "transparent"};
-  /* border: 2px solid ${({ color }) => color ?? "rgba(0, 0, 0, 0.1)"}; */
   border: 2px solid rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   outline: none;
@@ -136,20 +117,16 @@ const Note = styled.textarea<{ color: string }>`
 `;
 
 const BottomSection = styled.div`
-  /* position: relative; */
   padding: 0 0.2rem 0.2rem 0.2rem;
   border: 0.5px solid rgba(0, 0, 0, 0.1);
   border-top: 0;
-  /* background-color: cornsilk; */
 
   display: flex;
   height: 15%;
-  /* min-height: 15%; */
 `;
 
 const Summary = styled.div`
   padding: 0.2rem;
-  /* background-color: lightseagreen; */
 
   flex-grow: 1;
 `;
