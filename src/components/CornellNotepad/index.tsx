@@ -1,10 +1,11 @@
 import {
   BottomSection,
   Container,
+  MiddleDivider,
+  MiddleSection,
   Note,
   Notes,
   Summary,
-  TopSection,
   Topic,
   TopicPreview,
   Topics,
@@ -16,21 +17,73 @@ import { SyntheticEvent, useEffect, useRef, useState } from "react";
 
 import Btn from "../Btn";
 import TextInput from "../TextInput";
+import { theme } from "../themes";
 import { useDisclosure } from "@mantine/hooks";
+
+const topicsData: TopicProps[] = [
+  {
+    id: "t1",
+    value: "Suspendisse potenti.",
+    color: theme.colors.random[0],
+  },
+  {
+    id: "t2",
+    value: "Vestibulum quis mattis felis.",
+    color: theme.colors.random[1],
+  },
+];
+
+const notesData: NoteProps[] = [
+  {
+    id: "n1",
+    value:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nPraesent placerat dapibus arcu. Sed eleifend metus quis purus vestibulum ultricies.\nVestibulum quis mattis felis.\nMaecenas tempor tortor nisl, ac convallis orci sodales ut.\nFusce nibh tellus, placerat at enim ac, viverra dapibus arcu.",
+    idTopic: "t1",
+  },
+  {
+    id: "n2",
+    value:
+      "Aenean in arcu nulla. In tempus, justo nec aliquet lacinia, vitae nisi ex a diam.\nEtiam at quam eu tellus fermentum maximus.\nProin et iaculis dui. Etiam quis facilisis purus.\nVestibulum a placerat sem. Donec nec pellentesque sapien.\nMorbi dignissim iaculis commodo.\nDonec sed eros in elit consectetur lacinia eu et risus.\nSed tempor feugiat mauris, vel auctor elit.",
+    idTopic: "t2",
+  },
+  {
+    id: "n3",
+    value:
+      "Suspendisse vitae sem mi.\nPhasellus venenatis tristique diam, non pretium purus vulputate sit amet.\nSuspendisse consectetur sodales ullamcorper. Sed ac quam justo.\nDuis nec tincidunt tellus, a ullamcorper felis.\nDonec pulvinar sapien justo. Mauris sed mi neque.",
+    idTopic: "t1",
+  },
+];
 
 const CornellNotepad = ({}: CornellNotepadProps) => {
   const notesRef = useRef();
-  const [notes, setNotes] = useState<NoteProps[]>([]);
+  const [notes, setNotes] = useState<NoteProps[]>(notesData);
   const [topicsOpened, { open, close }] = useDisclosure(false);
-  const [topics, setTopics] = useState<TopicProps[]>([]);
+  const [topics, setTopics] = useState<TopicProps[]>(topicsData);
   const [currentTopic, setCurrentTopic] = useState<string>(null);
   const [topicName, setTopicName] = useState<string>("");
   const [topicNotes, setTopicNotes] = useState<string[]>([]);
   const [topicColor, setTopicColor] = useState<string>(null);
+  const [topicSpacings, setTopicSpacings] = useState<Record<string, number>>(
+    {}
+  );
 
   useEffect(() => {
     setTopicColor(getRandomColor());
   }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      recalcTopicSpacings();
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    recalcTopicSpacings();
+  }, [notes, topics]);
 
   useEffect(() => {
     if (topicsOpened && !currentTopic) {
@@ -41,18 +94,25 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
   }, [topicsOpened]);
 
   useEffect(() => {
-    console.log(topics);
-  }, [topics]);
+    const newSpacings: Record<string, number> = {};
+    topics.forEach((topic) => {
+      newSpacings[topic.id] = calcTopicSpacing(topic);
+    });
+    setTopicSpacings(newSpacings);
+  }, [notes, topics, window.innerWidth]);
 
-  useEffect(() => {
-    console.log(notes);
-  }, [notes]);
+  const recalcTopicSpacings = () => {
+    const newSpacings: Record<string, number> = {};
+    topics.forEach((topic) => {
+      newSpacings[topic.id] = calcTopicSpacing(topic);
+    });
+    setTopicSpacings(newSpacings);
+  };
 
   const getRandomColor = () =>
-    "#" +
-    Math.floor(Math.random() * 2 ** 24)
-      .toString(16)
-      .padStart(6, "0");
+    theme.colors.random[
+      Math.floor(Math.random() * (theme.colors.random.length - 2))
+    ];
 
   const getTopicColor = (idTopic: string) =>
     topics.find((t) => t.id === idTopic).color;
@@ -61,23 +121,21 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
     if (e.target.nodeName == "DIV") {
       const notesContainer: HTMLDivElement = notesRef?.current;
       if (notesContainer) {
-        const cont = document.createElement("div");
         const textarea = document.createElement("textarea");
         textarea.rows = 1;
         textarea.style.height = calcTextareaHeight(" ") + "px";
-        cont.appendChild(textarea);
-        notesContainer.appendChild(cont);
+        notesContainer.appendChild(textarea);
         textarea.focus();
         textarea.addEventListener("blur", () => {
           if (textarea.value) {
             const newN: NoteProps = {
-              id: new Date().getTime().toString(),
+              id: "n" + new Date().getTime().toString(),
               value: textarea.value,
               idTopic: null,
             };
             setNotes((prevNotes) => [...prevNotes, newN]);
           }
-          notesContainer.removeChild(cont);
+          notesContainer.removeChild(textarea);
         });
         textarea.addEventListener(
           "input",
@@ -114,6 +172,27 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
     return newHeight;
   };
 
+  const calcTopicSpacing = (topic: TopicProps) => {
+    const topicEl: HTMLDivElement = document.querySelector(
+      `.topic#${topic?.id}`
+    );
+    const notesIds = notes
+      ?.filter((n) => n.idTopic === topic?.id)
+      ?.map((n) => n.id);
+    let notesHeight = 0;
+    const noteBorder = 4;
+    const noteMargin = 8;
+    notesIds.forEach((n) => {
+      const noteEl = document.querySelector(`.note#${n}`);
+      if (noteEl) {
+        notesHeight += noteEl.clientHeight + noteBorder + noteMargin;
+      }
+    });
+    return notesHeight <= topicEl?.scrollHeight
+      ? 0
+      : notesHeight - topicEl?.scrollHeight;
+  };
+
   const handleUpdateTopics = () => {
     let auxTopicId = null;
     setTopics((prevTopics) => {
@@ -125,7 +204,7 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
         }
         auxTopicId = currentTopic;
       } else {
-        auxTopicId = new Date().getTime().toString();
+        auxTopicId = "t" + new Date().getTime().toString();
         prevTopics.push({
           id: auxTopicId,
           value: topicName,
@@ -183,42 +262,58 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
 
   return (
     <Container>
-      <TopSection>
-        <Topics>
-          topics
-          {topics?.map((t) => (
-            <Topic
-              key={t?.id}
-              color={t?.color}
-              onClick={() => handleTopicClick(t)}
-            >
-              {t?.value}
-            </Topic>
-          ))}
-          <Topic
+      <MiddleSection>
+        <Topics className="topics">
+          {topics?.map((t) => {
+            return (
+              <Topic
+                className="topic"
+                key={t?.id}
+                id={t?.id}
+                color={t?.color}
+                onClick={() => handleTopicClick(t)}
+                style={{ marginBottom: (topicSpacings[t.id] || 8) + "px" }}
+              >
+                {t?.value}
+              </Topic>
+            );
+          })}
+          <Btn
             className={"new"}
             onClick={() => {
               setCurrentTopic(null);
               open();
             }}
           >
-            + Novo tópico
-          </Topic>
+            + Novo
+          </Btn>
+          <span style={{ minHeight: ".5rem", width: "100%" }} />
         </Topics>
+        <MiddleDivider />
         <Notes onClick={handleNotesClick} ref={notesRef}>
-          {notes?.map((n) => (
-            <Note
-              key={n?.id}
-              id={n?.id}
-              value={n?.value}
-              onChange={onChangeNote}
-              onBlur={onBlurNote}
-              style={{ height: calcTextareaHeight(n?.value) + "px" }}
-              color={n.idTopic ? getTopicColor(n.idTopic) : null}
-            />
-          ))}
+          {notes
+            ?.sort((a, b) => {
+              let idsTopics = topics.map((t) => t.id);
+              return (
+                (a.idTopic ? idsTopics.indexOf(a.idTopic) : Infinity) -
+                (b.idTopic ? idsTopics.indexOf(b.idTopic) : Infinity)
+              );
+            })
+            ?.map((n) => (
+              <Note
+                className="note"
+                key={n?.id}
+                id={n?.id}
+                value={n?.value}
+                onChange={onChangeNote}
+                onBlur={onBlurNote}
+                style={{ height: calcTextareaHeight(n?.value) + "px" }}
+                color={n.idTopic ? getTopicColor(n.idTopic) : null}
+              />
+            ))}
+          <span style={{ minHeight: ".5rem", lineHeight: "30px" }} />
         </Notes>
-      </TopSection>
+      </MiddleSection>
       <BottomSection>
         <Summary>summary</Summary>
       </BottomSection>
@@ -247,17 +342,23 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
         <Row>
           <RowItem center>
             <ColorPicker
-              size="sm"
+              size="xs"
               fullWidth
+              withPicker={false}
               value={topicColor}
               onChange={setTopicColor}
+              swatches={theme.colors.random.slice(0, -2)}
+              swatchesPerRow={8}
             />
           </RowItem>
         </Row>
         <Row>
           <RowItem>
             <MultiSelect
-              disabled={!notes?.length}
+              disabled={
+                !notes?.filter((n) => !n.idTopic || n.idTopic === currentTopic)
+                  ?.length
+              }
               label={"Anotações"}
               value={topicNotes}
               onChange={setTopicNotes}

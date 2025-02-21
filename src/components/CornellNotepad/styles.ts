@@ -10,25 +10,38 @@ const Container = styled.div`
   height: 600px;
 `;
 
-const TopSection = styled.div`
-  padding: 0.2rem 0.2rem 0 0.2rem;
+const MiddleSection = styled.div`
+  position: relative;
+  padding: 0 0.2rem 0 0.2rem;
   /* background-color: thistle; */
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
 
   display: flex;
   justify-content: space-between;
   height: 85%;
+  position: relative;
+
+  overflow-y: scroll;
 `;
 
 const Topics = styled.div`
   padding: 0.2rem;
+  position: relative;
   /* background-color: burlywood; */
-  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  /* border: 0.5px solid rgba(0, 0, 0, 0.1); */
 
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   flex-direction: column;
   /* flex-grow: 0.3; */
-  min-width: 30%;
+  /* min-width: 20%; */
+  width: 20%;
+  min-width: 100px;
+  /* height: 100%; */
+
+  .new {
+    margin-bottom: 0.5rem;
+  }
 `;
 
 const TopicPreview = styled.div`
@@ -51,8 +64,9 @@ const Topic = styled.div<{ color?: string }>`
   padding: 0.4rem;
   background-color: ${({ color }) => color ?? "#fff"};
   border-radius: 8px;
+  word-break: break-word;
 
-  margin-top: 0.5rem;
+  /* margin-top: 0.5rem; */
   cursor: pointer;
 
   &:first-of-type {
@@ -65,30 +79,41 @@ const Topic = styled.div<{ color?: string }>`
   }
 `;
 
+const MiddleDivider = styled.div`
+  position: sticky;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+`;
+
 const Notes = styled.div`
   padding: 0.2rem;
   /* background-color: chocolate; */
-  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  /* border: 0.5px solid rgba(0, 0, 0, 0.1); */
 
   /* flex-grow: 0.7; */
-  min-width: 70%;
-  overflow-y: scroll;
+  /* min-width: 70%; */
+  width: 100%;
+  line-height: 0;
+  /* max-width: 80%; */
+  /* overflow-y: scroll; */
 
   > div {
     /* height: ; */
+  }
+  > textarea {
+    width: 100%;
+    padding: 0.5rem;
+    overflow: hidden;
+    resize: none;
+    line-height: 20px;
 
-    > textarea {
-      width: 100%;
-      padding: 0.5rem;
-      overflow: hidden;
-      resize: none;
-      line-height: 20px;
-
-      /* background-color: cornflowerblue; */
-      border: 2px solid rgba(0, 0, 0, 0.2);
-      border-radius: 8px;
-      outline: none;
-    }
+    /* background-color: cornflowerblue; */
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    outline: none;
   }
 `;
 
@@ -104,11 +129,17 @@ const Note = styled.textarea<{ color: string }>`
   border: 2px solid rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   outline: none;
+
+  &:not(:first-of-type) {
+    margin-top: 0.5rem;
+  }
 `;
 
 const BottomSection = styled.div`
-  position: relative;
+  /* position: relative; */
   padding: 0 0.2rem 0.2rem 0.2rem;
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  border-top: 0;
   /* background-color: cornsilk; */
 
   display: flex;
@@ -119,17 +150,17 @@ const BottomSection = styled.div`
 const Summary = styled.div`
   padding: 0.2rem;
   /* background-color: lightseagreen; */
-  border: 0.5px solid rgba(0, 0, 0, 0.1);
 
   flex-grow: 1;
 `;
 
 export {
   Container,
-  TopSection,
+  MiddleSection,
   Topics,
   TopicPreview,
   Topic,
+  MiddleDivider,
   Notes,
   Note,
   BottomSection,
