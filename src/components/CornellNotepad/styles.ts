@@ -11,7 +11,7 @@ const Container = styled.div`
 
 const MiddleSection = styled.div`
   position: relative;
-  padding: 0 0 0 0.2rem;
+  padding: 0;
   border: 0.5px solid rgba(0, 0, 0, 0.1);
 
   display: flex;
