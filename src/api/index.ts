@@ -1,3 +1,5 @@
+import { RootState } from "@/redux/rootReducer";
+import { Store } from "redux";
 import axios from "axios";
 
 const getApiBaseUrl = () => {
@@ -11,5 +13,15 @@ const api = axios.create({
     Accept: "*/*",
   },
 });
+
+export const configureApi = (store: Store<RootState>) => {
+  api.interceptors.request.use((config) => {
+    const token = store.getState().Session.token;
+    if (token) {
+      config.headers.Authorization = `Token ${token}`;
+    }
+    return config;
+  });
+};
 
 export default api;

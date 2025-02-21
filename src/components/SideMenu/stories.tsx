@@ -5,7 +5,7 @@ import SideMenu from "./index";
 import { SideMenuProps } from "./interfaces";
 
 export default {
-  title: "Layout/Side Menu2",
+  title: "Layout/Side Menu",
   component: SideMenu,
   args: {
     initialOpen: false, // Define o estado inicial para melhor visualização

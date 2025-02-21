@@ -28,6 +28,7 @@ const SideMenu: React.FC<SideMenuProps> = ({
           border
           fill={theme.colors.purple[5]}
           width={30}
+          height={30}
           style={{
             transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
             border: isOpen ? "none" : `3px solid ${theme.colors.purple[5]}bf`,
