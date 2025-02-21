@@ -93,6 +93,8 @@ const Notes = styled.div`
   flex-direction: column;
   min-height: 100%;
 
+  cursor: pointer;
+
   > textarea {
     width: 100%;
     padding: 0.5rem;
@@ -127,6 +129,19 @@ const Note = styled.textarea<{ color: string }>`
   }
 `;
 
+const AddNoteSign = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 5rem;
+  line-height: 30px;
+  order: 999999;
+  font-weight: 500;
+
+  cursor: pointer;
+`;
+
 const BottomSection = styled.div`
   padding: 0 0.2rem 0.2rem 0.2rem;
   border: 0.5px solid rgba(0, 0, 0, 0.1);
@@ -151,6 +166,7 @@ export {
   MiddleDivider,
   Notes,
   Note,
+  AddNoteSign,
   BottomSection,
   Summary,
 };

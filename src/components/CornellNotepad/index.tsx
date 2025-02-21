@@ -1,4 +1,5 @@
 import {
+  AddNoteSign,
   BottomSection,
   Container,
   MiddleDivider,
@@ -312,7 +313,7 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
                 color={n.idTopic ? getTopicColor(n.idTopic) : null}
               />
             ))}
-          <div style={{ minHeight: "3rem", lineHeight: "30px", order: 10 }} />
+          <AddNoteSign>Clique para adicionar uma nota</AddNoteSign>
         </Notes>
       </MiddleSection>
       <BottomSection>
