@@ -284,10 +284,11 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
               setCurrentTopic(null);
               open();
             }}
+            style={{ flexShrink: 0 }}
           >
             + Novo
           </Btn>
-          <span style={{ minHeight: ".5rem", width: "100%" }} />
+          <span style={{ minHeight: ".5rem", width: "100%", order: 100 }} />
         </Topics>
         <MiddleDivider />
         <Notes onClick={handleNotesClick} ref={notesRef}>
@@ -311,7 +312,7 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
                 color={n.idTopic ? getTopicColor(n.idTopic) : null}
               />
             ))}
-          <span style={{ minHeight: ".5rem", lineHeight: "30px" }} />
+          <div style={{ minHeight: "3rem", lineHeight: "30px", order: 10 }} />
         </Notes>
       </MiddleSection>
       <BottomSection>

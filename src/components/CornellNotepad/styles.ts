@@ -16,6 +16,7 @@ const MiddleSection = styled.div`
 
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   height: 85%;
   position: relative;
 
@@ -75,6 +76,8 @@ const MiddleDivider = styled.div`
   position: sticky;
   border-right: 1px solid rgba(0, 0, 0, 0.1);
 
+  height: 100%;
+
   top: 0;
   bottom: 0;
   left: 0;
@@ -86,6 +89,10 @@ const Notes = styled.div`
   width: 100%;
   line-height: 0;
 
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+
   > textarea {
     width: 100%;
     padding: 0.5rem;
@@ -96,6 +103,10 @@ const Notes = styled.div`
     border: 2px solid rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     outline: none;
+
+    &:not(:first-of-type) {
+      margin-top: 0.5rem;
+    }
   }
 `;
 
