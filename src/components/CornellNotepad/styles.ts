@@ -1,18 +1,19 @@
 import styled from "@emotion/styled";
 
 const Container = styled.div`
-  padding: 0.2rem;
-
   display: flex;
   flex-direction: column;
 
+  position: relative;
   height: 600px;
+  overflow: hidden;
 `;
 
 const MiddleSection = styled.div`
   position: relative;
   padding: 0;
   border: 0.5px solid rgba(0, 0, 0, 0.1);
+  border-bottom: none;
 
   display: flex;
   justify-content: space-between;
@@ -143,18 +144,40 @@ const AddNoteSign = styled.div`
 `;
 
 const BottomSection = styled.div`
-  padding: 0 0.2rem 0.2rem 0.2rem;
-  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  position: absolute;
+  // top: calc(85% - 0.2rem);
+  background-color: cadetblue;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  // padding: 0 0.2rem 0.2rem 0.2rem;
+  // border: 0.5px solid rgba(0, 0, 0, 0.1);
   border-top: 0;
 
   display: flex;
   height: 15%;
+  transition: 0.2s ease-in-out;
+
+  &:focus-within {
+    height: 90%;
+    box-shadow: 0px -10px 10px 0px rgba(0, 0, 0, 0.2);
+  }
 `;
 
-const Summary = styled.div`
-  padding: 0.2rem;
+const Summary = styled.textarea`
+  padding: 0.5rem;
+
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  resize: none;
+  outline: none;
 
   flex-grow: 1;
+
+  &::placeholder {
+    font-weight: 500;
+    color: #000;
+  }
 `;
 
 export {

@@ -58,7 +58,8 @@ const notesData: NoteProps[] = [
 const CornellNotepad = ({}: CornellNotepadProps) => {
   const notesRef = useRef();
   const [notes, setNotes] = useState<NoteProps[]>(notesData);
-  const [topicsOpened, { open, close }] = useDisclosure(false);
+  const [topicsOpened, { open: openTopics, close: closeTopics }] =
+    useDisclosure(false);
   const [topics, setTopics] = useState<TopicProps[]>(topicsData);
   const [currentTopic, setCurrentTopic] = useState<string>(null);
   const [topicName, setTopicName] = useState<string>("");
@@ -67,6 +68,9 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
   const [topicSpacings, setTopicSpacings] = useState<Record<string, number>>(
     {}
   );
+  const [summaryOpened, { open: openSummary, close: closeSummary }] =
+    useDisclosure(false);
+  const [summary, setSummary] = useState("");
 
   useEffect(() => {
     setTopicColor(getRandomColor());
@@ -237,7 +241,7 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
         );
       }
     }
-    close();
+    closeTopics();
   };
 
   const handleDeleteTopic = () => {
@@ -248,7 +252,7 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
       }
       return prevTopics;
     });
-    close();
+    closeTopics();
   };
 
   const handleTopicClick = (topic: TopicProps) => {
@@ -258,7 +262,7 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
     setTopicNotes(
       notes?.filter((n) => n.idTopic === topic.id).map((n) => n.id)
     );
-    open();
+    openTopics();
   };
 
   return (
@@ -283,7 +287,7 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
             className={"new"}
             onClick={() => {
               setCurrentTopic(null);
-              open();
+              openTopics();
             }}
             style={{ flexShrink: 0 }}
           >
@@ -317,11 +321,15 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
         </Notes>
       </MiddleSection>
       <BottomSection>
-        <Summary>summary</Summary>
+        <Summary
+          placeholder="Clique para adicionar uma nota"
+          value={summary}
+          onChange={(e) => setSummary(e.target.value)}
+        />
       </BottomSection>
       <Modal
         opened={topicsOpened}
-        onClose={close}
+        onClose={closeTopics}
         title={currentTopic ? "EDITAR TÓPICO" : "CRIAR NOVO TÓPICO"}
       >
         <Row>
@@ -386,7 +394,7 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
               Excluir
             </Btn>
           )}
-          <Btn onClick={close}>Cancelar</Btn>
+          <Btn onClick={closeTopics}>Cancelar</Btn>
         </Row>
       </Modal>
     </Container>
