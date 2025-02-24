@@ -38,7 +38,11 @@ export interface Aula {
   duracao: number;
 }
 
+<<<<<<< HEAD
+interface MapaTexto {
+=======
 export interface MapaTexto {
+>>>>>>> 597cc64c325b22b137b2e2fc59b5c92d63ac4820
   id: number;
   texto: string;
   x: number;
