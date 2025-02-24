@@ -38,7 +38,6 @@ const Home: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log(usuario);
     if (usuario) {
       replace("/home");
     }
@@ -84,7 +83,7 @@ const Home: NextPage = () => {
                     <TextHover
                       fw={500}
                       size={`2rem`}
-                      style={{ cursor: `pointer` }}
+                      style={{ cursor: `pointer`, width: "fit-content" }}
                       c={theme?.colors?.purple[5]}
                       hoverColor={theme?.colors?.purple[7]}
                       textDecoration="underline"
@@ -132,8 +131,8 @@ const Login = () => {
   const handleLogin = useCallback(() => {
     dispatch(
       startLogin({
-        usuario: email,
-        senha: senha,
+        username: email,
+        password: senha,
       })
     );
   }, [email, senha]);

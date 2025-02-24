@@ -4,11 +4,11 @@ import { Row, RowItem } from "../Row";
 import Checkbox from "../Checkbox";
 import VideoThumb from "./index";
 import { VideoThumbProps } from "./interfaces";
-import thumb from "../../../public/images/bgCadastro.png";
+import thumb from "@/public/images/bgCadastro.png";
 import { useState } from "react";
 
 export default {
-  title: "Image/VideoThumb",
+  title: "Image/Video Thumb",
   component: VideoThumb,
   args: {
     title: "Int. à Genética",

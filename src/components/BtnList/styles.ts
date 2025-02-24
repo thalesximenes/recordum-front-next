@@ -35,6 +35,7 @@ const _Container = styled(Button)<BtnProps>`
     --loader-color: ${({ template }) => getColor(template)} !important;
   }
 `;
+
 const Container = createPolymorphicComponent<"button", BtnProps>(_Container);
 
 export { Container };

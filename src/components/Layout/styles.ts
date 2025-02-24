@@ -5,6 +5,7 @@ import {
   onTablet,
 } from "../themes";
 
+import { LayoutContainerProps } from "./interface";
 import bgCadastro from "@/public/images/bgCadastro.png";
 import styled from "@emotion/styled";
 
@@ -46,11 +47,17 @@ const MainContainer = styled.div<any>`
   }
 `;
 
-const Container = styled.div<any>`
+const Container = styled.div<LayoutContainerProps>`
   height: 100%;
   z-index: -1;
+  background-image: ${({ backgroundImage }) =>
+    backgroundImage ? `url(${backgroundImage})` : "none"};
 
-  margin: 2rem 5rem 2rem 5rem;
+  padding: 2rem 2rem 2rem 2rem;
+
+  ${onTablet} {
+    padding: 2rem 5rem 2rem 5rem;
+  }
 `;
 
 const MainLogin = styled.main<any>`

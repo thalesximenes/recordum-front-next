@@ -4,7 +4,7 @@ import { Row } from "../Row";
 import { theme } from "../themes";
 import useWindowSize from "../../hooks/useWindowSize";
 
-const Btn = ({ buttons }: BtnListProps) => {
+const BtnList = ({ buttons }: BtnListProps) => {
   const { isTablet } = useWindowSize();
 
   const getColor = (index: number) => {
@@ -30,4 +30,4 @@ const Btn = ({ buttons }: BtnListProps) => {
   ));
 };
 
-export default Btn;
+export default BtnList;

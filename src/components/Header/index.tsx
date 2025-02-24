@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 import Btn from "../Btn";
+import Burger from "@/public/images/burger.svg";
 import IconBtn from "../IconBtn";
 import Img from "../Img";
 import { RootState } from "@/redux/rootReducer";
@@ -22,6 +23,8 @@ const Header = () => {
 
   const { usuario } = useSelector((state: RootState) => state?.User);
 
+  const { pageName } = useSelector((store: RootState) => store.Session);
+
   useEffect(() => {
     if (!usuario) {
       replace("/");
@@ -29,25 +32,46 @@ const Header = () => {
   }, [usuario]);
 
   const [opened, setOpened] = useState(false);
-  const { isDesktop, width } = useWindowSize();
+  const { isDesktop, isTablet, width } = useWindowSize();
 
   return (
     <>
       <Container>
-        <IconBtn
-          onClick={() => {
-            push("/home");
-            setOpened(false);
-          }}
-        >
-          <Img width={57} height={48} src={logo} alt={"icone_logo"} />
-        </IconBtn>
-        <Options>
-          <h1>Premium</h1>
-          <IconBtn onClick={() => setOpened(!opened)}>
-            <Img width={48} height={48} src={perfil} alt={"icone_perfil"} />
-          </IconBtn>
-        </Options>
+        {!isDesktop && !isTablet ? (
+          <>
+            <div />
+            <div style={{ position: "absolute" }}>
+              <IconBtn
+                onClick={() => {
+                  setOpened(!opened);
+                }}
+              >
+                <Burger width={48} height={48} />
+              </IconBtn>
+            </div>
+            <Options>
+              <h1>{pageName}</h1>
+            </Options>
+            <div />
+          </>
+        ) : (
+          <>
+            <IconBtn
+              onClick={() => {
+                push("/home");
+                setOpened(false);
+              }}
+            >
+              <Img width={57} height={48} src={logo} alt={"icone_logo"} />
+            </IconBtn>
+            <Options>
+              <h1>Premium</h1>
+              <IconBtn onClick={() => setOpened(!opened)}>
+                <Img width={48} height={48} src={perfil} alt={"icone_perfil"} />
+              </IconBtn>
+            </Options>
+          </>
+        )}
       </Container>
       <Menu opened={opened}>
         <Row style={{ padding: "2rem 0 3rem 0", height: `100%` }}>
@@ -118,7 +142,7 @@ const Middle = ({ isDesktop, usuario }) => {
           <TextDisplay
             direction={direction(isDesktop)}
             size={size(isDesktop)}
-            label={`Primeiro Nome`}
+            label={`Nome`}
             text={usuario?.primeiroNome}
           />
         </RowItem>

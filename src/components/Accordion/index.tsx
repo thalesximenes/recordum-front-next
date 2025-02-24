@@ -7,6 +7,7 @@ import { LoadingOverlay } from "@mantine/core";
 const Accordion = ({
   title,
   children,
+  titleCentered = false,
   icon: Icon,
   loading = false,
   value: initialValue = "",
@@ -21,7 +22,7 @@ const Accordion = ({
     >
       <Item value="default">
         <Control icon={Icon || null} closed={value !== "default"}>
-          <h2>{title}</h2>
+          <h2 style={titleCentered ? { textAlign: "center" } : {}}>{title}</h2>
         </Control>
         <Panel>{children}</Panel>
         <LoadingOverlay visible={loading} />

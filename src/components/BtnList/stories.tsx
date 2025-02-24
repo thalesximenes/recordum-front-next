@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from "@storybook/react";
 
-import Btn from "./index";
+import BtnList from "./index";
 import { BtnListProps } from "./interfaces";
 
 export default {
-  title: "Button/BtnList",
-  component: Btn,
+  title: "Button/Btn List",
+  component: BtnList,
   args: {},
 } as Meta<BtnListProps>;
 

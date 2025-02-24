@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { UserReducerState, Usuario } from "./interfaces";
 
+import { UserReducerState } from "./interfaces";
 import persistReducer from "redux-persist/lib/persistReducer";
 import storage from "../storage";
 
@@ -23,9 +23,17 @@ const slice = createSlice({
     startGetUserInfo: (state, { payload }) => ({
       ...initialState,
     }),
-    successGetUserInfo: (state, action: PayloadAction<Usuario>) => ({
+    successGetUserInfo: (state, { payload }: PayloadAction<any>) => ({
       ...state,
-      usuario: { ...action.payload },
+      usuario: {
+        primeiroNome: payload.first_name,
+        sobrenome: payload.last_name,
+        curso: payload.curso,
+        email: payload.email,
+        escolaridade: payload.escolaridade,
+        universidade: payload.universidade,
+        vestibulares: payload.vestibulares,
+      },
       date: new Date(),
     }),
     failureGetUserInfo: () => ({

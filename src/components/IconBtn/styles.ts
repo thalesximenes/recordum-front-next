@@ -25,7 +25,7 @@ const _Container = styled(ActionIcon)<IconBtnProps>`
   }
 
   &:hover {
-    background-color: ${theme?.colors?.purple?.[7]};
+    background-color: ${theme?.colors?.purple?.[1]};
   }
 
   &:disabled {

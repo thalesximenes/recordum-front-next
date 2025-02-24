@@ -3,7 +3,7 @@ import TextInput from "./index";
 import { TextInputProps } from "./interfaces";
 
 export default {
-  title: "Input/TextInput",
+  title: "Input/Text Input",
   component: TextInput,
   args: {},
 } as Meta<TextInputProps>;

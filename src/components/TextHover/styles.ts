@@ -1,19 +1,18 @@
-import { theme } from "../themes";
+import { Text, createPolymorphicComponent } from "@mantine/core";
 
 import { TextProps } from "./interfaces";
-import { createPolymorphicComponent } from "@mantine/core";
 import styled from "@emotion/styled";
 
-const _Container = styled(`p`)<TextProps>`
+const _Container = styled(Text)<TextProps>`
   margin: 0px;
-  color: ${({ c }) => c && c};
-  font-size: ${({ size }) => (size ? size : "1rem")};
-  font-weight: ${({ fw }) => fw && fw};
+  width: fit-content !important;
+  color: ${({ c }) => c};
+  font-size: ${({ size }) => size && "1rem"};
+  font-weight: ${({ fw }) => fw};
 
   &:hover {
-    color: ${({ hoverColor }) => hoverColor && hoverColor};
-    text-decoration: ${({ textDecoration }) =>
-      textDecoration ? textDecoration : ""};
+    color: ${({ hoverColor }) => hoverColor};
+    text-decoration: ${({ textDecoration }) => textDecoration || "underline"};
   }
 `;
 

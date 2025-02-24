@@ -4,6 +4,7 @@ import persistReducer from "redux-persist/lib/persistReducer";
 import storage from "../storage";
 
 const initialState: SessionReducerState = {
+  backgroundImage: "",
   pageName: "",
   token: "",
   networkError: false,
@@ -21,7 +22,7 @@ const slice = createSlice({
   reducers: {
     // Actions relacionadas ao login
     startLogin: (state, { payload }) => ({
-      ...state,
+      ...initialState,
       loading: true,
     }),
 
@@ -50,10 +51,16 @@ const slice = createSlice({
       ...initialState,
     }),
 
+    setBackgroundImage: (state, { payload }) => ({
+      ...state,
+      backgroundImage: payload?.backgroundImage,
+    }),
+
     setPageName: (state, { payload }) => ({
       ...state,
       pageName: payload,
     }),
+
     resetLogin: () => ({
       ...initialState,
     }),
@@ -61,6 +68,7 @@ const slice = createSlice({
 });
 
 export const {
+  setBackgroundImage,
   setPageName,
   startLogin,
   successLogin,

@@ -1,4 +1,4 @@
-import { onDesktop, onTablet, theme } from "../themes";
+import { onDesktop, onTablet } from "../themes";
 
 import { TextProps } from "./interfaces";
 import { createPolymorphicComponent } from "@mantine/core";

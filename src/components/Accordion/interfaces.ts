@@ -8,6 +8,7 @@ export interface AccordionProps extends Omit<MAccordionItemProps, "value"> {
   icon?: any;
   loading?: boolean;
   value?: string;
+  titleCentered?: boolean;
 }
 
 export interface AccordionControlProps extends MAccordionControlProps {

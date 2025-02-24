@@ -1,21 +1,65 @@
 import { Row, RowItem } from "@/components/Row";
+import { setBackgroundImage, setPageName } from "@/redux/Session/slice";
+import { setEixo, startGetEixos } from "@/redux/Conteudo/slice";
+import { useDispatch, useSelector } from "react-redux";
 
+import BtnCarousel from "@/components/BtnCarousel";
 import BtnList from "@/components/BtnList";
 import Card from "@/components/Card";
 import { NextPage } from "next";
+import { RootState } from "@/redux/rootReducer";
+import { Text } from "@mantine/core";
+import VideoThumb from "@/components/VideoThumb";
+import { theme } from "@/components/themes";
+import thumb from "@/public/images/bgCadastro.png";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import useWindowSize from "@/hooks/useWindowSize";
 
 const Home: NextPage = () => {
+  const dispatch = useDispatch();
+
+  const { usuario } = useSelector((store: RootState) => store.User);
+
+  useEffect(() => {
+    dispatch(setPageName("Início"));
+    dispatch(setBackgroundImage({ backgroundImage: "" }));
+    dispatch(startGetEixos());
+  }, []);
+
   return (
     <>
       <HomeLayout>
         <Row>
           <RowItem>
-            <Card title="Continue Assistindo">Vídeo</Card>
+            <Text c={theme?.colors?.purple[5]} size={"1.5rem"} fw={700}>
+              Olá, {usuario?.primeiroNome}!
+            </Text>
           </RowItem>
         </Row>
         <Row>
           <RowItem>
-            <Card title="Hora da Revisão">Vídeo Resumido</Card>
+            <Card title="Continue Assistindo">
+              <VideoThumb
+                alt="Int. à Genética"
+                src={thumb}
+                title="Int. à Genética"
+                description="Genética"
+                description2="Biologia"
+              />
+            </Card>
+          </RowItem>
+        </Row>
+        <Row>
+          <RowItem>
+            <Card title="Hora da Revisão">
+              <VideoThumb
+                alt="Conteúdo Y"
+                src={thumb}
+                title="Conteúdo Y"
+                summarized
+              />
+            </Card>
           </RowItem>
         </Row>
       </HomeLayout>
@@ -23,30 +67,89 @@ const Home: NextPage = () => {
   );
 };
 
-const HomeLayout = ({ children }) => (
-  <Row style={{ flexDirection: "row", width: "100%" }}>
-    <RowItem>{children}</RowItem>
-    <SideMenu />
-  </Row>
-);
+const HomeLayout = ({ children }) => {
+  const { width } = useWindowSize();
 
-const SideMenu = () => (
-  <Row style={{ marginTop: 0 }}>
-    <Row style={{ flexDirection: "column" }}>
-      <BtnList
-        buttons={[
-          { children: "Teste" },
-          { children: "Teste" },
-          { children: "Teste" },
-          { children: "Teste" },
-          { children: "Teste" },
-          { children: "Teste" },
-          { children: "Teste" },
-          { children: "Teste" },
-        ]}
-      />
+  return (
+    <>
+      {width < 1024 && (
+        <Row>
+          <RowItem>
+            <HeadMenu />
+          </RowItem>
+        </Row>
+      )}
+      <Row style={{ flexDirection: "row", width: "100%" }}>
+        <RowItem>{children}</RowItem>
+        {width >= 1024 && <SideMenu />}
+      </Row>
+    </>
+  );
+};
+
+const HeadMenu = () => {
+  const { push } = useRouter();
+  const dispatch = useDispatch();
+  const { eixos } = useSelector((store: RootState) => store.Conteudo);
+  const { isTablet } = useWindowSize();
+
+  return (
+    <Row style={{ marginTop: 0 }}>
+      <Row>
+        <Text
+          size={isTablet ? "1.25rem" : "1.125rem"}
+          fw={700}
+          c={theme.colors.purple[5]}
+        >
+          Eixos Temáticos
+        </Text>
+      </Row>
+      <Row style={{ flexDirection: "column" }}>
+        <BtnCarousel
+          buttons={eixos?.map((e) => ({
+            children: e?.nome,
+            onClick: () => {
+              dispatch(setEixo(e?.id));
+              push(`/eixo-tematico/${e?.nome.normalize("NFKD")}`);
+            },
+          }))}
+        />
+      </Row>
     </Row>
-  </Row>
-);
+  );
+};
+
+const SideMenu = () => {
+  const { push } = useRouter();
+  const dispatch = useDispatch();
+  const { eixos } = useSelector((store: RootState) => store.Conteudo);
+
+  const { isTablet } = useWindowSize();
+
+  return (
+    <Row style={{ marginTop: 0 }}>
+      <Row style={{ flexDirection: "column", overflowY: "auto" }}>
+        <Row>
+          <Text
+            size={isTablet ? "1.25rem" : "1.125rem"}
+            fw={700}
+            c={theme.colors.purple[5]}
+          >
+            Eixos Temáticos
+          </Text>
+        </Row>
+        <BtnList
+          buttons={eixos?.map((e) => ({
+            children: e?.nome,
+            onClick: () => {
+              dispatch(setEixo(e?.id));
+              push(`/eixo-tematico/${e?.nome.normalize("NFKD")}`);
+            },
+          }))}
+        />
+      </Row>
+    </Row>
+  );
+};
 
 export default Home;

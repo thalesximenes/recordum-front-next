@@ -2,7 +2,7 @@ import Image from "next/image";
 import { ImgProps } from "./interfaces";
 
 const Img = (props: ImgProps) => {
-  const { src, alt, width, height } = props;
+  const { src, alt, width, height, style } = props;
   const blurDataUrl =
     "data:image/svg+xml;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mOs/w8AAgMBgMd74YAAAAAASUVORK5CYII=";
 
@@ -10,6 +10,7 @@ const Img = (props: ImgProps) => {
     return width && height ? (
       <Image
         placeholder="blur"
+        style={{ ...style, minWidth: `${width}px`, minHeight: `${height}px` }}
         width={width}
         height={height}
         alt={alt}
@@ -29,6 +30,11 @@ const Img = (props: ImgProps) => {
     return (
       <Image
         {...props}
+        style={{
+          ...style,
+          minWidth: props?.width ?? 0,
+          minHeight: props?.height ?? 0,
+        }}
         placeholder="blur"
         alt={alt}
         src={src}

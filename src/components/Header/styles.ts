@@ -5,10 +5,9 @@ import {
   theme,
 } from "@/components/themes";
 
-import { HeaderProps } from "./interfaces";
 import styled from "@emotion/styled";
 
-const Container = styled.header<HeaderProps>`
+const Container = styled.header`
   background-color: ${theme?.colors?.purple?.[6]};
   width: 100%;
 

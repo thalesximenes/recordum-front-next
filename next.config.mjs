@@ -15,6 +15,9 @@ const configWithPWA = withPWA({
 const nextConfig = {
     reactStrictMode: false,
     basePath: scope,
+    images: {
+        domains: ["127.0.0.1"],
+    },
     webpack(config) {
         config.module.rules.push({
             test: /\.svg$/i,

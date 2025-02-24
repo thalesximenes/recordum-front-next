@@ -1,13 +1,14 @@
 import "@mantine/core/styles.css";
 import "react-toastify/dist/ReactToastify.css";
 
+import api, { configureApi } from "api/index";
+
 import Layout from "@/components/Layout";
 import { MantineProvider } from "@mantine/core";
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import { RootState } from "redux/rootReducer";
 import Toast from "@/styles/toast";
-import api from "api";
 import { theme } from "../components/themes";
 import { useEffect } from "react";
 import wrapper from "@/redux/store";
@@ -17,16 +18,19 @@ const App = ({ Component, ...rest }) => {
   const { pageProps } = props;
   const persistor = store.__persistor;
 
+  configureApi(store);
+
   const setApiAuthorization = (token: any) => {
-    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    api.defaults.headers.common["Authorization"] = `Token ${token}`;
   };
 
   useEffect(() => {
     const token = (store.getState() as RootState).Session.token;
+
     if (token) {
       setApiAuthorization(token);
     }
-  }, [store]);
+  }, []);
 
   return (
     <Provider store={store}>

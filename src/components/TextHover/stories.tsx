@@ -4,7 +4,7 @@ import TextHover from "./index";
 import { TextProps } from "./interfaces";
 
 export default {
-  title: "Layout/TextHover",
+  title: "Layout/Text Hover",
   component: TextHover,
   args: {},
 } as Meta<TextProps>;
