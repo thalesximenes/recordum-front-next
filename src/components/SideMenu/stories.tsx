@@ -8,7 +8,7 @@ export default {
   title: "Layout/Side Menu",
   component: SideMenu,
   args: {
-    initialOpen: false, // Define o estado inicial para melhor visualização
+    initialOpen: false,
     width: 200,
     collapsedWidth: 50,
     children: (

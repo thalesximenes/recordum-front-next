@@ -43,8 +43,6 @@ const BtnCarousel = ({ buttons }: BtnCarouselProps) => {
       </Container>
     </Row>
   );
-  // buttons?.map((b, i) => (
-  // ));
 };
 
 export default BtnCarousel;

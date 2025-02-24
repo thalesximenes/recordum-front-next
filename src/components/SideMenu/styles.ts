@@ -7,9 +7,10 @@ const SideMenuContainer = styled("div", {
   shouldForwardProp: (prop) =>
     prop !== "isOpen" && prop !== "width" && prop !== "collapsedWidth",
 })<SideMenuProps>`
-  position: fixed;
+  position: absolute;
   right: 0;
   display: flex;
+  z-index: 10;
   flex-direction: row;
   background-color: ${({ isOpen }) => (isOpen ? `white` : `none`)};
   transition: ${defaultTransition};
@@ -19,8 +20,10 @@ const SideMenuContainer = styled("div", {
   align-items: center;
   padding: 10px 20px 10px 0;
   margin-top: 26px;
-  transform: ${({ isOpen }) =>
-    isOpen ? `translate(0, 0)` : `translate(${300 + 20}px , 0)`};
+  transform: ${({ isOpen, width }) =>
+    isOpen
+      ? `translate(0, 0)`
+      : `translate(${((width + 10) * 10) / 3 + 20}px , 0)`};
 
   ${onDesktop} {
     margin-top: 32px;
@@ -48,7 +51,8 @@ const Content = styled.div<SideMenuProps>`
   align-self: flex-start;
   flex-direction: column;
 
-  width: 300px;
+  width: ${({ width }) =>
+    width ? `${((width + 10) * 10) / 3}px` : "fit-content"};
   ${onDesktop} {
     width: ${({ width }) => (width ? `${width}px` : "fit-content")};
   }

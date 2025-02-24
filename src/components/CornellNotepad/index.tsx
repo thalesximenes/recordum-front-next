@@ -21,46 +21,12 @@ import TextInput from "../TextInput";
 import { theme } from "../themes";
 import { useDisclosure } from "@mantine/hooks";
 
-const topicsData: TopicProps[] = [
-  {
-    id: "t1",
-    value: "Suspendisse potenti.",
-    color: theme.colors.random[0],
-  },
-  {
-    id: "t2",
-    value: "Vestibulum quis mattis felis.",
-    color: theme.colors.random[1],
-  },
-];
-
-const notesData: NoteProps[] = [
-  {
-    id: "n1",
-    value:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nPraesent placerat dapibus arcu. Sed eleifend metus quis purus vestibulum ultricies.\nVestibulum quis mattis felis.\nMaecenas tempor tortor nisl, ac convallis orci sodales ut.\nFusce nibh tellus, placerat at enim ac, viverra dapibus arcu.",
-    idTopic: "t1",
-  },
-  {
-    id: "n2",
-    value:
-      "Aenean in arcu nulla. In tempus, justo nec aliquet lacinia, vitae nisi ex a diam.\nEtiam at quam eu tellus fermentum maximus.\nProin et iaculis dui. Etiam quis facilisis purus.\nVestibulum a placerat sem. Donec nec pellentesque sapien.\nMorbi dignissim iaculis commodo.\nDonec sed eros in elit consectetur lacinia eu et risus.\nSed tempor feugiat mauris, vel auctor elit.",
-    idTopic: "t2",
-  },
-  {
-    id: "n3",
-    value:
-      "Suspendisse vitae sem mi.\nPhasellus venenatis tristique diam, non pretium purus vulputate sit amet.\nSuspendisse consectetur sodales ullamcorper. Sed ac quam justo.\nDuis nec tincidunt tellus, a ullamcorper felis.\nDonec pulvinar sapien justo. Mauris sed mi neque.",
-    idTopic: "t1",
-  },
-];
-
 const CornellNotepad = ({}: CornellNotepadProps) => {
   const notesRef = useRef();
-  const [notes, setNotes] = useState<NoteProps[]>(notesData);
+  const [notes, setNotes] = useState<NoteProps[]>([]);
   const [topicsOpened, { open: openTopics, close: closeTopics }] =
     useDisclosure(false);
-  const [topics, setTopics] = useState<TopicProps[]>(topicsData);
+  const [topics, setTopics] = useState<TopicProps[]>([]);
   const [currentTopic, setCurrentTopic] = useState<string>(null);
   const [topicName, setTopicName] = useState<string>("");
   const [topicNotes, setTopicNotes] = useState<string[]>([]);
@@ -68,8 +34,6 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
   const [topicSpacings, setTopicSpacings] = useState<Record<string, number>>(
     {}
   );
-  const [summaryOpened, { open: openSummary, close: closeSummary }] =
-    useDisclosure(false);
   const [summary, setSummary] = useState("");
 
   useEffect(() => {
@@ -100,7 +64,7 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
 
   useEffect(() => {
     const newSpacings: Record<string, number> = {};
-    topics.forEach((topic) => {
+    topics?.forEach((topic) => {
       newSpacings[topic.id] = calcTopicSpacing(topic);
     });
     setTopicSpacings(newSpacings);
@@ -108,7 +72,7 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
 
   const recalcTopicSpacings = () => {
     const newSpacings: Record<string, number> = {};
-    topics.forEach((topic) => {
+    topics?.forEach((topic) => {
       newSpacings[topic.id] = calcTopicSpacing(topic);
     });
     setTopicSpacings(newSpacings);
@@ -187,7 +151,7 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
     let notesHeight = 0;
     const noteBorder = 4;
     const noteMargin = 8;
-    notesIds.forEach((n) => {
+    notesIds?.forEach((n) => {
       const noteEl = document.querySelector(`.note#${n}`);
       if (noteEl) {
         notesHeight += noteEl.clientHeight + noteBorder + noteMargin;
@@ -322,7 +286,7 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
       </MiddleSection>
       <BottomSection>
         <Summary
-          placeholder="Clique para adicionar uma nota"
+          placeholder="Clique para adicionar o resumo"
           value={summary}
           onChange={(e) => setSummary(e.target.value)}
         />

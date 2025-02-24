@@ -95,7 +95,6 @@ const ImgMindMap = (props: ImgMindMapProps) => {
           src={src}
           alt={alt}
           width={width}
-          height={height}
           mindMaps={mindMaps}
         />
         {template === "EDIT" && infoPosition && (

@@ -1,4 +1,4 @@
-import { HoverCard, Text } from "@mantine/core";
+import { HoverCard, Image, Text } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 
 import Img from "@/components/Img";
@@ -32,12 +32,11 @@ const ImgMindMapViewer = (props: ImgMindMapProps) => {
 
   return (
     <div ref={viewerContainerRef}>
-      <Img
+      <Image
         src={src}
         alt={alt}
         style={{
           width: "100%",
-          maxWidth: width,
           height: "auto",
         }}
       />

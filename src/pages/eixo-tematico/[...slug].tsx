@@ -31,7 +31,9 @@ const Materia: NextPage = () => {
         </>
       );
     default:
-      <></>;
+      <>
+        <BreadCrumbs />
+      </>;
   }
 };
 

@@ -1,9 +1,10 @@
 import { Content, SideMenuContainer, ToggleButton } from "./styles";
+import { useEffect, useState } from "react";
 
 import DoubleArrow from "@/public/images/doubleArrow.svg";
 import { SideMenuProps } from "./interfaces";
 import { theme } from "../themes";
-import { useState } from "react";
+import useWindowSize from "@/hooks/useWindowSize";
 
 const SideMenu: React.FC<SideMenuProps> = ({
   children,
@@ -11,7 +12,12 @@ const SideMenu: React.FC<SideMenuProps> = ({
   width = 200,
   onToggle,
 }) => {
+  const { isDesktop } = useWindowSize();
   const [isOpen, setIsOpen] = useState(initialOpen);
+
+  useEffect(() => {
+    if (isDesktop) setIsOpen(true);
+  }, [isDesktop]);
 
   const handleToggle = () => {
     const newState = !isOpen;

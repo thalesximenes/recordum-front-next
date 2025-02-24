@@ -1,5 +1,5 @@
+import { Loader, Text, Tooltip } from "@mantine/core";
 import { Row, RowItem } from "@/components/Row";
-import { Text, Tooltip } from "@mantine/core";
 import { setAula, startGetTemas } from "@/redux/Conteudo/slice";
 import { setBackgroundImage, setPageName } from "@/redux/Session/slice";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Accordion from "@/components/Accordion";
 import IconBtn from "@/components/IconBtn";
 import Img from "@/components/Img";
+import NadaAqui from "@/public/images/nada_aqui.svg";
 import { NextPage } from "next";
 import Quiz from "@/public/images/quiz.svg";
 import Rating from "@/public/images/rating.svg";
@@ -22,8 +23,8 @@ import useWindowSize from "@/hooks/useWindowSize";
 const TemaPage: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { width } = useWindowSize();
-  const { idDisciplina, temas } = useSelector(
+  const { width, isTablet } = useWindowSize();
+  const { idDisciplina, temas, loading } = useSelector(
     (store: RootState) => store.Conteudo
   );
 
@@ -35,29 +36,57 @@ const TemaPage: NextPage = () => {
   }, []);
 
   return (
-    <Row>
-      <RowItem>
-        {temas.map((d, index) => (
-          <Row key={index}>
-            <RowItem>
-              <Accordion title={`${index + 1}. ${d.tema}`} value={"default"}>
-                {d?.aulas?.map((a, index) => (
-                  <Row key={index}>
+    <>
+      {loading && (
+        <Row>
+          <RowItem center>
+            <Loader />
+          </RowItem>
+        </Row>
+      )}
+      {!loading && temas.length === 0 && (
+        <Row>
+          <RowItem center>
+            <NadaAqui width={isTablet ? width / 2 : width - 60} />
+          </RowItem>
+        </Row>
+      )}
+      <Row>
+        <RowItem>
+          {temas.map((d, index) => (
+            <Row key={index}>
+              <RowItem>
+                <Accordion
+                  title={`${index + 1}. ${d.tema}`}
+                  value={d?.aulas.length === 0 ? "" : "default"}
+                >
+                  {d?.aulas.length === 0 && (
                     <>
-                      {width >= 480 ? (
-                        <VideoDesktop aula={a} />
-                      ) : (
-                        <VideoMobile aula={a} />
-                      )}
+                      <Row>
+                        <RowItem center>
+                          <NadaAqui width={isTablet ? 350 : width - 60} />
+                        </RowItem>
+                      </Row>
                     </>
-                  </Row>
-                ))}
-              </Accordion>
-            </RowItem>
-          </Row>
-        ))}
-      </RowItem>
-    </Row>
+                  )}
+                  {d?.aulas?.map((a, index) => (
+                    <Row key={index}>
+                      <>
+                        {width >= 480 ? (
+                          <VideoDesktop aula={a} />
+                        ) : (
+                          <VideoMobile aula={a} />
+                        )}
+                      </>
+                    </Row>
+                  ))}
+                </Accordion>
+              </RowItem>
+            </Row>
+          ))}
+        </RowItem>
+      </Row>
+    </>
   );
 };
 
@@ -79,7 +108,9 @@ const VideoDesktop = ({ aula }) => {
           onClick={() => {
             dispatch(setAula(aula?.id));
             router.push(
-              `/eixo-tematico/${eixo}/${disciplina}/${aula?.nome.normalize("NFC")}`
+              `/eixo-tematico/${eixo}/${disciplina}/${aula?.nome.normalize(
+                "NFC"
+              )}`
             );
           }}
         />
@@ -93,10 +124,10 @@ const VideoDesktop = ({ aula }) => {
         }}
       >
         <Text style={{ alignSelf: "center" }}>{+aula?.duracao} min. |</Text>
-        <IconBtn>
+        <IconBtn disabled>
           <Rating width={30} />
         </IconBtn>
-        <IconBtn>
+        <IconBtn disabled>
           <Quiz width={30} />
         </IconBtn>
       </Row>
@@ -121,12 +152,14 @@ const VideoMobile = ({ aula }) => {
         onClick={() => {
           dispatch(setAula(aula?.id));
           router.push(
-            `/eixo-tematico/${eixo}/${disciplina}/${aula?.nome.normalize("NFC")}`
+            `/eixo-tematico/${eixo}/${disciplina}/${aula?.nome.normalize(
+              "NFC"
+            )}`
           );
         }}
         onKeyDown={() => null}
       />
-      <Row style={{ flexWrap: "nowrap", alignItems: "center" }}>
+      <Row style={{ alignItems: "center" }}>
         <RowItem>
           <Tooltip label={aula?.nome}>
             <Text
@@ -139,7 +172,9 @@ const VideoMobile = ({ aula }) => {
               onClick={() => {
                 dispatch(setAula(aula?.id));
                 router.push(
-                  `/eixo-tematico/${eixo}/${disciplina}/${aula?.nome.normalize("NFC")}`
+                  `/eixo-tematico/${eixo}/${disciplina}/${aula?.nome.normalize(
+                    "NFC"
+                  )}`
                 );
               }}
             >
@@ -150,16 +185,18 @@ const VideoMobile = ({ aula }) => {
         <Row
           style={{
             alignSelf: "center",
-            justifyContent: "end",
+            justifyContent: "center",
+            width: "100%",
             marginTop: 0,
             paddingLeft: 0,
           }}
+          wrap="nowrap"
         >
           <Text style={{ alignSelf: "center" }}>{+aula?.duracao} min. |</Text>
-          <IconBtn>
+          <IconBtn disabled>
             <Rating width={30} />
           </IconBtn>
-          <IconBtn>
+          <IconBtn disabled>
             <Quiz width={30} />
           </IconBtn>
         </Row>

@@ -1,11 +1,15 @@
-import { AspectRatio, Progress, Text } from "@mantine/core";
+import { AspectRatio, Image, Modal, Progress, Text } from "@mantine/core";
 import { Aula, MapaTexto } from "@/redux/Conteudo/interfaces";
 import { Row, RowItem } from "@/components/Row";
 import { startGetAula, startGetMapasTextos } from "@/redux/Conteudo/slice";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
+import CornellNotepad from "@/components/CornellNotepad";
 import IconBtn from "@/components/IconBtn";
 import ImgMindMap from "@/components/ImgMindMap";
+import InfoCircle from "@/public/images/info-circle.svg";
+import MetodoCornell from "@/public/images/metodo-cornell.png";
 import { NextPage } from "next";
 import Rating from "@/public/images/rating.svg";
 import { RootState } from "@/redux/rootReducer";
@@ -15,7 +19,6 @@ import TitleSideMenu from "@/components/TitleSideMenu";
 import genetica from "../../../public/images/genetica.png";
 import { setBackgroundImage } from "@/redux/Session/slice";
 import { theme } from "@/components/themes";
-import { useEffect } from "react";
 import { useRouter } from "next/router";
 import useWindowSize from "@/hooks/useWindowSize";
 
@@ -23,6 +26,8 @@ const AulaPage: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { width, isDesktop } = useWindowSize();
+
+  const [open, setOpen] = useState(false);
 
   const eixo = router?.query?.slug?.[0];
   const disciplina = router?.query?.slug?.[1];
@@ -39,67 +44,96 @@ const AulaPage: NextPage = () => {
   }, []);
 
   return (
-    <Row>
-      <RowItem style={{ width: "fill-content" }}>
-        <Tabs
-          items={[
-            {
-              label: "Aula",
-              content: <TabConteudo aula={aula} />,
-            },
-            {
-              label: "Revisão",
-              content: <TabRevisao aula={aula} mapasTextos={mapasTextos} />,
-            },
-          ]}
-        />
-      </RowItem>
-      {isDesktop && <Row style={{ width: "30%" }} />}
-      <SideMenu width={width * 0.3 - 40}>
-        <Row wrap="nowrap">
-          <RowItem>
-            <TitleSideMenu eixo={eixo} disciplina={disciplina} />
-          </RowItem>
-          <RowItem end>
-            <IconBtn>
-              <Rating width={40} />
-            </IconBtn>
-          </RowItem>
-        </Row>
-        <div className={"content"} style={{ marginTop: "10px" }}>
-          <Row>
+    <>
+      <Row>
+        <RowItem style={{ width: "fill-content" }}>
+          <Tabs
+            items={[
+              {
+                label: "Aula",
+                content: <TabConteudo aula={aula} />,
+              },
+              {
+                label: "Revisão",
+                content: <TabRevisao aula={aula} mapasTextos={mapasTextos} />,
+              },
+            ]}
+          />
+        </RowItem>
+        {isDesktop && <Row style={{ width: "30%" }} />}
+        <SideMenu width={width * 0.3 - 40}>
+          <Row wrap="nowrap">
             <RowItem>
-              <Text style={{ marginTop: 0 }} c={theme.colors.gray[6]} fw={450}>
-                1/5 VIDEOS COMPLETOS
-              </Text>
-              <Progress.Root>
-                <Progress.Section value={20} color={theme.colors.purple[5]} />
-              </Progress.Root>
+              <TitleSideMenu eixo={eixo} disciplina={disciplina} />
+            </RowItem>
+            <RowItem end>
+              <IconBtn>
+                <Rating width={40} />
+              </IconBtn>
             </RowItem>
           </Row>
-          {data.map((d, index) => (
-            <>
-              <Row key={index}>
-                <RowItem>
-                  <Text c={theme.colors.gray[7]}>{`${
-                    index + 1
-                  } - ${d.title.toUpperCase()}`}</Text>
-                </RowItem>
-              </Row>
-              {d.aulas.map((a, index) => (
+          <div className={"content"} style={{ marginTop: "10px" }}>
+            <Row>
+              <RowItem>
+                <Text
+                  style={{ marginTop: 0 }}
+                  c={theme.colors.gray[6]}
+                  fw={450}
+                >
+                  1/5 VIDEOS COMPLETOS
+                </Text>
+                <Progress.Root>
+                  <Progress.Section value={20} color={theme.colors.purple[5]} />
+                </Progress.Root>
+              </RowItem>
+            </Row>
+            {data.map((d, index) => (
+              <>
                 <Row key={index}>
                   <RowItem>
-                    <Text c={theme.colors.purple[5]} fw={500}>
-                      {a.title}
-                    </Text>
+                    <Text c={theme.colors.gray[7]}>{`${
+                      index + 1
+                    } - ${d.title.toUpperCase()}`}</Text>
                   </RowItem>
                 </Row>
-              ))}
-            </>
-          ))}
-        </div>
-      </SideMenu>
-    </Row>
+                {d.aulas.map((a, index) => (
+                  <Row key={index}>
+                    <RowItem>
+                      <Text c={theme.colors.purple[5]} fw={500}>
+                        {a.title}
+                      </Text>
+                    </RowItem>
+                  </Row>
+                ))}
+              </>
+            ))}
+          </div>
+        </SideMenu>
+      </Row>
+      <Row>
+        <RowItem center style={{ gap: 0 }}>
+          <Text size="xl" c={theme.colors.purple[5]} fw={600}>
+            Notas Cornell
+          </Text>
+          <IconBtn onClick={() => setOpen(true)}>
+            <InfoCircle width={20} />
+          </IconBtn>
+        </RowItem>
+      </Row>
+      <Row style={{ paddingBottom: "0;625rem" }}>
+        <RowItem>
+          <CornellNotepad />
+        </RowItem>
+      </Row>
+      <br />
+      <Modal opened={open} onClose={() => setOpen(false)} size={750}>
+        <Row>
+          <RowItem>
+            <Image src={MetodoCornell.src} alt={"Metodo Cornell"} />
+          </RowItem>
+        </Row>
+      </Modal>
+    </>
   );
 };
 
@@ -150,12 +184,12 @@ const TabRevisao = ({
         <RowItem>
           <div>
             <ImgMindMap
-              // src={`http://127.0.0.1:8000${aula.mapa}`}
-              src={genetica}
+              src={`http://127.0.0.1:8000${aula.mapa}`}
+              // src={genetica}
               mindMaps={mapasTextos}
               alt={aula.nome}
               width={750}
-              height={375}
+              // height={375}
             />
           </div>
         </RowItem>

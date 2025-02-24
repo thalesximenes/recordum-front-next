@@ -12,7 +12,7 @@ const Container = styled.div`
 const MiddleSection = styled.div`
   position: relative;
   padding: 0;
-  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  border: 2px solid #bab8d7;
   border-bottom: none;
 
   display: flex;
@@ -75,7 +75,7 @@ const Topic = styled.div<{ color?: string }>`
 
 const MiddleDivider = styled.div`
   position: sticky;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  border-right: 2px solid #bab8d7;
 
   height: 100%;
 
@@ -145,14 +145,11 @@ const AddNoteSign = styled.div`
 
 const BottomSection = styled.div`
   position: absolute;
-  // top: calc(85% - 0.2rem);
   background-color: cadetblue;
   bottom: 0;
   left: 0;
   right: 0;
 
-  // padding: 0 0.2rem 0.2rem 0.2rem;
-  // border: 0.5px solid rgba(0, 0, 0, 0.1);
   border-top: 0;
 
   display: flex;
@@ -160,7 +157,7 @@ const BottomSection = styled.div`
   transition: 0.2s ease-in-out;
 
   &:focus-within {
-    height: 90%;
+    height: 95%;
     box-shadow: 0px -10px 10px 0px rgba(0, 0, 0, 0.2);
   }
 `;
@@ -168,13 +165,14 @@ const BottomSection = styled.div`
 const Summary = styled.textarea`
   padding: 0.5rem;
 
-  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  border: 2px solid #bab8d7;
   resize: none;
   outline: none;
 
   flex-grow: 1;
 
   &::placeholder {
+    text-align: center;
     font-weight: 500;
     color: #000;
   }

@@ -4,6 +4,7 @@ import { setDisciplina, startGetDisciplinas } from "@/redux/Conteudo/slice";
 import { useDispatch, useSelector } from "react-redux";
 
 import Accordion from "@/components/Accordion";
+import NadaAqui from "@/public/images/nada_aqui.svg";
 import { NextPage } from "next";
 import { RootState } from "@/redux/rootReducer";
 import VideoThumb from "@/components/VideoThumb";
@@ -17,9 +18,9 @@ const DisciplinaPage: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const eixo = router?.query?.slug?.[0];
-  const { width } = useWindowSize();
+  const { isTablet, width } = useWindowSize();
 
-  const { idEixo, disciplinas } = useSelector(
+  const { idEixo, disciplinas, loading } = useSelector(
     (store: RootState) => store.Conteudo
   );
 
@@ -33,41 +34,46 @@ const DisciplinaPage: NextPage = () => {
   return (
     <Row>
       <RowItem>
-        <Accordion title={eixo?.toUpperCase()} value={"default"} titleCentered>
+        <Accordion
+          title={eixo?.toUpperCase()}
+          value={"default"}
+          titleCentered
+          loading={loading}
+        >
           <Row>
-            {disciplinas?.map((d, index) => (
-              <RowItem key={index}>
-                <VideoThumb
-                  alt={d?.nome}
-                  src={thumb}
-                  title={d?.nome.normalize("NFKC")}
-                  width={width <= 480 && width - 80}
-                  height={width <= 480 && (width - 120) * 0.6}
-                  description={`${d?.quantidade_aulas || 0} aula(s)`}
-                  description2={eixo}
-                  onClick={() => {
-                    dispatch(setDisciplina(d?.id));
-                    router.push(
-                      `/eixo-tematico/${router?.query?.slug?.[0]}/${d?.nome.normalize("NFD")}`
-                    );
-                  }}
-                />
-              </RowItem>
-            ))}
-            <RowItem>
-              <VideoThumb
-                alt="Int. à Genética"
-                src={thumb}
-                title="Int. à Genética"
-                description="Genética"
-                description2="Biologia"
-                onClick={() =>
-                  router.push(
-                    `/eixo-tematico/${router?.query?.slug?.[0]}/genetica`
-                  )
-                }
-              />
-            </RowItem>
+            {!loading && disciplinas.length === 0 ? (
+              <>
+                <Row>
+                  <RowItem center>
+                    <NadaAqui width={isTablet ? width / 2 : width - 60} />
+                  </RowItem>
+                </Row>
+              </>
+            ) : (
+              <>
+                {disciplinas?.map((d, index) => (
+                  <RowItem key={index}>
+                    <VideoThumb
+                      alt={d?.nome}
+                      src={thumb}
+                      title={d?.nome.normalize("NFKC")}
+                      width={width <= 480 && width - 80}
+                      height={width <= 480 && (width - 120) * 0.6}
+                      description={`${d?.quantidade_aulas || 0} aula(s)`}
+                      description2={eixo}
+                      onClick={() => {
+                        dispatch(setDisciplina(d?.id));
+                        router.push(
+                          `/eixo-tematico/${
+                            router?.query?.slug?.[0]
+                          }/${d?.nome.normalize("NFD")}`
+                        );
+                      }}
+                    />
+                  </RowItem>
+                ))}
+              </>
+            )}
           </Row>
         </Accordion>
       </RowItem>

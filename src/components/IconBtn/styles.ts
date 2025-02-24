@@ -30,6 +30,7 @@ const _Container = styled(ActionIcon)<IconBtnProps>`
 
   &:disabled {
     border-color: #ced4da;
+    background-color: #ced4da;
   }
 `;
 
