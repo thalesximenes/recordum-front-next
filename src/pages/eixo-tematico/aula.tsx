@@ -1,6 +1,7 @@
 import { AspectRatio, Image, Modal, Progress, Text } from "@mantine/core";
 import { Aula, MapaTexto } from "@/redux/Conteudo/interfaces";
 import { Row, RowItem } from "@/components/Row";
+import { setBackgroundImage, setPageName } from "@/redux/Session/slice";
 import { startGetAula, startGetMapasTextos } from "@/redux/Conteudo/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -16,8 +17,6 @@ import { RootState } from "@/redux/rootReducer";
 import SideMenu from "@/components/SideMenu";
 import Tabs from "@/components/Tabs";
 import TitleSideMenu from "@/components/TitleSideMenu";
-import genetica from "../../../public/images/genetica.png";
-import { setBackgroundImage } from "@/redux/Session/slice";
 import { theme } from "@/components/themes";
 import { useRouter } from "next/router";
 import useWindowSize from "@/hooks/useWindowSize";
@@ -38,6 +37,7 @@ const AulaPage: NextPage = () => {
 
   useEffect(() => {
     if (!router?.query?.slug) router.push("/home");
+    dispatch(setPageName("Aula"));
     dispatch(setBackgroundImage({ backgroundImage: "" }));
     dispatch(startGetAula(idAula));
     dispatch(startGetMapasTextos(idAula));
@@ -184,7 +184,7 @@ const TabRevisao = ({
         <RowItem>
           <div>
             <ImgMindMap
-              src={`http://127.0.0.1:8000${aula.mapa}`}
+              src={`${process.env.NEXT_PUBLIC_BASE_URL_BACK}${aula.mapa}`}
               // src={genetica}
               mindMaps={mapasTextos}
               alt={aula.nome}

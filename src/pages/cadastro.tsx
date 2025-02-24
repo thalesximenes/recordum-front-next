@@ -258,12 +258,6 @@ const Home: NextPage = () => {
   );
 };
 
-export const getServerSideProps = async () => {
-  return {
-    props: {},
-  };
-};
-
 const Container = styled.form`
   display: flex;
   justify-content: center;

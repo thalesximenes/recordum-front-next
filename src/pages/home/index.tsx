@@ -194,4 +194,10 @@ const SideMenu = () => {
   );
 };
 
+export const getServerSideProps = async () => {
+  return {
+    props: {},
+  };
+};
+
 export default Home;
