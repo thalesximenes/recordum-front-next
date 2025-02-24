@@ -2,16 +2,16 @@ import { Meta, StoryObj } from "@storybook/react";
 
 import { ImageProps } from "next/image";
 import Img from ".";
-import perfil from "../../../public/images/perfil.png";
+import logo_extenso from "../../../public/images/Logo_extenso.png";
 
 export default {
   title: "Image/Img",
   component: Img,
   args: {
-    src: perfil,
+    src: logo_extenso,
     alt: "Imagem",
-    width: 200,
-    height: 200,
+    width: 232,
+    height: 35,
   },
 } as Meta<ImageProps>;
 

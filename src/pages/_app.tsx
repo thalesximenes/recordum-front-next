@@ -1,14 +1,14 @@
 import "@mantine/core/styles.css";
 import "react-toastify/dist/ReactToastify.css";
 
+import api, { configureApi } from "api/index";
+
 import Layout from "@/components/Layout";
 import { MantineProvider } from "@mantine/core";
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import { RootState } from "redux/rootReducer";
 import Toast from "@/styles/toast";
-import api from "api";
-import { configureApi } from "api/api";
 import { theme } from "../components/themes";
 import { useEffect } from "react";
 import wrapper from "@/redux/store";
