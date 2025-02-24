@@ -184,7 +184,9 @@ const TabRevisao = ({
         <RowItem>
           <div>
             <ImgMindMap
-              src={`${process.env.NEXT_PUBLIC_BASE_URL_BACK}${aula.mapa}`}
+              src={`${process.env.NEXT_PUBLIC_BASE_URL_BACK}${aula.mapa.slice(
+                1
+              )}`}
               // src={genetica}
               mindMaps={mapasTextos}
               alt={aula.nome}
