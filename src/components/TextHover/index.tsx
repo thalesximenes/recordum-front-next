@@ -5,6 +5,7 @@ import { TextProps } from "./interfaces";
 const TextHover = (props: TextProps) => {
   const { hoverColor, textDecoration, children, onClick, ...otherProps } =
     props;
+  console.log(otherProps.size);
 
   return (
     <Container
