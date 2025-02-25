@@ -26,6 +26,7 @@ function* startCadastrarUsuarioSaga() {
         const errorData = error?.response?.data;
         errorData?.non_field_errors?.map((e) => newToast(e, "ERROR"));
         errorData?.email?.map((e) => newToast(e, "ERROR"));
+        errorData?.username?.map((e) => newToast(e, "ERROR"));
 
         yield put(failureCadastrarUsuario());
       }

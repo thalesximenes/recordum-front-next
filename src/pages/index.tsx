@@ -123,6 +123,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const isOnline = useNavigatorOnLine();
 
+  const { push } = useRouter();
   const { loading } = useSelector((store: RootState) => store.Session);
 
   const [email, setEmail] = useState("");
@@ -173,9 +174,14 @@ const Login = () => {
         </Row>
         <Row>
           <RowItem center>
-            <Text style={{ cursor: `pointer` }} c={theme?.colors?.purple[4]}>
+            <TextHover
+              onClick={() => push("/recuperar")}
+              style={{ cursor: `pointer` }}
+              c={theme?.colors?.purple[4]}
+              hoverColor={theme?.colors?.purple[7]}
+            >
               Esqueci minha senha
-            </Text>
+            </TextHover>
           </RowItem>
         </Row>
       </div>

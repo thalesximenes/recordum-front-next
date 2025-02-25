@@ -1,7 +1,6 @@
 import { HoverCard, Image, Text } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 
-import Img from "@/components/Img";
 import { ImgMindMapProps } from "../interfaces";
 import { MindMapContainer } from "./styles";
 import { theme } from "@/components/themes";
