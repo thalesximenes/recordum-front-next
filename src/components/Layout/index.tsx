@@ -14,7 +14,9 @@ const Layout = ({ children }: any) => {
 
   return (
     <>
-      {pathname === "/" || pathname === "/cadastro" ? (
+      {pathname === "/" ||
+      pathname === "/cadastro" ||
+      pathname === "/recuperar" ? (
         <MainLogin ref={scrollRef}>
           <MainContainer>{children}</MainContainer>
         </MainLogin>

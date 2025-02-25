@@ -42,13 +42,13 @@ const DisciplinaPage: NextPage = () => {
         >
           <Row>
             {!loading && disciplinas.length === 0 ? (
-              <>
+              <RowItem>
                 <Row>
                   <RowItem center>
-                    <NadaAqui width={isTablet ? width / 2 : width - 60} />
+                    <NadaAqui width={isTablet ? 350 : width - 60} />
                   </RowItem>
                 </Row>
-              </>
+              </RowItem>
             ) : (
               <>
                 {disciplinas?.map((d, index) => (

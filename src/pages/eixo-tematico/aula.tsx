@@ -191,6 +191,7 @@ const TabRevisao = ({
               mindMaps={mapasTextos}
               alt={aula.nome}
               width={750}
+              height={375}
             />
           </div>
         </RowItem>

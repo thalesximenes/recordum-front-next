@@ -84,7 +84,7 @@ const CornellNotepad = ({}: CornellNotepadProps) => {
     ];
 
   const getTopicColor = (idTopic: string) =>
-    topics.find((t) => t.id === idTopic).color;
+    topics.find((t) => t.id === idTopic)?.color;
 
   const handleNotesClick = (e: any) => {
     if (e.target.nodeName == "DIV") {
