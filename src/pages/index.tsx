@@ -20,25 +20,23 @@ import { useRouter } from "next/router";
 import useWindowSize from "@/hooks/useWindowSize";
 
 const Home: NextPage = () => {
-  const dispatch = useDispatch();
-
   const firstUpdateRef = useRef(true);
   const { replace, push } = useRouter();
 
   const { isDesktop } = useWindowSize();
   const { usuario } = useSelector((store: RootState) => store.User);
+  const { token } = useSelector((store: RootState) => store.Session);
 
   const [showLogin, setShowLogin] = useState(false);
 
   useEffect(() => {
-    dispatch(resetLogin());
     if (firstUpdateRef.current) {
       firstUpdateRef.current = false;
     }
   }, []);
 
   useEffect(() => {
-    if (usuario) {
+    if (usuario && token) {
       replace("/home");
     }
   }, [usuario]);

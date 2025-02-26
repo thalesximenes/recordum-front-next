@@ -152,6 +152,6 @@ export const {
   failureGetMapasTextos,
 } = slice.actions;
 
-const SessionReducer = persistReducer(persistConfig, slice.reducer);
+const ConteudoReducer = persistReducer(persistConfig, slice.reducer);
 
-export default SessionReducer;
+export default ConteudoReducer;

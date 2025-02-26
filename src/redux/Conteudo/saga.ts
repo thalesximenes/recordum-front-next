@@ -30,7 +30,7 @@ function* startGetEixosSaga() {
       if (error?.message === "Network Error") {
         newToast("A rede conectada não tem acesso à internet", "WARNING");
       } else {
-        error?.response?.data?.detail.map((e) => newToast(e, "ERROR"));
+        newToast(error?.response?.data?.detail, "ERROR");
       }
       yield put(failureGetEixos());
     }
@@ -63,7 +63,7 @@ function* startGetTemasSaga() {
       if (error?.message === "Network Error") {
         newToast("A rede conectada não tem acesso à internet", "WARNING");
       } else {
-        error?.response?.data?.detail.map((e) => newToast(e, "ERROR"));
+        newToast(error?.response?.data?.detail, "ERROR");
       }
       yield put(failureGetTemas());
     }
@@ -80,7 +80,7 @@ function* startGetAulaSaga() {
       if (error?.message === "Network Error") {
         newToast("A rede conectada não tem acesso à internet", "WARNING");
       } else {
-        error?.response?.data?.detail.map((e) => newToast(e, "ERROR"));
+        newToast(error?.response?.data?.detail, "ERROR");
       }
       yield put(failureGetAula());
     }
