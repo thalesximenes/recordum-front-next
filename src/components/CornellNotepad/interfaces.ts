@@ -1,4 +1,7 @@
-export interface CornellNotepadProps {}
+export interface CornellNotepadProps {
+  notesData?: NoteProps[];
+  topicsData?: TopicProps[];
+}
 
 export interface NoteProps {
   id: string;

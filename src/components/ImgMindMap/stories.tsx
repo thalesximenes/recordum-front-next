@@ -12,7 +12,7 @@ export default {
     alt: "Imagem",
     width: 750,
     height: 375,
-    template: "EDIT",
+    template: "VIEW",
     mindMaps: [
       {
         x: 141,

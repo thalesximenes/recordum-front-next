@@ -21,12 +21,15 @@ import TextInput from "../TextInput";
 import { theme } from "../themes";
 import { useDisclosure } from "@mantine/hooks";
 
-const CornellNotepad = ({}: CornellNotepadProps) => {
+const CornellNotepad = ({
+  notesData = [],
+  topicsData = [],
+}: CornellNotepadProps) => {
   const notesRef = useRef();
-  const [notes, setNotes] = useState<NoteProps[]>([]);
+  const [notes, setNotes] = useState<NoteProps[]>(notesData);
   const [topicsOpened, { open: openTopics, close: closeTopics }] =
     useDisclosure(false);
-  const [topics, setTopics] = useState<TopicProps[]>([]);
+  const [topics, setTopics] = useState<TopicProps[]>(topicsData);
   const [currentTopic, setCurrentTopic] = useState<string>(null);
   const [topicName, setTopicName] = useState<string>("");
   const [topicNotes, setTopicNotes] = useState<string[]>([]);
